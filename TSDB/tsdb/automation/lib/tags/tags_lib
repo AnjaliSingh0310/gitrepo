@@ -1,0 +1,91 @@
+#!/bin/bash
+
+source $NS_WDIR/TSDB/tsdb/automation/testsuites/common
+common_setup
+
+check_number_tags() {
+   tag_no_exp=$(cat  $RESPONSE_FILE | grep "Num" | cut -d ":" -f2 |xargs )
+   tag_no_act=$(cat  $RESPONSE_FILE | grep -c "tag_name" )
+   automation_log "NUMBER OF TAGS = $tag_no_exp, NUMBER OF TAG NAME = $tag_no_act"
+   if [ $tag_no_exp -eq $tag_no_act ];then
+      automation_log "Number of tags and the tags in response are same"
+   else
+      ERR_MSG=$ERR_MSG"There are more tags present"
+   fi
+
+
+   if [ ${#ERR_MSG} -gt 0 ];then
+      result1="FAIL"
+   else
+      result1="PASS"
+   fi
+
+   if [ "$result1" == "FAIL" ];then
+      echo "$ERR_MSG"
+   else
+      echo "PASS"
+   fi
+}
+
+actual_tags() {
+	cat $RESPONSE_FILE |grep "tag_name" | cut -d ":" -f2 | sort | uniq > tag_list_act
+}
+
+exp_tags() {
+  if [ "$1" != "" ]; then
+    ingestion_file=`grep "register: called for profile -" $TSDB_WDIR/logs/tsdb_ingestion_trace.log | tail -1 | cut -d ',' -f 1 | awk '{print $NF}';`
+    automation_log "Ingestion file $ingestion_file"
+    Taglist=`grep "$1.*|t:" $ingestion_file | cut -d "|" -f 3 | cut -d ";" -f 1 | awk -F ":" '{print $2}'`
+    Attrlist=`grep "$1.*|t:" $ingestion_file | cut -d "|" -f 3 | cut -d ";" -f 2 | awk -F ":" '{print $2}'`
+    # Split the input string by commas
+    IFS=',' read -ra tags <<< "$Taglist"
+    IFS=',' read -ra attrs <<< "$Attrlist"
+
+    # Iterate through each tag and print the part before '='
+    echo "httpConnection" >> .tag_list_exp_tmp
+    echo "httpHost" >> .tag_list_exp_tmp
+
+    #tags
+    for tag in "${tags[@]}"; do
+      echo "$tag" | awk -F '=' '{print $1}' >> .tag_list_exp_tmp
+    done
+
+    #attrs
+    for attr in "${attrs[@]}"; do
+      echo "$attr" | awk -F '=' '{print $1}' >> .tag_list_exp_tmp
+    done
+
+    cat .tag_list_exp_tmp | sort | uniq > tag_list_exp
+    rm .tag_list_exp_tmp
+  else
+	  cat $NS_WDIR/TSDB/tsdb/automation/total_tag_list | grep "$TAGNAME" | cut -d "=" -f2 | sort | uniq > tag_list_exp
+  fi
+}
+
+tag_validtaion() {
+	actual_tags
+	exp_tags $1
+	file1="tag_list_act"
+
+        file2="tag_list_exp"
+
+        if cmp -s "$file1" "$file2"; then
+           automation_log "The contents of $file1 and $file2 are exactly the same."
+        else
+           automation_log "The contents of $file1 and $file2 are different."
+           ERR_MSG=$ERR_MSG"Wrong tags = `diff -y --suppress-common-lines "$file1" "$file2"`"
+        fi
+
+        if [ ${#ERR_MSG} -gt 0 ];then
+           result1="FAIL"
+        else
+           result1="PASS"
+        fi
+
+        if [ "$result1" == "FAIL" ];then
+           echo "$ERR_MSG"
+        else
+           echo "PASS"
+        fi
+}
+

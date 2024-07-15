@@ -1,0 +1,86 @@
+#!/bin/bash
+
+function check_percentile_data() {
+   PER_RESP=$1
+   PRESET=$2
+   RESPONSE=$3
+   automation_log "$RESPONSE"
+
+   #Getting percentile data from percentile response file and picking the next corresponding value
+   Percentile_line=($(cat $PER_RESP |grep "$PRESET" | xargs))
+   index=-1
+   for i in "${!Percentile_line[@]}"; do
+      if [[ "${Percentile_line[$i]}" = "$PRESET" ]]; then
+         index=$i
+         break
+      fi
+   done
+   get_idx=$(($index + 1))
+   Data_in_percentile=${Percentile_line[$get_idx]}
+
+   #Getting Data in the response file
+   Data_in_response=`cat $RESPONSE | grep "Avg" -A2 | tail -1 | awk -F' ' '{print $8}'`
+   automation_log "Data in percentile file = $Data_in_percentile"
+   automation_log "Data in response file = $Data_in_response"
+   if [ "$Data_in_percentile" != "$Data_in_response" ];then
+      ERR_MSG=$ERR_MSG"Data in native metric and of preset value are not equal\n"
+   fi
+   if [ ${#ERR_MSG} -gt 0 ];then
+      result1="FAIL"
+   else
+      result1="PASS"
+   fi
+}
+
+function check_name() {
+   SUB_HIER_IN_REQ=$1
+   RESPONSE=$2
+   SUB_HIER_IN_RESP=`cat $RESPONSE | grep 'sub_values:' | cut -d'>' -f6-7`
+   automation_log "Req - $SUB_HIER_IN_REQ"
+   automation_log "Resp - $SUB_HIER_IN_RESP"
+
+   if [ "$SUB_HIER_IN_REQ" != "$SUB_HIER_IN_RESP" ];then
+      ERR_MSG=$ERR_MSG"Hierarchy is not same in both hier request and response\n"
+   fi
+   if [ ${#ERR_MSG} -gt 0 ];then
+      result2="FAIL"
+   else
+      result2="PASS"
+   fi
+}
+
+function check_graph_name_id() {
+  id=$1
+  preset=$2
+  name=$3
+  RESP=$4
+
+  exp_graph_name="$name p$preset"
+  act_graph_name=`cat $RESP | grep Measure: | awk -F':' '{print $7}'`
+  
+  graph_id_exp=$(($id + $preset))
+  graph_id_act=`cat $RESP | grep Measure: | awk -F':' '{print $8}'`
+
+  if [ "$exp_graph_name" != "$act_graph_name" ];then
+     ERR_MSG=$ERR_MSG"Graph name is not same in both request and response\n"
+  fi
+
+  if [ $graph_id_exp -ne $graph_id_act ];then
+     ERR_MSG=$ERR_MSG"Graph id is not same in both request and Respose\n "
+  fi
+   if [ ${#ERR_MSG} -gt 0 ];then
+      result3="FAIL"
+   else
+      result3="PASS"
+   fi
+}
+
+
+function validate_output() {
+   if [ "$result1" == "FAIL" ] || [ "$result2" == "FAIL" ] || [ "$result3" == "FAIL"];then
+      echo "$ERR_MSG"
+   else
+      echo "PASS"
+   fi
+
+}

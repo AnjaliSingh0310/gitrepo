@@ -1,0 +1,63 @@
+#!/bin/bash
+
+source $NS_WDIR/TSDB/tsdb/automation/testsuites/common
+source $NS_WDIR/TSDB/tsdb/automation/lib/tsdbRequests
+common_setup
+
+TR=`grep "^nde.testRunNum" $NS_WDIR/webapps/sys/config.ini | cut -d'=' -f2`
+
+get_derived_mgroups() {
+  tsdb_admin --op dmgn --tr $TR | grep "Group name" | cut -d',' -f1 | cut -d':' -f2 > ${GROUP_GRAPH_TEMP}/derived_mgroup.txt
+  sed -i 's/[[:blank:]]*//' ${GROUP_GRAPH_TEMP}/derived_mgroup.txt
+}
+
+get_mgroups() {
+  tsdb_admin --op mgn --tr $TR | grep "Group name" | cut -d',' -f1 | cut -d':' -f2 > ${GROUP_GRAPH_TEMP}/mgroup.txt
+  sed -i 's/[[:blank:]]*//' ${GROUP_GRAPH_TEMP}/mgroup.txt
+  tsdb_admin --op mgn --tr $TR | grep "gdf_id" | cut -d',' -f1 | cut -d':' -f2 > ${GROUP_GRAPH_TEMP}/mg_id.txt
+  sed -i 's/[[:blank:]]*//' ${GROUP_GRAPH_TEMP}/mg_id.txt
+}
+
+get_derived_mgroups
+get_mgroups
+
+derived_mgroup="${GROUP_GRAPH_TEMP}/derived_mgroup.txt"
+mgroup="${GROUP_GRAPH_TEMP}/mgroup.txt"
+mg_id="${GROUP_GRAPH_TEMP}/mg_id.txt"
+
+both_mgroup_mgid=$(paste -d',' "$mgroup" "$mg_id")
+
+
+BATS_FILE="$NS_WDIR/TSDB/tsdb/automation/testsuites/group_and_graph_call.bats"
+
+echo -e "#!/home/cavisson/work/TSDB/tsdb/automation/thirdparty/bats-core/bin/bats" > $BATS_FILE
+echo -e "setup() {
+         source ./testsuites/common
+         common_setup
+         source ./lib/tsdbRequests
+	 source \${GROUP_GRAPH_LIB}/group_graph_lib
+         export RESPONSE_FILE=\$GRAPH_REP/MG_\$BATS_TEST_NUMBER.txt
+     }" >> $BATS_FILE
+
+i=1
+while IFS=',' read -r metric_group metric_group_id; do 
+    echo -e "@test \"[TC-0$i],Metric call for Metric Group:$metric_group and Metric group id:$metric_group_id\" {
+       run_query OP=mn  OUTFILE=\$RESPONSE_FILE ID=$metric_group_id VERSION=2
+       response=\"$GRAPH_REP/MG_$i.txt\"
+       output=\$(validate_graphs \"$metric_group\" \"$metric_group_id\" \"$GRAPH_REP/MG_$i.txt\")
+       assert_output \"PASS\"
+    }\n" >> $BATS_FILE
+    i=$((i+1))
+done <<< "$both_mgroup_mgid"
+
+while IFS= read -r der_mg; do
+    echo -e "@test \"[TC-0$i],Derived Metric call for Derived Metric Group:$der_mg\" {
+       run_query OP=dmn  OUTFILE=\$RESPONSE_FILE MG_NAME=\"$der_mg\"
+    }\n" >> $BATS_FILE
+    i=$((i+1))
+done < "$derived_mgroup"
+
+
+echo "Created TestSuite - $BATS_FILE"
+echo "Command to run - ./bats <bats_file> --report-formatter junit -o ."
+

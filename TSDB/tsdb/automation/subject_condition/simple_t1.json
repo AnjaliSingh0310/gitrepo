@@ -1,0 +1,121 @@
+{
+    "cctx": {
+        "cck": "cavisson.33335.1714737398337",
+        "pk": "cavisson:172.24.1.8:05-03-2024 11-56-37.802",
+        "u": "cavisson",
+        "prodType": "Netdiagnostics"
+    },
+    "opType": 31,
+    "clientId": "-1",
+    "appId": "-1",
+    "rules": [
+        {
+            "name": "subject_t1_",
+            "id": -1,
+            "attributes": {
+                "enable": true,
+                "chkStatus": true,
+                "chkStatusTime": 900,
+                "level": 0,
+                "conditionType": "0",
+                "groups": "0",
+                "skipSamples": false,
+                "applyRuleAfter": 5,
+                "genAlertForNaN": false,
+                "severity": [
+                    {
+                        "id": 3,
+                        "condition": "C1",
+                        "conditionList": [
+                            {
+                                "type": 0,
+                                "mName": "A",
+                                "grpAffLevel": 0,
+                                "gAffLevfTh": -1,
+                                "gAffLevrTh": -1,
+                                "thresholdType": {
+                                    "dataType": 0,
+                                    "operator": 0,
+                                    "windowType": 0,
+                                    "fThreshold": 1,
+                                    "sThreshold": -1,
+                                    "srThreshold": -1,
+                                    "pctType": 0,
+                                    "pct": 100,
+                                    "timeWindow": 5,
+                                    "twUnit": 0,
+                                    "frThreshold": -1
+                                },
+                                "id": 0,
+                                "name": "C1"
+                            }
+                        ]
+                    }
+                ],
+                "actions": [],
+                "tags": [],
+                "metric": [
+                    {
+                        "subject": [
+                            {
+                                "tags": [
+                                    {
+                                        "key": "Tier",
+                                        "value": "Cavisson",
+                                        "mode": 1
+                                    },
+                                    {
+                                        "key": "Server",
+                                        "value": "ALL",
+                                        "mode": 2
+                                    },
+                                    {
+                                        "key": "Severity",
+                                        "value": "ALL",
+                                        "mode": 2
+                                    }
+                                ]
+                            }
+                        ],
+                        "measure": {
+                            "metric": "Alerts/Minute",
+                            "metricId": 2,
+                            "mg": "Alert Server Stats",
+                            "mgId": 10775,
+                            "mgType": "Alert Server Stats provides metrics related to alert count on Server.",
+                            "mgTypeId": -1,
+                            "value": "Alert Server Stats"
+                        },
+                        "glbMetricId": null,
+                        "derivedFormula": null,
+                        "attribute": 0,
+                        "name": "A",
+                        "mode": 2
+                    }
+                ],
+                "schedule": false,
+                "mailIds": [],
+                "extensions": [],
+                "message": null,
+                "description": null,
+                "recommendation": null,
+                "actionsEvents": {
+                    "minorToMajor": true,
+                    "minorToCritical": false,
+                    "majorToMinor": true,
+                    "majorToCritical": false,
+                    "criticalToMajor": false,
+                    "criticalToMinor": false,
+                    "forceClear": false,
+                    "continuousEvent": false,
+                    "endedMinor": false,
+                    "endedMajor": false,
+                    "endedCritical": false,
+                    "startedMinor": false,
+                    "startedMajor": false,
+                    "startedCritical": false
+                }
+            }
+        }
+    ]
+}

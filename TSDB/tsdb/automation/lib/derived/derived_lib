@@ -1,0 +1,57 @@
+#!/bin/bash
+
+function check_mgroup() {
+   DMG_NAME=$1
+   RESPONSE=$2
+   MG_RESP=`cat $RESPONSE |grep "Measure:" | cut -d: -f5 | uniq`
+   automation_log "Derived Metric group name in test case = $DMG_NAME"
+   automation_log "Derived Metric group name in response file = $MG_RESP"
+   if [ "$DMG_NAME" != "$MG_RESP" ];then
+      ERR_MSG=$ERR_MSG"Derived Metric group is not same"
+   fi
+   if [ ${#ERR_MSG} -gt 0 ];then
+      result1="FAIL"
+   else
+      result1="PASS"
+   fi
+}
+
+function check_level() {
+   D_LEVEL=$1
+   RESPONSE=$2
+   LEVEL=`cat $RESPONSE | grep 'Graph' | cut -d' ' -f13`
+   automation_log "Derived Level in test case = $D_LEVEL, Response File = $LEVEL"
+   if [ "$D_LEVEL" != "$LEVEL" ];then
+      ERR_MSG=$ERR_MSG"Derived Level is not same in both test case and response file"
+   fi
+   if [ ${#ERR_MSG} -gt 0 ];then
+      result2="FAIL"
+   else
+      result2="PASS"
+   fi
+}
+
+function check_name() {
+   NAME=$1
+   RESPONSE=$2
+   G_NAME=`cat $RESPONSE | grep 'Graph' | cut -d' ' -f8 | cut -d'(' -f1`
+   automation_log "Derived graph in test case = $NAME, Response File = $G_NAME"
+   if [ "$NAME" != "$G_NAME" ];then
+      ERR_MSG=$ERR_MSG"Derived Level is not same in both test case and response file"
+   fi
+   if [ ${#ERR_MSG} -gt 0 ];then
+      result3="FAIL"
+   else
+      result3="PASS"
+   fi
+}
+
+
+function validate_output() {
+   if [ "$result1" == "FAIL" ] || [ "$result2" == "FAIL" ] || [ "$result3" == "FAIL" ];then
+      echo "$ERR_MSG"
+   else
+      echo "PASS"
+   fi
+
+}

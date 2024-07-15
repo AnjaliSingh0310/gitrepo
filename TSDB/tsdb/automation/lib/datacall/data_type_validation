@@ -1,0 +1,131 @@
+#!/bin/bash
+function get_metric_details()
+{
+  export MG_ID=$(grep "Measure:" ${RESPONSE_FILE} | cut -d'>' -f2 | cut -d':' -f3)
+  export GRAPH_ID=$(grep "Measure:" ${RESPONSE_FILE} | cut -d'>' -f3 | cut -d':' -f3)
+  export GRAPH_NAME=$(grep "Measure:" ${RESPONSE_FILE} | cut -d'>' -f3 | cut -d':' -f2)
+  GDF_NAME=$(grep "$MG_ID" $NS_WDIR/sys/*.gdf | cut -d':' -f1 | awk -F'/' '{print $NF}')
+  export FORMULA=$(grep "^Graph.*|$GRAPH_ID|" $NS_WDIR/sys/$GDF_NAME | awk -F"|" '{print $7}')
+  #RANGE=$(grep "$GDF_NAME" $DATACALL_LIB/GDFConfig.txt.seq | awk -F',' '{print $NF}' | cut -d'|' -f${GRAPH_ID})
+  #export MIN_VALUE=$(echo $RANGE | cut -d':' -f1)
+  #export MAX_VALUE=$(echo $RANGE | cut -d':' -f2)
+  automation_log "MG_ID=$MG_ID"
+  automation_log "GRAPH_ID=$GRAPH_ID"
+  automation_log "GDF_NAME=$GDF_NAME"
+  automation_log "FORMULA=$FORMULA"
+}
+function get_data_type_info()
+{
+   element_count=$(grep "$GRAPH_NAME" $DATACALL_LIB/data_type_info.txt | cut -d"|" -f3)
+   min=$(grep "cm_test_all_graph_types.gdf" $ING_CONF_FILE | cut -d'|' -f3 | cut -d':' -f2 | cut -d'.' -f1)
+   max=$(grep "cm_test_all_graph_types.gdf" $ING_CONF_FILE | cut -d'|' -f3 | cut -d':' -f3 | cut -d'.' -f1)
+   ingested_count=$(grep "cm_test_all_graph_types.gdf" $ING_CONF_FILE | cut -d'|' -f3 | cut -d':' -f4 | cut -d'.' -f1)
+   avg=$(($((min + max))/2))
+   if [ $element_count -eq 1 ];then
+      count=$((SF/NF))
+   else
+      count=$ingested_count
+   fi
+   automation_log "ingested data = $min | $max | $count"
+}
+
+function set_expected_values()
+{
+    if [ "$FORMULA" == "PS" ] || [ "$FORMULA" == "CumToPS" ];then
+      expected_avg=$(echo "scale=6; $avg/$NF" | bc -l | cut -d'.' -f1)
+      expected_min=$(echo "scale=6; $min/$NF" | bc -l | cut -d'.' -f1)
+      expected_max=$(echo "scale=6; $max/$NF" | bc -l | cut -d'.' -f1)
+    elif [ "$FORMULA" == "PM" ] || [ "$FORMULA" == "CumToPM" ];then
+      avg_ps=$(echo "$avg/$NF" | bc -l)
+      avg_pm=$(echo "scale=2; 60 * ${avg_ps}" | bc -l | cut -d'.' -f1)
+      expected_avg=${avg_pm}
+
+      min_ps=$(echo "$min/$NF" | bc -l)
+      min_pm=$(echo "scale=2; 60 * ${min_ps}" | bc -l | cut -d'.' -f1)
+      expected_min=${min_pm}
+
+      max_ps=$(echo "$max/$NF" | bc -l)
+      max_pm=$(echo "scale=2; 60 * ${max_ps}" | bc -l | cut -d'.' -f1)
+      expected_max=${max_pm}
+    else
+      expected_avg=$(echo $avg | cut -d'.' -f1)
+      expected_min=$(echo $min | cut -d'.' -f1)
+      expected_max=$(echo $max | cut -d'.' -f1)
+      expected_count=$((SF/NF))
+    fi
+    expected_count=$count
+    expected_sumsq=$((expected_avg * expected_avg * count))
+    automation_log "expected_min=$expected_min | expected_max=$expected_max | expected_avg=$expected_avg | expected_count=$expected_count | expected_sumsq=$expected_sumsq"
+}
+
+function validate_data_type()
+{
+  get_metric_details
+  get_data_type_info
+  set_expected_values
+  
+  data_sln=$(($(grep -n "^Data:" ${RESPONSE_FILE} | cut -d':' -f1)+ 4))
+  data_eln=$((data_sln + ACT_SC))
+
+  export DATA_AVG_ARR=($(awk -v sln=$data_sln -v eln=$data_eln 'NR==sln , NR==eln' ${RESPONSE_FILE} | awk '{print $8}' | xargs))
+  export DATA_MIN_ARR=($(awk -v sln=$data_sln -v eln=$data_eln 'NR==sln , NR==eln' ${RESPONSE_FILE} | awk '{print $9}' | xargs))
+  export DATA_MAX_ARR=($(awk -v sln=$data_sln -v eln=$data_eln 'NR==sln , NR==eln' ${RESPONSE_FILE} | awk '{print $10}' | xargs))
+  export DATA_COUNT_ARR=($(awk -v sln=$data_sln -v eln=$data_eln 'NR==sln , NR==eln' ${RESPONSE_FILE} | awk '{print $11}' | xargs))
+  export DATA_SUMSQ_ARR=($(awk -v sln=$data_sln -v eln=$data_eln 'NR==sln , NR==eln' ${RESPONSE_FILE} | awk '{print $13}' | xargs))
+
+  min_flag=0
+  max_flag=0
+  avg_flag=0
+  count_flag=0
+  faulty_sample_count=0
+  nan_count=0
+ # nan_threshold=$(((sample_count * 20)/100))
+  itr_count=0
+
+#  if [ $int_mdmode -eq 0 ];then
+  while [ $itr_count -lt $ACT_SC ]
+  do
+    min_flag=0
+    max_flag=0
+    avg_flag=0
+    count_flag=0
+    sumsq_flag=0
+
+    d_min=$(echo ${DATA_MIN_ARR[itr_count]} | cut -d"." -f1)
+    d_max=$(echo ${DATA_MAX_ARR[itr_count]} | cut -d"." -f1)
+    d_avg=$(echo ${DATA_AVG_ARR[itr_count]} | cut -d"." -f1)
+    d_count=$(echo ${DATA_COUNT_ARR[itr_count]} | cut -d"." -f1)
+    d_sumsq=$(echo ${DATA_SUMSQ_ARR[itr_count]} | cut -d"." -f1)
+
+    automation_log "d_min=$d_min | d_max=$d_max | d_avg=$d_avg | d_count=$d_count | d_sumsq=$d_sumsq"
+
+    #echo "expected_sumsq=$exp_sumsq"
+   #check for nan
+   if [ "$d_min" == "nan" ] || [ "$d_max" == "nan" ] || [ "$d_avg" == "nan" ] || [ "$d_count" == "nan" ];then
+      nan_count=$(( nan_count + 1 ))
+   else
+	if [ "${d_min}" != "${expected_min}" ];then
+           ERR_MSG="exp_min = ${expected_min} act_min = ${d_min}"
+        fi
+	if [ "${d_max}" != "${expected_max}" ];then
+           ERR_MSG="exp_max = ${expected_max} act_max = ${d_max}"
+        fi
+	if [ ${d_count} != ${expected_count} ];then
+           ERR_MSG="exp_count = ${expected_count} act_count = ${d_count}"
+        fi
+	if [ "${d_sumsq}" != "${expected_sumsq}" ];then
+           ERR_MSG="exp_sumsq = ${expected_sumsq} act_sumsq = ${d_sumsq}"
+        fi
+      fi
+      #if [ $min_flag -ne 0 ] || [ $max_flag -ne 0 ] || [ $avg_flag -ne 0 ] || [ $count_flag -ne 0 ] || [ $sumsq_flag -ne 0 ];then
+       # automation_log "faulty_sample_count=$((faulty_sample_count + 1))"
+      #fi
+   itr_count=$((itr_count + 1))
+  done
+  if [ ${#ERR_MSG} -gt 0 ];then
+      echo "FAILED : $ERR_MSG"
+   else
+      echo "PASS"
+   fi
+ # fi
+}

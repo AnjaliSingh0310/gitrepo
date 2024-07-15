@@ -1,0 +1,227 @@
+#!bin/bash
+
+set_exp_sf_sc()
+{
+   export NF=${NF_ARR[$NFIDX]}
+   tp=$((TP * 60))
+   view_by=$GRANULARITY
+   
+   if [ $tp -gt 0 ] && [ $tp -le 300 ];then
+      SF=1
+   elif [ $tp -gt 301 ] && [ $tp -le 3600 ];then
+      SF=10
+   elif [ $tp -ge 3601 ] && [ $tp -le 14400 ];then
+      SF=60
+   elif [ $tp -gt 14401 ] && [ $tp -le 172800 ];then
+      SF=600
+   elif [ $tp -gt 172801 ] && [ $tp -le 1209600 ];then
+      SF=3600
+   elif [ $tp -gt 1209601 ] && [ $tp -le 3888000 ];then
+      SF=14400
+   fi
+
+   if [ "${view_by}X" != "X" ];then
+      SF=${NF_ARR[view_by]}
+   fi
+
+   if [ $NF -gt $SF ];then
+      export SF=$NF
+   else
+      export SF=$SF
+   fi
+  # if [ $SF -lt 60 ];then
+      export EXP_SF=${SF}s 
+ #  else
+  #    export EXP_SF=$((SF / 60))m
+  # fi
+   
+   export EXP_SC=$((tp / SF))
+}
+
+extract_actual_output()
+{
+  export ACT_SF=$(grep "Freq specs:" ${RESPONSE_FILE} | cut -d"," -f4 | tr -d " " | cut -d":" -f2)
+  export ACT_SC=$(grep "Freq specs:" ${RESPONSE_FILE} | cut -d"," -f6 | tr -d " " | cut -d":" -f2)
+  export ACT_MC=$(grep "Freq specs:" ${RESPONSE_FILE} | cut -d"," -f5 | tr -d " " | cut -d":" -f2)
+  export ACT_DM=$(grep "tx_name:" ${RESPONSE_FILE} | awk -F"_" '{print $NF}')
+ # export ACT_SUB=$(grep -o "sub_values:.*$" ${RESPONSE_FILE} | awk '{print $2}')
+ # export ACT_MEASURE=$(grep -o "MGroup.*$" ${RESPONSE_FILE} | sed "s/>/\\n/g" | awk -F':' '{print $3}' | xargs | sed "s/ /,/g")
+  
+}
+
+get_min_max_value()
+{
+   export MG_ID=$(grep "Measure:" ${TMP_RES_FILE} | cut -d'>' -f2 | cut -d':' -f3)
+   export GRAPH_ID=$(grep "Measure:" ${TMP_RES_FILE} | cut -d'>' -f3 | cut -d':' -f3)
+   GDF_NAME=$(grep "$MG_ID" $NS_WDIR/sys/*.gdf | cut -d':' -f1 | awk -F'/' '{print $NF}')
+   RANGE=$(grep "$GDF_NAME" $DATACALL_LIB/GDFConfig.txt.seq | awk -F',' '{print $NF}' | cut -d'|' -f${GRAPH_ID})
+   export MIN_VALUE=$(echo $RANGE | cut -d':' -f1)
+   export MAX_VALUE=$(echo $RANGE | cut -d':' -f2)
+   MEASURE=`grep "Measure:" ${TMP_RES_FILE}`
+   #automation_log "MIN_VALUE=$MIN_VALUE, MAX_VALUE=$MAX_VALUE"
+}
+
+function validate_data_samples()
+{
+  get_min_max_value	
+  df_length=${#DT_FILTER[@]}
+  automation_log "df_length=$df_length"
+  for ((j=0 ; j<df_length ; j++))
+  do
+    data_sln=$(($(grep -n "^Data:" ${TMP_RES_FILE} | cut -d':' -f1)+ 4))
+    data_eln=$((data_sln + ACT_SC))
+   # get_min_max_value
+    automation_log "dt-filter -> ${DT_FILTER[j]}"
+    if [ "${DT_FILTER[j]}" == "avg" ];then
+	export DATA_AVG_ARR=($(awk -v sln=$data_sln -v eln=$data_eln 'NR==sln , NR==eln' ${TMP_RES_FILE} | awk -v idx=$((8 + j)) '{print $idx}' | cut -d'.' -f1 | xargs))
+#	automation_log "data_avg=${DATA_AVG_ARR[@]}"
+	for ((i=0 ; i<ACT_SC ; i++))
+        do
+           if [ "${DATA_AVG_ARR[i]}" != "nan" ];then
+              if [ ${DATA_AVG_ARR[i]} -lt $MIN_VALUE ] || [ ${DATA_AVG_ARR[i]} -gt $MAX_VALUE ];then
+                 ERR_MSG=$ERR_MSG"AVG_Value=${DATA_AVG_ARR[i]} expected between $MIN_VALUE and $MAX_VALUE\n"
+		# automation_log "DATA_AVG_ARR=${DATA_AVG_ARR[@]}"
+              fi
+           fi
+        done
+    elif [ "${DT_FILTER[j]}" == "min" ];then
+	export DATA_MIN_ARR=($(awk -v sln=$data_sln -v eln=$data_eln 'NR==sln , NR==eln' ${TMP_RES_FILE} | awk -v idx=$((8 + j)) '{print $idx}' | cut -d'.' -f1 | xargs))
+#	automation_log "DATA_MIN_ARR=${DATA_MIN_ARR[@]}"
+        for ((i=0 ; i<ACT_SC ; i++))       
+        do
+          if [ "${DATA_MIN_ARR[i]}" != "nan" ];then 
+             if [ ${DATA_MIN_ARR[i]} -lt $MIN_VALUE ] || [ ${DATA_MIN_ARR[i]} -gt $MAX_VALUE ];then
+                ERR_MSG=$ERR_MSG"MIN_Value=${DATA_MIN_ARR[i]} expected between $MIN_VALUE and $MAX_VALUE\n"
+#		automation_log "DATA_MIN_ARR=${DATA_MIN_ARR[@]}"
+             fi
+          fi
+        done 
+    elif [ "${DT_FILTER[j]}" == "max" ];then
+        export DATA_MAX_ARR=($(awk -v sln=$data_sln -v eln=$data_eln 'NR==sln , NR==eln' ${TMP_RES_FILE} | awk -v idx=$((8 + j)) '{print $idx}' | cut -d'.' -f1 | xargs))
+#        automation_log "DATA_MAX_ARR=${DATA_MAX_ARR[@]}"
+        for ((i=0 ; i<ACT_SC ; i++ ))
+        do 
+        if [ "${DATA_MAX_ARR[i]}" != "nan" ];then
+           if [ ${DATA_MAX_ARR[i]} -lt $MIN_VALUE ] || [ ${DATA_MAX_ARR[i]} -gt $MAX_VALUE ];then
+            ERR_MSG=$ERR_MSG"MAX_Value=${DATA_MAX_ARR[i]} expected between $MIN_VALUE and $MAX_VALUE\n"
+	   # automation_log "DATA_MAX_ARR=${DATA_MAX_ARR[@]}"
+           fi
+        fi
+        done
+#    elif [ "${DT_FILTER[j]}" == "count" ];then
+#	export DATA_COUNT_ARR=($(awk -v sln=$data_sln -v eln=$data_eln 'NR==sln , NR==eln' ${TMP_RES_FILE} | awk -v idx=$((8 + j)) '{print $idx}' | cut -d'.' -f1 | xargs))
+#        automation_log "DATA_COUNT_ARR=${DATA_COUNT_ARR[@]}"
+#        for ((i=0 ; i<ACT_SC ; i++ ))
+#        do
+#	if [ "${DATA_COUNT_ARR[i]}" != "nan" ];then
+#	  if [ $SF -gt $NF ];then
+#            if [ "${DATA_COUNT_ARR[i]}" -gt $((SF/NF)) ];then
+#             ERR_MSG=$ERR_MSG"EXP_COUNT=$((SF/NF)) ACT_COUNT=${DATA_COUNT_ARR[i]}\n"
+#            fi
+#          else
+#           if [ "${DATA_COUNT_ARR[i]}" -ne $((SF/NF)) ];then
+#             ERR_MSG=$ERR_MSG"EXP_COUNT=$((SF/NF)) ACT_COUNT=${DATA_COUNT_ARR[i]}\n"     
+#	   fi   
+#	  fi 
+#        fi
+#        done
+    fi
+  done
+}
+
+set_dcn_expected_values()
+{
+    export EXP_SUBJECT=$(echo $SUBJECT | sed "s/>/\\n/g" | awk -F':' '{print $2}' | xargs | sed "s/ />/g")
+    export EXP_MG_MT_IDS=$(echo $MEASURE | cut -d',' -f2-3)
+    export TP=$1
+    export SUB_MODE=$2
+    automation_log "TP=$TP , SUB_MODE=$SUB_MODE"
+    set_exp_sf_sc
+    if [ "$NF" == "$SF" ];then
+	   export EXP_DM=P1:0:0
+    fi
+    if [ "$SUB_MODE" == "Pattern" ];then
+       SUB=`echo $SUB_PATTERN | sed 's/*/*.*/g'`
+    elif [ "$SUB_MODE" == "ALL" ];then
+       SUB=`echo $SUB_PATTERN | sed 's/ALL/*.*/g'`
+    else
+       SUB=$SUBJECT
+    fi
+       grep -o "${SUB}.*${MEASURE}" ${METRIC_FILE} | cut -d',' -f1 > ${DATA_REP}/exp_sub_list.tmp 
+       export EXP_MC=`grep "${SUB}.*${MEASURE}" ${METRIC_FILE} | wc -l`
+       automation_log "EXP_MC=$EXP_MC"
+       >${DATA_REP}/exp_sub_list
+       while read -r line;
+       do
+         echo $line | sed "s/>/\\n/g" | awk -F':' '{print $2}' | xargs | sed "s/ />/g" >>${DATA_REP}/exp_sub_list
+       done <${DATA_REP}/exp_sub_list.tmp
+
+}
+
+validate_response() 
+{
+   #assert [ "$EXP_SF" == "$ACT_SF" ]
+   if [ "$EXP_SF" != "$ACT_SF" ];then
+      ERR_MSG=$ERR_MSG"Expected_SF=$EXP_SF, Actual_SF=$ACT_SF\n"
+      automation_log "ERR_MSG=$ERR_MSG"
+   fi
+  
+   #assert [ $EXP_SC -eq $ACT_SC ]
+   if [ $EXP_SC -ne $ACT_SC ];then
+      ERR_MSG=$ERR_MSG"Expected_SC=$EXP_SC, Actual_SC=$ACT_SC\n"
+   fi
+  
+  #automation_log "ACT_MC=$ACT_MC, EXP_MC=$EXP_MC"
+  #if [ $ACT_MC -ne $EXP_MC ];then
+   # automation_log "Actual_MC=$ACT_MC, Exp_MC=$EXP_MC"
+  #fi
+  
+  #assert [ "$ACT_DM" == "$EXP_DM" ]
+  #if [ "$ACT_DM" != "$EXP_DM" ];then
+    #automation_log "Actual_DM=$ACT_DM, Exp_DM=$EXP_DM"
+  #fi
+  
+  metric_sln=(`grep -n "Metric id" ${RESPONSE_FILE} |cut -d":" -f1|xargs`)
+
+  if [ ${#DT_FILTER[@]} -eq 0 ];then
+     export DT_FILTER=(avg min max count)
+     filter_flag=0
+     metric_eln=(`grep -n "Data summary" ${RESPONSE_FILE} |cut -d":" -f1|xargs`)
+  else
+     filter_flag=1
+  fi
+  
+   itr=0
+   while [ $itr -lt $ACT_MC ]
+   do
+     export TMP_RES_FILE=${DATA_REP}/resp.tmp
+     if [ $filter_flag -eq 0 ];then
+     	cat ${RESPONSE_FILE} | awk -v sln=${metric_sln[itr]} -v eln=${metric_eln[itr]} "NR==sln, NR==eln" > ${TMP_RES_FILE}
+     else
+	metric_eln=$((metric_sln[itr] + 8 + ACT_SC - 1))
+	cat ${RESPONSE_FILE} | awk -v sln=${metric_sln[itr]} -v eln=$metric_eln "NR==sln, NR==eln" > ${TMP_RES_FILE}
+     fi
+     export ACT_SUB=$(grep -o "sub_values:.*$" ${TMP_RES_FILE} | awk '{print $2}')
+     export ACT_MEASURE=$(grep -o "MGroup.*$" ${TMP_RES_FILE} | sed "s/>/\\n/g" | awk -F':' '{print $3}' | xargs | sed "s/ /,/g")
+     automation_log "ACT_SUB=$ACT_SUB"
+     #assert [ "$ACT_MEASURE" == "$EXP_MG_MT_IDS" ]
+     if [ "$ACT_MEASURE" != "$EXP_MG_MT_IDS" ];then
+        ERR_MSG=$ERR_MSG"Actual_MG_MT_IDS=$ACT_MEASURE Exp_MG_MT_IDS=$EXP_MG_MT_IDS\n"
+     fi
+
+     SUB_FLAG=`grep -c "$ACT_SUB" ${DATA_REP}/exp_sub_list`
+#     automation_log "SUB_FLAG=$SUB_FLAG"
+#       if [ $SUB_FLAG -lt 0 ];then
+#          ERR_MSG=$ERR_MSG"There are wrong subjects\n"
+#	  automation_log "TAGS=1"
+#       fi
+     validate_data_samples
+     itr=$((itr + 1))
+   done
+   if [ ${#ERR_MSG} -gt 0 ];then
+      echo "FAILED : $ERR_MSG"
+   else
+      echo "PASS"
+   fi
+
+}

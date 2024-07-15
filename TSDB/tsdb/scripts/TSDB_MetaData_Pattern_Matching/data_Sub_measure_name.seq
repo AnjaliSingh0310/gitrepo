@@ -1,0 +1,2 @@
+#subject,measure(MGType and MGGroup)
+Tier:Cavisson>Server:NDAppliance,MGType:System Metrics>MGroup:Memory Stats,10007,Total Memory (MB):1|Used Memory (MB):2|Free Memory (MB):3|Shared Memory (MB):4|Buffers Memory (MB):5|Cached Memory (MB):6

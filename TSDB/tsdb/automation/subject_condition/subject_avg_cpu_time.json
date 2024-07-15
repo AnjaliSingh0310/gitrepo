@@ -1,0 +1,278 @@
+{
+    "cctx": {
+        "cck": "cavisson.44443.1714629272035",
+        "pk": "cavisson:172.24.1.8:05-02-2024 05-54-31.371",
+        "u": "cavisson",
+        "prodType": "Netdiagnostics"
+    },
+    "opType": 31,
+    "clientId": "-1",
+    "appId": "-1",
+    "rules": [
+        {
+            "name": "ttt",
+            "id": -1,
+            "attributes": {
+                "enable": true,
+                "chkStatus": true,
+                "chkStatusTime": 900,
+                "level": 0,
+                "conditionType": 0,
+                "groups": "0",
+                "skipSamples": false,
+                "applyRuleAfter": 5,
+                "genAlertForNaN": false,
+                "severity": [
+                    {
+                        "id": 3,
+                        "condition": "C1",
+                        "conditionList": [
+                            {
+                                "type": 2,
+                                "mName": "A",
+                                "grpAffLevel": 0,
+                                "gAffLevfTh": -1,
+                                "gAffLevrTh": -1,
+                                "id": 0,
+                                "name": "C1",
+                                "anomalyType": {
+                                    "dataType": 4,
+                                    "operator": 0,
+                                    "windowType": 1,
+                                    "timeWindow": 5,
+                                    "twUnit": 0,
+                                    "pctType": 0,
+                                    "pct": 100,
+                                    "algoType": 0,
+                                    "deviation": 2
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "actions": [],
+                "tags": [],
+                "metric": [
+                    {
+                        "subject": [
+                            {
+                                "tags": [
+                                    {
+                                        "key": "Tier",
+                                        "mode": 1,
+                                        "value": "business-tier-1"
+                                    },
+                                    {
+                                        "key": "Server",
+                                        "mode": 1,
+                                        "value": "business-server-2"
+                                    },
+                                    {
+                                        "key": "Instance",
+                                        "mode": 1,
+                                        "value": "business-instance-1"
+                                    },
+                                    {
+                                        "key": "Business Transactions",
+                                        "mode": 1,
+                                        "value": "business-transaction-1"
+                                    }
+                                ]
+                            },
+                            {
+                                "tags": [
+                                    {
+                                        "key": "Tier",
+                                        "mode": 1,
+                                        "value": "business-tier-1"
+                                    },
+                                    {
+                                        "key": "Server",
+                                        "mode": 1,
+                                        "value": "business-server-2"
+                                    },
+                                    {
+                                        "key": "Instance",
+                                        "mode": 1,
+                                        "value": "business-instance-1"
+                                    },
+                                    {
+                                        "key": "Business Transactions",
+                                        "mode": 1,
+                                        "value": "business-transaction-2"
+                                    }
+                                ]
+                            },
+                            {
+                                "tags": [
+                                    {
+                                        "key": "Tier",
+                                        "mode": 1,
+                                        "value": "business-tier-1"
+                                    },
+                                    {
+                                        "key": "Server",
+                                        "mode": 1,
+                                        "value": "business-server-2"
+                                    },
+                                    {
+                                        "key": "Instance",
+                                        "mode": 1,
+                                        "value": "business-instance-2"
+                                    },
+                                    {
+                                        "key": "Business Transactions",
+                                        "mode": 1,
+                                        "value": "business-transaction-1"
+                                    }
+                                ]
+                            },
+                            {
+                                "tags": [
+                                    {
+                                        "key": "Tier",
+                                        "mode": 1,
+                                        "value": "business-tier-1"
+                                    },
+                                    {
+                                        "key": "Server",
+                                        "mode": 1,
+                                        "value": "business-server-2"
+                                    },
+                                    {
+                                        "key": "Instance",
+                                        "mode": 1,
+                                        "value": "business-instance-2"
+                                    },
+                                    {
+                                        "key": "Business Transactions",
+                                        "mode": 1,
+                                        "value": "business-transaction-2"
+                                    }
+                                ]
+                            },
+                            {
+                                "tags": [
+                                    {
+                                        "key": "Tier",
+                                        "mode": 1,
+                                        "value": "business-tier-2"
+                                    },
+                                    {
+                                        "key": "Server",
+                                        "mode": 1,
+                                        "value": "business-server-2"
+                                    },
+                                    {
+                                        "key": "Instance",
+                                        "mode": 1,
+                                        "value": "business-instance-1"
+                                    },
+                                    {
+                                        "key": "Business Transactions",
+                                        "mode": 1,
+                                        "value": "business-transaction-1"
+                                    }
+                                ]
+                            },
+                            {
+                                "tags": [
+                                    {
+                                        "key": "Tier",
+                                        "mode": 1,
+                                        "value": "business-tier-2"
+                                    },
+                                    {
+                                        "key": "Server",
+                                        "mode": 1,
+                                        "value": "business-server-2"
+                                    },
+                                    {
+                                        "key": "Instance",
+                                        "mode": 1,
+                                        "value": "business-instance-1"
+                                    },
+                                    {
+                                        "key": "Business Transactions",
+                                        "mode": 1,
+                                        "value": "business-transaction-2"
+                                    }
+                                ]
+                            },
+                            {
+                                "tags": [
+                                    {
+                                        "key": "Tier",
+                                        "mode": 1,
+                                        "value": "business-tier-2"
+                                    },
+                                    {
+                                        "key": "Server",
+                                        "mode": 1,
+                                        "value": "business-server-2"
+                                    },
+                                    {
+                                        "key": "Instance",
+                                        "mode": 1,
+                                        "value": "business-instance-2"
+                                    },
+                                    {
+                                        "key": "Business Transactions",
+                                        "mode": 1,
+                                        "value": "business-transaction-1"
+                                    }
+                                ]
+                            },
+                            {
+                                "tags": [
+                                    {
+                                        "key": "Tier",
+                                        "mode": 1,
+                                        "value": "business-tier-2"
+                                    },
+                                    {
+                                        "key": "Server",
+                                        "mode": 1,
+                                        "value": "business-server-2"
+                                    },
+                                    {
+                                        "key": "Instance",
+                                        "mode": 1,
+                                        "value": "business-instance-2"
+                                    },
+                                    {
+                                        "key": "Business Transactions",
+                                        "mode": 1,
+                                        "value": "business-transaction-2"
+                                    }
+                                ]
+                            },
+                            {
+                                "tags": [
+                                    {
+                                        "key": "Tier",
+                                        "mode": 1,
+                                        "value": "cavisson-tier"
+                                    },
+                                    {
+                                        "key": "Server",
+                                        "mode": 1,
+                                        "value": "cavisson-server"
+                                    },
+                                    {
+                                        "key": "Instance",
+                                        "mode": 1,
+                                        "value": "cavisson-instance"
+                                    },
+                                    {
+                                        "key": "Business Transactions",
+                                        "mode": 1,
+                                        "value": "cavisson-bt"
+                                    }
+                                ]
+                            }
+                        ],
+                        "measure": {
+                            "metric": "Average Cpu Time (ms)",
+                            "metricId": 10,
+                            "mg": "Business Transactions","Show more

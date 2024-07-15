@@ -1,0 +1,21 @@
+uproll_validation: true
+summary_validation: true
+#If analyse_all_mt is set to false, then it will analyse only first metric. 
+analyse_all_mt: false
+skip_metrics:
+  - mgid: 10113
+    mtid: 1
+  - mgid: 10114
+    mtid: 2
+
+#log_level can be INFO, DEBUG, WARN, ERROR 
+log_level: INFO
+
+# Reporting setting. 
+report:
+  mail: false
+  rcpt: 
+    - sample@cavisson.com
+    - gample@cavisson.com
+
+

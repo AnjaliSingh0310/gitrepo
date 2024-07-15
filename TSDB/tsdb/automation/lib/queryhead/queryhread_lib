@@ -1,0 +1,66 @@
+#!/bin/bash
+
+check_queryhead_status() {
+	queryhead_status_output=$(/etc/init.d/queryhead status)
+    if [[ "$queryhead_status_output" == *"pid"* ]]; then
+        automation_log "Queryhead service is running"
+        result=0 # Pass
+    else
+        automation_log "Queryhead service is not running"
+        result=1 # Fail
+    fi
+}
+
+check_nsi_check_query_head_running() {
+    nsi_check_query_head_pid=$(pgrep -f "nsi_check_query_head")
+    if [ -n "$nsi_check_query_head_pid" ]; then
+        echo "nsi_check_query_head process is running with PID - $nsi_check_query_head_pid"
+        result=0  
+    else
+        echo "nsi_check_query_head process is not running"
+        result=1  
+    fi
+}
+
+check_queryhead_recovery_status() {
+    queryhead_status_output=$(/etc/init.d/queryhead status)
+    query_head_pid=$(echo "$queryhead_status_output" | awk '{print $NF}')
+    if [[ "$query_head_pid" =~ ^[0-9]+$ ]]; then
+        echo "query_head service is running with PID - $query_head_pid"
+        result=0  
+    else
+        echo "query_head service is not running"
+        result=1  
+    fi
+}
+
+check_tsdb_main_running() {
+    target_tr_num=$(nsu_show_test_logs | awk -F '|' '/default\|default\|/{tr_num=$3} END{print tr_num}')
+
+    process_ids=$(ps -ef | grep "tsdb_main" | awk '{print $2}')
+
+    for process_id in $process_ids; do
+        tr_num=$(ps -o cmd= -p "$process_id" | awk '{print $NF}')
+
+        tsdb_admin --op tci --tr "$target_tr_num"   
+        if [ "$tr_num" == "$target_tr_num" ]; then
+            echo "tsdb_main process ID $process_id is running" 
+            result=0
+            return
+        fi
+    done
+
+    echo "No tsdb_main process found for TR $target_tr_num"
+    result=1
+}
+
+
+validate_response() {
+    if [ "$result" -eq 1 ]; then
+        echo "$ERR_MSG"
+    elif [ "$result" -eq 0 ]; then
+        echo "pass"
+    fi
+}
+
+

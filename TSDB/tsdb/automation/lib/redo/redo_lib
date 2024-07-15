@@ -1,0 +1,179 @@
+#!bin/bash
+
+function check_rar_running() {
+    # Get the process ID of tsdb_rar process
+    tsdb_rar_pid=$(pgrep -f "tsdb_rar -t $TESTIDX")
+
+    if [ -n "$tsdb_rar_pid" ]; then
+        # If tsdb_rar process is running, extract its details
+        process_details=$(ps -p "$tsdb_rar_pid" -o cmd=)
+
+        # Extract TR ID from process details
+        TR_IDX=$(echo "$process_details" | awk -F "-t " '{print $2}' | awk '{print $1}')
+
+        if [ "$TR_IDX" = "$TESTIDX" ]; then
+            ERR_MSG=$ERR_MSG"tsdb_rar process is running for valid TR ID: $TESTIDX\n"
+            result=0  # Set result to 0 (success)
+        else
+            ERR_MSG=$ERR_MSG"tsdb_rar process is running for invalid TR ID: $TR_IDX\n"
+            result=1  # Set result to 1 (failure)
+        fi
+    else
+        # If tsdb_rar process is not running, the test fails
+        result=1  # Set result to 1 (failure)
+	ERR_MSG=$ERR_MSG"tsdb rar is not running"
+    fi
+}
+
+
+function check_ddsw_running() {
+    # Get the process ID of tsdb_ddsw process
+    tsdb_ddsw_pid=$(pgrep -f "tsdb_ddsw -t $TESTIDX")
+
+    if [ -n "$tsdb_ddsw_pid" ]; then
+        # If tsdb_ddsw process is running, extract its details
+        process_details=$(ps -p "$tsdb_ddsw_pid" -o cmd=)
+
+        # Extract TR ID from process details
+        TR_IDX=$(echo "$process_details" | awk -F "-t " '{print $2}' | awk '{print $1}')
+
+        if [ "$TR_IDX" = "$TESTIDX" ]; then
+            ERR_MSG=$ERR_MSG"tsdb_ddsw process is running for valid TR ID: $TESTIDX\n"
+            result2=0  # Set result to 0 (success)
+        else
+            ERR_MSG=$ERR_MSG"tsdb_ddsw process is running for invalid TR ID: $TR_IDX\n"
+            result2=1  # Set result to 1 (failure)
+        fi
+    else
+        # If tsdb_ddsw process is not running, the test fails
+        result2=1  # Set result to 1 (failure)
+	ERR_MSG=$ERR_MSG"tsdb ddsw is not running"
+    fi
+}
+
+function check_ddsw_recovered() {
+    # Check if tsdb_ddsw process is initially running
+    check_ddsw_running
+    if [ "$result2" -eq 0 ]; then
+        # If tsdb_ddsw process is running, stop it to simulate it going down
+        killall tsdb_ddsw
+
+        # Wait for a brief period to allow the process to shut down
+        sleep 5
+
+        # Check if tsdb_ddsw process has stopped
+        if ! pgrep "tsdb_ddsw" >/dev/null; then
+            # If tsdb_ddsw process has stopped, wait for it to recover
+            sleep 10
+
+            # Check if tsdb_ddsw process has recovered
+            if pgrep "tsdb_ddsw" >/dev/null; then
+                # If tsdb_ddsw process has recovered, the test passes
+                automation_log "tsdb_ddsw process has recovered successfully"
+                result=0  # Set result to 0 (success)
+            else
+                # If tsdb_ddsw process has not recovered, the test fails
+                ERR_MSG=$ERR_MSG"tsdb_ddsw process failed to recover"
+                result=1  # Set result to 1 (failure)
+            fi
+        else
+            # If tsdb_ddsw process has not stopped after attempting to kill it, the test fails
+            ERR_MSG=$ERR_MSG"Failed to stop tsdb_ddsw process"
+            result=1  # Set result to 1 (failure)
+        fi
+    else
+        # If tsdb_ddsw process is not initially running, the test fails
+        ERR_MSG=$ERR_MSG"tsdb_ddsw process is not running"
+        result=1  # Set result to 1 (failure)
+    fi
+}
+
+function recovery_by_snapshot_or_ddsw() {
+    # Check for .recovery.control file in tsdb.
+    IS_SNAPSHOT=$(cat $TSDB_WDIR/.recovery.control | cut -d"|" -f1)
+
+    # if first field in .recovery.control file is -1 means recovery is done by ddsw.
+    if [[ "$IS_SNAPSHOT" != "-1" ]]; then
+	 check_rar_running
+	 check_ddsw_running
+	 if [ "$result" -eq 1 ] && [ "$result2" -eq 1 ]; then
+            result=0 # Set result to 0 (success)
+	    automation_log "tsdb_rar and tsdb_ddsw are not running as recovery is being done by snapshot."
+	 else
+	    result=1 # Set result to 1 (failure)
+            ERR_MSG=$ERR_MSG"tsdb_rar or tsdb_ddsw are running and recovery is being done by snapshot."
+	 fi
+    else
+	 check_rar_running
+	 check_ddsw_running
+	 if [ "$result" -eq 0 ] && [ "$result2" -eq 0 ]; then
+            result=0 # Set result to 0 (success)
+	    automation_log "tsdb_rar and tsdb_ddsw should be running as recovery is being done by ddsw."
+	 else
+            result=1 # Set result to 1 (failure)
+            ERR_MSG=$ERR_MSG"tsdb_rar or tsdb_ddsw are not running and recovery is being done by ddsw."
+	 fi
+    fi
+}
+
+function check_tsdb_heartbeat_update() {
+    local file="$1"
+    local field_index="$2"
+    local initial_value
+    local updated_value
+
+    # Get the initial value of tsdb_heartbeat
+    initial_value=$(awk -F'|' '{print $'"$field_index"'}' "$file")
+
+    # Wait for a few seconds to allow for potential updates
+    sleep 5
+
+    # Get the updated value of tsdb_heartbeat
+    updated_value=$(awk -F'|' '{print $'"$field_index"'}' "$file")
+
+    # Check if the tsdb_heartbeat field has updated
+    if [ "$initial_value" != "$updated_value" ]; then
+       result=0 # Set result to 0 (success)
+    else
+       result=1 # Set result to 1 (failure)
+       ERR_MSG=$ERR_MSG"tsdb heartbeat is not updating of "$file"."
+    fi
+}
+
+search_in_file() {
+
+  SEARCH_ARG="$1"
+  FILE_ARG="$2"
+
+#Search for the pattern in the file and store the matching line for non_tag metric
+  grep "$SEARCH_ARG" "$FILE_ARG" | grep -v "^#" | shuf -n 1
+}
+
+function validate_redo_response() {
+   TC_NO="${BATS_TEST_NUMBER}"
+   case $TC_NO in
+       "1" | "3" | "4" | "5" | "6" | "8")
+	   if [ "$result" -eq 1 ];then
+	      echo "$ERR_MSG"
+           else
+              echo "PASS"
+           fi
+	   ;;
+       "2")
+	   if [ "$result" -eq 0 ] && [ "$result2" -eq 0 ];then
+              echo "PASS"
+	   else
+              echo "$ERR_MSG"
+	   fi
+	   ;;
+       "7")
+	   err_msg=(`grep -n "ErrorMsg:" ${RESPONSE_FILE} | cut -d "," -f 3 | cut -d ":" -f 2`)
+           if [ "$err_msg" = "Recovery is in progress" ]; then
+	     echo "$err_msg"
+	   else
+             echo "PASS"
+	   fi
+	   ;;
+
+   esac
+}

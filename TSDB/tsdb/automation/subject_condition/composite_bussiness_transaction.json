@@ -1,0 +1,217 @@
+{
+    "cctx": {
+        "cck": "cavisson.44443.1714711871178",
+        "pk": "cavisson:172.24.1.8:05-03-2024 04-51-10.672",
+        "u": "cavisson",
+        "prodType": "Netdiagnostics"
+    },
+    "opType": 31,
+    "clientId": "-1",
+    "appId": "-1",
+    "rules": [
+        {
+            "name": "composite_case",
+            "id": -1,
+            "attributes": {
+                "enable": true,
+                "chkStatus": true,
+                "chkStatusTime": 900,
+                "level": 0,
+                "conditionType": "1",
+                "groups": "0",
+                "skipSamples": false,
+                "applyRuleAfter": 5,
+                "genAlertForNaN": false,
+                "severity": [
+                    {
+                        "id": 3,
+                        "condition": "C1 && C2",
+                        "conditionList": [
+                            {
+                                "type": 0,
+                                "thresholdType": {
+                                    "dataType": 0,
+                                    "operator": 0,
+                                    "windowType": 0,
+                                    "fThreshold": 6,
+                                    "sThreshold": -1,
+                                    "frThreshold": -1,
+                                    "srThreshold": -1,
+                                    "pctType": 0,
+                                    "pct": 100,
+                                    "timeWindow": 5,
+                                    "twUnit": 0
+                                },
+                                "id": -1,
+                                "name": "C1",
+                                "mName": "A",
+                                "grpAffLevel": 0,
+                                "gAffLevfTh": -1,
+                                "gAffLevrTh": -1
+                            },
+                            {
+                                "type": 0,
+                                "thresholdType": {
+                                    "dataType": 0,
+                                    "operator": 0,
+                                    "windowType": 0,
+                                    "fThreshold": 7,
+                                    "sThreshold": -1,
+                                    "frThreshold": -1,
+                                    "srThreshold": -1,
+                                    "pctType": 0,
+                                    "pct": 100,
+                                    "timeWindow": 5,
+                                    "twUnit": 0
+                                },
+                                "id": 0,
+                                "name": "C2",
+                                "mName": "B",
+                                "grpAffLevel": 0,
+                                "gAffLevfTh": -1,
+                                "gAffLevrTh": -1
+                            }
+                        ]
+                    }
+                ],
+                "actions": [],
+                "tags": [],
+                "metric": [
+                    {
+                        "subject": [
+                            {
+                                "tags": [
+                                    {
+                                        "key": "Tier",
+                                        "mode": 2,
+                                        "value": "ALL"
+                                    },
+                                    {
+                                        "key": "Server",
+                                        "mode": 2,
+                                        "value": "ALL"
+                                    },
+                                    {
+                                        "key": "Instance",
+                                        "mode": 2,
+                                        "value": "ALL"
+                                    },
+                                    {
+                                        "key": "Business Transactions",
+                                        "mode": 2,
+                                        "value": "ALL"
+                                    }
+                                ]
+                            }
+                        ],
+                        "measure": {
+                            "metric": "Average Queue Time (ms)",
+                            "metricId": 13,
+                            "mg": "Business Transactions",
+                            "mgId": 10245,
+                            "mgType": "Business Transactions",
+                            "mgTypeId": -1,
+                            "value": "Business Transactions"
+                        },
+                        "glbMetricId": null,
+                        "derivedFormula": null,
+                        "attribute": 3,
+                        "name": "A",
+                        "mode": 0
+                    },
+                    {
+                        "subject": [
+                            {
+                                "tags": [
+                                    {
+                                        "key": "Tier",
+                                        "mode": 2,
+                                        "value": "ALL"
+                                    },
+                                    {
+                                        "key": "Server",
+                                        "mode": 2,
+                                        "value": "ALL"
+                                    },
+                                    {
+                                        "key": "Instance",
+                                        "mode": 2,
+                                        "value": "ALL"
+                                    },
+                                    {
+                                        "key": "Business Transactions",
+                                        "mode": 2,
+                                        "value": "ALL"
+                                    }
+                                ]
+                            }
+                        ],
+                        "measure": {
+                            "metric": "Average Response Time (ms) p80",
+                            "metricId": 336,
+                            "mg": "Business Transactions",
+                            "mgId": 10245,
+                            "mgType": "Business Transactions",
+                            "mgTypeId": -1,
+                            "value": "Business Transactions"
+                        },
+                        "glbMetricId": null,
+                        "derivedFormula": null,
+                        "attribute": 0,
+                        "name": "B",
+                        "mode": 0
+                    },
+                    {
+                        "subject": [
+                            {
+                                "tags": [
+                                    {
+                                        "key": "Tier",
+                                        "mode": 2,
+                                        "value": "ALL"
+                                    }
+                                ]
+                            }
+                        ],
+                        "measure": {
+                            "metric": "Average Request Size",
+                            "metricId": 2,
+                            "mg": "Business Transactions By Tier",
+                            "mgId": 1000005,
+                            "mgType": "Business Transactions",
+                            "mgTypeId": -1,
+                            "value": "Business Transactions By Tier"
+                        },
+                        "glbMetricId": null,
+                        "derivedFormula": null,
+                        "attribute": 3,
+                        "name": "C",
+                        "mode": 0
+                    }
+                ],
+                "schedule": false,
+                "mailIds": [],
+                "extensions": [],
+                "message": null,
+                "description": null,
+                "recommendation": null,
+                "actionsEvents": {
+                    "minorToMajor": true,
+                    "minorToCritical": false,
+                    "majorToMinor": true,
+                    "majorToCritical": false,
+                    "criticalToMajor": false,
+                    "criticalToMinor": false,
+                    "forceClear": false,
+                    "continuousEvent": false,
+                    "endedMinor": false,
+                    "endedMajor": false,
+                    "endedCritical": false,
+                    "startedMinor": false,
+                    "startedMajor": false,
+                    "startedCritical": false
+                }
+            }
+        }
+    ]
+}

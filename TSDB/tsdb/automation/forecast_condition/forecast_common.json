@@ -1,0 +1,114 @@
+{
+    "cctx": {
+        "cck": "cavisson.33335.1714732202137",
+        "pk": "cavisson:172.24.1.8:05-03-2024 10-30-01.787",
+        "u": "cavisson",
+        "prodType": "Netdiagnostics"
+    },
+    "opType": 31,
+    "clientId": "-1",
+    "appId": "-1",
+    "rules": [
+        {
+            "name": "forecastcase",
+            "id": -1,
+            "attributes": {
+                "enable": true,
+                "chkStatus": true,
+                "chkStatusTime": 900,
+                "level": 0,
+                "conditionType": 0,
+                "groups": null,
+                "skipSamples": false,
+                "applyRuleAfter": 5,
+                "genAlertForNaN": false,
+                "severity": [
+                    {
+                        "id": 3,
+                        "condition": "C1",
+                        "conditionList": [
+                            {
+                                "type": 4,
+                                "mName": "A",
+                                "grpAffLevel": 0,
+                                "gAffLevfTh": -1,
+                                "gAffLevrTh": -1,
+                                "id": 0,
+                                "name": "C1",
+                                "forcastType": {
+                                    "dataType": $DATA_TYPE,
+                                    "operator": $OPERATOR,
+                                    "fThreshold": 2,
+                                    "sThreshold": -1,
+                                    "frThreshold": -1,
+                                    "srThreshold": -1,
+                                    "timeWindow": 5,
+                                    "twUnit": 0,
+                                    "windowType": $WINDOW_TYPE,
+                                    "trendWindow": 5,
+                                    "trendWindowUnit": 0,
+                                    "pctType": 0,
+                                    "pct": -1,
+                                    "forecastModel": 0,
+                                    "forecastType": 0
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "actions": [],
+                "tags": [],
+                "metric": [
+                    {
+                        "subject": [
+                            {
+                                "tags": [
+                                    {
+                                        "key": "Tier",
+                                        "mode": 2,
+                                        "value": "ALL"
+                                    }
+                                ]
+                            }
+                        ],
+                        "measure": {
+                            "metric": "AL 2xx/Sec",
+                            "metricId": 6,
+                            "mg": "Access Log Stats By Tier",
+                            "mgId": 1000000,
+                            "mgType": "Request stats using access Log such as Requests/Sec, Service Time, Receive Throughtput.",
+                            "mgTypeId": -1
+                        },
+                        "glbMetricId": null,
+                        "derivedFormula": null,
+                        "attribute": 2,
+                        "name": "A",
+                        "mode": 0
+                    }
+                ],
+                "schedule": false,
+                "mailIds": [],
+                "extensions": [],
+                "message": null,
+                "description": null,
+                "recommendation": null,
+                "actionsEvents": {
+                    "minorToMajor": true,
+                    "minorToCritical": false,
+                    "majorToMinor": true,
+                    "majorToCritical": false,
+                    "criticalToMajor": false,
+                    "criticalToMinor": false,
+                    "forceClear": false,
+                    "continuousEvent": false,
+                    "endedMinor": false,
+                    "endedMajor": false,
+                    "endedCritical": false,
+                    "startedMinor": false,
+                    "startedMajor": false,
+                    "startedCritical": false
+                }
+            }
+        }
+    ]
+}

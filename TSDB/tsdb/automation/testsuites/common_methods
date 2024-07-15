@@ -1,0 +1,203 @@
+#!/bin/bash
+
+get_metric() {
+
+   METRIC_LINE=`grep "Tier:Cav-Tier-1>Server:Cav-Tier1-Server-1>Instance:Instance-1>Business Transactions:BT-1" $METRIC_FILE | grep -v "tags"| shuf -n 1`
+   METRIC_ID=`echo $METRIC_LINE | cut -d',' -f1` 
+   NFIDX=`echo $METRIC_LINE | cut -d',' -f2`
+   case $NFIDX in
+	   "0") FREQ=1;;
+	   "1") FREQ=10;;
+	   "2") FREQ="1m";;
+	   "3") FREQ="10m";;
+	   "4") FREQ="1h";;
+	   "5") FREQ="4h";;
+	   "6") FREQ="1d";;
+   esac;
+   GDF_ID=`echo $METRIC_LINE | cut -d',' -f5`
+   SUBJECT=`echo $METRIC_LINE | cut -d"," -f3`
+   MEASURE=`echo $METRIC_LINE | cut -d"," -f4-6`
+   METRIC_GROUP=`echo $MEASURE | cut -d"," -f1`
+   METRIC_NAME_FLD=`echo $METRIC_GROUP | cut -d">" -f3`
+   METRIC_NAME=`echo $METRIC_NAME_FLD | cut -d":" -f2`
+   echo "export GDF_ID='$GDF_ID'" > ${MT_DETAIL_FILE}
+   echo "export METRIC_NAME='$METRIC_NAME'" > ${MT_DETAIL_FILE}
+   echo "export METRIC_LINE='$METRIC_LINE'" > ${MT_DETAIL_FILE}
+   echo "export METRIC_ID=$METRIC_ID" >> ${MT_DETAIL_FILE}
+   echo "export NFIDX=$NFIDX" >> ${MT_DETAIL_FILE}
+   echo "export SUBJECT='$SUBJECT'" >> ${MT_DETAIL_FILE}
+   echo "export MEASURE='$MEASURE'" >> ${MT_DETAIL_FILE}
+   #echo "export TAGS='$TAGS'" >> ${MT_DETAIL_FILE}
+}
+
+
+search_in_file() {
+
+  SEARCH_ARG="$1"
+  FILE_ARG="$2"
+
+#Search for the pattern in the file and store the matching line for non_tag metric
+  grep "$SEARCH_ARG" "$FILE_ARG" | grep -v "^#" | shuf -n 1
+}
+
+
+metric_data_line_for_cur_tier()  {
+  SEARCH_ARG="$1"
+  FILE_ARG="$2"
+#Search for "METRIC_DATA|cm_nd_bt.gdf|all:1.0:10.0:10:10:600:30s:1" line in ingestion configuration file
+  grep -B 1 "$SEARCH_ARG" "$FILE_ARG" | head -n 1
+}
+
+
+scedule_line_for_cur_tier() {
+  SEARCH_ARG="$1"
+  FILE_ARG="$2"
+#Search for  "SCHEDULE|IngstWrkrThrd8|12|10|00:01:10|20:00:00|00:05:00|0"  line in ingestion configuration file
+  grep -A 20 "$SEARCH_ARG" "$FILE_ARG" | grep -v "^#" | grep "SCHEDULE" | tail -n 1
+}
+
+extract_tier_name()  {
+
+  TIER_LINE=`echo $SUBJECT | cut -d'>' -f3`
+
+#if single tier is given, then parse this variable for your desired tier name
+  TIER_NAME=`echo $TIER_LINE | cut -d':' -f2`
+  #if [[ $TIER_NAME =~ [0-9]+$ ]]; then
+   # TIER_NAME=`echo $TIER_NAME | rev | cut -d'-' -f2- | rev`  #discard 1 from datacall-tier-1 which is present in metric.txt
+  #fi
+  
+  ING_SUB_LINE=$(search_in_file "$TIER_NAME" "$ING_CONF_FILE")
+  
+#if single tier is given, then parse this variable in below validate_ingestion_response()
+  ING_TIER_NAME=`echo $ING_SUB_LINE | cut -d'|' -f2`
+  #if [[ $ING_TIER_NAME =~ \[[0-9]+-[0-9]+\]$ ]]; then
+   #  ING_TIER_NAME=`echo $ING_TIER_NAME | sed 's/\[[0-9]\+-[0-9]\+]//'`  #discard range [1-2] from datacall-tier-[1-2] which is present in ingestion.conf
+  #fi
+}
+
+#--------------- search percentile metric gdf file in conf file and pick that val--------------------
+
+find_percentile_metric() {
+  IFS=$'\n'  # set the Internal Field Separator to newline
+  SEARCH_ARG="$1"
+  FILE_ARG="$2"
+
+  while read -r LINE; do
+    if [[ $LINE =~ "$SEARCH_ARG" ]]; then
+      while IFS= read -r GRAPH_LINE; do
+        TYPE=$(echo "$GRAPH_LINE" | cut -d'|' -f1)
+
+        if [[ $TYPE != "Graph" ]]; then
+          continue
+        fi
+        DATA_TYPE_GDF=$(echo "$GRAPH_LINE" | cut -d'|' -f5)
+	GRAPH_NAME=$(echo "$GRAPH_LINE" | cut -d'|' -f2)
+        GRAPH_IDX=$(echo "$GRAPH_LINE" | cut -d'|' -f10)
+        #GRAPH_IDX_VAL=$(echo "$GRAPH_IDX" | grep -o '^1')
+
+        if grep -q '^1' <<< "$GRAPH_IDX"; then
+          export PERC_IDX=1
+          export PERC_PRESET_VAL=$(echo "$GRAPH_IDX" | cut -d':' -f2)
+          automation_log "preset val is ${PERC_PRESET_VAL}"
+          break 2
+        fi
+      done < "$GDF_PATH/$SEARCH_ARG"
+    fi
+  done < "$FILE_ARG"
+
+  automation_log "preset val is ${PERC_PRESET_VAL}"
+}
+
+graph_state_validate() {
+  FILE_ARG="$1"
+  skip_mt_count=0
+  tot_metric=0
+  while IFS= read -r GRAPH_LINE; do
+    LINE=$(echo "$GRAPH_LINE" | cut -d'|' -f1)
+
+    if [[ $LINE != "Graph" ]]; then
+      continue
+    fi
+
+    let "tot_metric=tot_metric+1"
+    GRAPH_TYPE_GDF=$(echo "$GRAPH_LINE" | cut -d'|' -f9)
+    if [[ $GRAPH_TYPE_GDF == "I" || $GRAPH_TYPE_GDF == "E" ]]; then
+      let "skip_mt_count=skip_mt_count+1"
+    fi
+
+    if [[ $GRAPH_TYPE_GDF == "E" ]]; then
+       mt_name=$(echo "$GRAPH_LINE" | cut -d'|' -f2)
+    fi
+  done < "$FILE_ARG"
+
+  tot_metric=$((tot_metric - skip_mt_count))
+}
+
+data_type_convert_str2num() {
+ data_type=`echo "$1" | tr '[:upper:]' '[:lower:]'`
+ automation_log "datatype= ${data_type}"
+ case $data_type in
+	 "sample" )  DATA_TYPE_NUM=0;;
+	 "rate" )  DATA_TYPE_NUM=1;;
+	 "cumulative" )  DATA_TYPE_NUM=2;;
+	 "times" ) DATA_TYPE_NUM=3;;
+	 "times_std" ) DATA_TYPE_NUM=4;;
+	 "sum" ) DATA_TYPE_NUM=5;;
+	 "rate_4b_1000" ) DATA_TYPE_NUM=6;;
+	 "times_4b_1000" ) DATA_TYPE_NUM=7;;
+	 "sample_2b_100" ) DATA_TYPE_NUM=8;;
+	 "sample_4b_1000" ) DATA_TYPE_NUM=9;;
+	 "sample_2b_100_count_4b" ) DATA_TYPE_NUM=10;;
+	 "sum_4b" ) DATA_TYPE_NUM=11;;
+	 "times_std_4b_1000" ) DATA_TYPE_NUM=12;;
+         "sample_4b" ) DATA_TYPE_NUM=13;;
+	 "sample_1b" ) DATA_TYPE_NUM=14;;
+	 "times_4b_10" ) DATA_TYPE_NUM=15;;
+	 "t_digest" ) DATA_TYPE_NUM=16;;
+	 "times_count_4b" ) DATA_TYPE_NUM=17;;
+	 "times_4b_1000_fixed" ) DATA_TYPE_NUM=18;;
+	 "times_4b_1000_count_8b" ) DATA_TYPE_NUM=19;;
+	 "times_2b_100_count_4b" ) DATA_TYPE_NUM=20;;
+	 "times_2b_100_count_8b" ) DATA_TYPE_NUM=21;;
+	 "times_4b_count_4b" ) DATA_TYPE_NUM=22;;
+	 "times_1b_count_4b" ) DATA_TYPE_NUM=23;;
+	 "times_4b_10_count_8b" ) DATA_TYPE_NUM=24;;
+	 "cdigest_4b" ) DATA_TYPE_NUM=25;;
+	 "cdigest_4b" ) DATA_TYPE_NUM=26;;
+	 "cdigest_presets" ) DATA_TYPE_NUM=27;;
+ esac
+}
+
+data_type_convert_num2str() {
+    case $1 in
+        0) DATA_TYPE_STR="sample" ;;
+        1) DATA_TYPE_STR="rate" ;;
+        2) DATA_TYPE_STR="cumulative" ;;
+        3) DATA_TYPE_STR="times" ;;
+        4) DATA_TYPE_STR="times_std" ;;
+        5) DATA_TYPE_STR="sum" ;;
+        6) DATA_TYPE_STR="rate_4b_1000" ;;
+        7) DATA_TYPE_STR="times_4b_1000" ;;
+        8) DATA_TYPE_STR="sample_2b_100" ;;
+        9) DATA_TYPE_STR="sample_4b_1000" ;;
+        10) DATA_TYPE_STR="sample_2b_100_count_4b" ;;
+        11) DATA_TYPE_STR="sum_4b" ;;
+        12) DATA_TYPE_STR="times_std_4b_1000" ;;
+        13) DATA_TYPE_STR="sample_4b" ;;
+        14) DATA_TYPE_STR="sample_1b" ;;
+        15) DATA_TYPE_STR="times_4b_10" ;;
+        16) DATA_TYPE_STR="t_digest" ;;
+        17) DATA_TYPE_STR="times_count_4b" ;;
+        18) DATA_TYPE_STR="times_4b_1000_fixed" ;;
+        19) DATA_TYPE_STR="times_4b_1000_count_8b" ;;
+        20) DATA_TYPE_STR="times_2b_100_count_4b" ;;
+        21) DATA_TYPE_STR="times_2b_100_count_8b" ;;
+        22) DATA_TYPE_STR="times_4b_count_4b" ;;
+        23) DATA_TYPE_STR="times_1b_count_4b" ;;
+        24) DATA_TYPE_STR="times_4b_10_count_8b" ;;
+        25) DATA_TYPE_STR="cdigest_4b" ;;
+        26) DATA_TYPE_STR="cdigest_4b" ;;
+        27) DATA_TYPE_STR="cdigest_presets" ;;
+    esac
+}
+

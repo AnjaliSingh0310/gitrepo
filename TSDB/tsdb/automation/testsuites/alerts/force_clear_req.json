@@ -1,0 +1,240 @@
+{
+    "cctx": {
+        "cck": "cavisson.242440.1715663402971",
+        "pk": "cavisson:172.24.0.206:05-14-2024 00-09-32.450",
+        "u": "cavisson",
+        "prodType": "Netdiagnostics"
+    },
+    "events": [
+        {
+            "id": 273050,
+            "activeId": 4,
+            "sequenceId": -1,
+            "tr": 242440,
+            "ruleId": 30899,
+            "type": 1,
+            "ruleName": "automation_test_3",
+            "msg": "",
+            "description": "",
+            "recomendation": "",
+            "ack": false,
+            "severity": 3,
+            "prevSeverity": 3,
+            "currentValue": "Idle CPU (%):86.666 ",
+            "state": 1,
+            "reason": 2,
+            "sourceProtocol": "",
+            "sourceIP": "",
+            "sourcePort": "",
+            "st": 1715601670000,
+            "et": 1715661310000,
+            "ust": 1715601670000,
+            "rTags": [],
+            "tagInfo": "Cavisson>cavisson-705>CPU3",
+            "commonSubject": {
+                "tags": [
+                    {
+                        "key": "Tier",
+                        "value": "Cavisson",
+                        "mode": 1
+                    },
+                    {
+                        "key": "Server",
+                        "value": "cavisson-705",
+                        "mode": 1
+                    },
+                    {
+                        "key": "Processor",
+                        "value": "CPU3",
+                        "mode": 1
+                    }
+                ],
+                "value": "86.666"
+            },
+            "metrics": [
+                {
+                    "name": "A",
+                    "measure": {
+                        "metric": "Idle CPU (%)",
+                        "metricId": 9,
+                        "mg": "MPStat Linux",
+                        "mgId": 10010,
+                        "mgType": "CPU core stats for linux.",
+                        "mgTypeId": -1
+                    },
+                    "subject": [
+                        {
+                            "tags": [
+                                {
+                                    "key": "Tier",
+                                    "value": "Cavisson",
+                                    "mode": 1
+                                },
+                                {
+                                    "key": "Server",
+                                    "value": "cavisson-705",
+                                    "mode": 1
+                                },
+                                {
+                                    "key": "Processor",
+                                    "value": "CPU3",
+                                    "mode": 1
+                                }
+                            ],
+                            "value": "86.666"
+                        }
+                    ],
+                    "value": 86.666
+                }
+            ],
+            "conditions": {
+                "condition": "C1",
+                "conditionList": [
+                    {
+                        "id": 0,
+                        "name": "C1",
+                        "mName": "A",
+                        "type": 0,
+                        "grpAffLevel": 0,
+                        "gAffLevfTh": -1,
+                        "gAffLevrTh": -1,
+                        "thresholdType": {
+                            "dataType": 0,
+                            "operator": 0,
+                            "windowType": 0,
+                            "fThreshold": 1,
+                            "sThreshold": -1,
+                            "frThreshold": -1,
+                            "srThreshold": -1,
+                            "pctType": 0,
+                            "pct": 100,
+                            "timeWindow": 5,
+                            "twUnit": 0
+                        }
+                    }
+                ]
+            },
+            "ruleInfo": "",
+            "level": 0,
+            "conditionType": 0,
+            "tagging": "",
+            "eventType": "System Event"
+        },
+        {
+            "id": 273044,
+            "activeId": 1,
+            "sequenceId": -1,
+            "tr": 242440,
+            "ruleId": 30900,
+            "type": 1,
+            "ruleName": "automation_test_4",
+            "msg": "",
+            "description": "",
+            "recomendation": "",
+            "ack": false,
+            "severity": 3,
+            "prevSeverity": 3,
+            "currentValue": "Idle CPU (%):86.913 ",
+            "state": 1,
+            "reason": 2,
+            "sourceProtocol": "",
+            "sourceIP": "",
+            "sourcePort": "",
+            "st": 1715601670000,
+            "et": 1715661310000,
+            "ust": 1715601670000,
+            "rTags": [],
+            "tagInfo": "Cavisson>cavisson-705>CPU0",
+            "commonSubject": {
+                "tags": [
+                    {
+                        "key": "Tier",
+                        "value": "Cavisson",
+                        "mode": 1
+                    },
+                    {
+                        "key": "Server",
+                        "value": "cavisson-705",
+                        "mode": 1
+                    },
+                    {
+                        "key": "Processor",
+                        "value": "CPU0",
+                        "mode": 1
+                    }
+                ],
+                "value": "86.913"
+            },
+            "metrics": [
+                {
+                    "name": "A",
+                    "measure": {
+                        "metric": "Idle CPU (%)",
+                        "metricId": 9,
+                        "mg": "MPStat Linux",
+                        "mgId": 10010,
+                        "mgType": "CPU core stats for linux.",
+                        "mgTypeId": -1
+                    },
+                    "subject": [
+                        {
+                            "tags": [
+                                {
+                                    "key": "Tier",
+                                    "value": "Cavisson",
+                                    "mode": 1
+                                },
+                                {
+                                    "key": "Server",
+                                    "value": "cavisson-705",
+                                    "mode": 1
+                                },
+                                {
+                                    "key": "Processor",
+                                    "value": "CPU0",
+                                    "mode": 1
+                                }
+                            ],
+                            "value": "86.913"
+                        }
+                    ],
+                    "value": 86.913
+                }
+            ],
+            "conditions": {
+                "condition": "C1",
+                "conditionList": [
+                    {
+                        "id": 0,
+                        "name": "C1",
+                        "mName": "A",
+                        "type": 0,
+                        "grpAffLevel": 0,
+                        "gAffLevfTh": -1,
+                        "gAffLevrTh": -1,
+                        "thresholdType": {
+                            "dataType": 0,
+                            "operator": 0,
+                            "windowType": 0,
+                            "fThreshold": 1,
+                            "sThreshold": -1,
+                            "frThreshold": -1,
+                            "srThreshold": -1,
+                            "pctType": 0,
+                            "pct": 100,
+                            "timeWindow": 5,
+                            "twUnit": 0
+                        }
+                    }
+                ]
+            },
+            "ruleInfo": "",
+            "level": 0,
+            "conditionType": 0,
+            "tagging": "",
+            "eventType": "System Event"
+        }
+    ],
+    "opType": 51,
+    "tr": "242440"
+}

@@ -1,0 +1,43 @@
+#DataType|Start Index|Element count
+Sample No Formula|1|1
+Sample PS|2|1
+Sample PM|3|1
+Sample_1B No Formula|4|1
+Sample_1B PS|5|1
+Sample_1B PM|6|1
+Sample_2B_100 No Formula|7|1
+Sample_2B_100 PS|8|1
+Sample_2B_100 PM|9|1
+Sample_4B No Formula|10|1
+Sample_4B PS|11|1
+Sample_4B PM|12|1
+Sample_4B_1000 No Formula|13|1
+Sample_4B_1000 PS|14|1
+Sample_4B_1000 PM|15|1
+Sample_2B_100_Count_4B No Formula|16|2
+Sample_2B_100_Count_4B PS|18|2
+Sample_2B_100_Count_4B PM|20|2
+Rate No Formula|22|1
+Rate PS|23|1
+Rate PM|24|1
+Rate_4B_1000 No Formula|25|1
+Rate_4B_1000 PS|26|1
+Rate_4B_1000 PM|27|1
+Cummulative No Formula|28|1
+Cummulative PS|29|1
+Cummulative PM|30|1
+Times No Formula|31|4
+Times PS|35|4
+Times PM|39|4
+Times_4B_10 No Formula|43|4
+Times_4B_10 PS|47|4
+Times_4B_10 PM|51|4
+Times_4B_1000 No Formula|55|4
+Times_4B_1000 PS|59|4
+Times_4B_1000 PM|63|4
+TimesStd No Formula|67|5
+TimesStd PS|72|5
+TimesStd PM|77|5
+TimesStd_4B_1000 No Formula|82|5
+TimesStd_4B_1000 PS|87|5
+TimesStd_4B_1000 PM|92|5

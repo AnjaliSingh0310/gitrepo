@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites time="6.463">
+<testsuite name="percentile_metric.bats" tests="19" failures="12" errors="0" skipped="0" time="6.463" timestamp="2024-06-11T12:36:47" hostname="cavisson">
+    <testcase classname="percentile_metric.bats" name="[PER001]Hierarchy=Tier,Server, OP=Data Query, Metric=graph_name_001" time="0.301" />
+    <testcase classname="percentile_metric.bats" name="[PER002]Hierarchy=Tier,Server, OP=Data Query, Metric=L1d Cache Memory(KB)" time="0.193" />
+    <testcase classname="percentile_metric.bats" name="[PER003]Hierarchy=Tier,Server, OP=Data Query, Metric=L1i Cache Memory(KB)" time="0.196" />
+    <testcase classname="percentile_metric.bats" name="[PER004]Hierarchy=Tier,Server, OP=Data Query, Metric=L2 Cache Memory(KB)" time="0.205" />
+    <testcase classname="percentile_metric.bats" name="[PER005]Hierarchy=Tier,Server, OP=Data Query, Metric=L3 Cache Memory(KB)" time="0.194" />
+    <testcase classname="percentile_metric.bats" name="[PER006]Hierarchy=Tier,Server, OP=Data Query, Metric=graph_name_001" time="0.645" />
+    <testcase classname="percentile_metric.bats" name="[PER007]Hierarchy=Tier,Server, OP=Data Query, Metric=graph_name_001 p22" time="0.350">
+        <failure type="failure">tags: filter:exact level:1 op:dcn
+(from function `assert_output&#39; in file testsuites/../thirdparty/bats-assert/src/assert_output.bash, line 194,
+ in test file testsuites/percentile_metric.bats, line 79)
+  `assert_output &quot;PASS&quot;&#39; failed
+Going to read port from the the file &#39;/home/cavisson/work/QueryHead/.port&#39;
+Port 10967 found from the file &#39;/home/cavisson/work/QueryHead/.port&#39;
+
+start_time: 1717568470 2024-06-05 06:21:10 GMT, end_time: 1717568530 2024-06-05 06:22:10 GMT,Preset: 0
+
+/home/cavisson/work/TSDB/tsdb/automation/lib/percentile/percentile_lib: line 68: [: 150: unary operator expected
+
+-- output differs --
+expected : PASS
+actual   : Hierarchy is not same in both hier request and response\nGraph name is not same in both request and response\n
+--</failure>
+    </testcase>
+    <testcase classname="percentile_metric.bats" name="[PER008]Hierarchy=Tier,Server, OP=Data Query, Metric=graph_name_001 p36" time="0.436">
+        <failure type="failure">tags: filter:exact level:1 op:dcn
+(from function `assert_output&#39; in file testsuites/../thirdparty/bats-assert/src/assert_output.bash, line 194,
+ in test file testsuites/percentile_metric.bats, line 90)
+  `assert_output &quot;PASS&quot;&#39; failed
+Going to read port from the the file &#39;/home/cavisson/work/QueryHead/.port&#39;
+Port 10967 found from the file &#39;/home/cavisson/work/QueryHead/.port&#39;
+
+start_time: 1717568470 2024-06-05 06:21:10 GMT, end_time: 1717568530 2024-06-05 06:22:10 GMT,Preset: 0
+
+/home/cavisson/work/TSDB/tsdb/automation/lib/percentile/percentile_lib: line 68: [: 164: unary operator expected
+
+-- output differs --
+expected : PASS
+actual   : Hierarchy is not same in both hier request and response\nGraph name is not same in both request and response\n
+--</failure>
+    </testcase>
+    <testcase classname="percentile_metric.bats" name="[PER009]Hierarchy=Tier,Server, OP=Data Query, Metric=graph_name_001 p45" time="0.351">
+        <failure type="failure">tags: filter:exact level:1 op:dcn
+(from function `assert_output&#39; in file testsuites/../thirdparty/bats-assert/src/assert_output.bash, line 194,
+ in test file testsuites/percentile_metric.bats, line 101)
+  `assert_output &quot;PASS&quot;&#39; failed
+Going to read port from the the file &#39;/home/cavisson/work/QueryHead/.port&#39;
+Port 10967 found from the file &#39;/home/cavisson/work/QueryHead/.port&#39;
+
+start_time: 1717568470 2024-06-05 06:21:10 GMT, end_time: 1717568530 2024-06-05 06:22:10 GMT,Preset: 0
+
+/home/cavisson/work/TSDB/tsdb/automation/lib/percentile/percentile_lib: line 68: [: 173: unary operator expected
+
+-- output differs --
+expected : PASS
+actual   : Hierarchy is not same in both hier request and response\nGraph name is not same in both request and response\n
+--</failure>
+    </testcase>
+    <testcase classname="percentile_metric.bats" name="[PER010]Hierarchy=Tier,Server, OP=Data Query, Metric=graph_name_001 p52" time="0.349">
+        <failure type="failure">tags: filter:exact level:1 op:dcn
+(from function `assert_output&#39; in file testsuites/../thirdparty/bats-assert/src/assert_output.bash, line 194,
+ in test file testsuites/percentile_metric.bats, line 112)
+  `assert_output &quot;PASS&quot;&#39; failed
+Going to read port from the the file &#39;/home/cavisson/work/QueryHead/.port&#39;
+Port 10967 found from the file &#39;/home/cavisson/work/QueryHead/.port&#39;
+
+start_time: 1717568470 2024-06-05 06:21:10 GMT, end_time: 1717568530 2024-06-05 06:22:10 GMT,Preset: 0
+
+/home/cavisson/work/TSDB/tsdb/automation/lib/percentile/percentile_lib: line 68: [: 180: unary operator expected
+
+-- output differs --
+expected : PASS
+actual   : Hierarchy is not same in both hier request and response\nGraph name is not same in both request and response\n
+--</failure>
+    </testcase>
+    <testcase classname="percentile_metric.bats" name="[PER011]Hierarchy=Tier,Server, OP=Data Query, Metric=graph_name_001 p56" time="0.349">
+        <failure type="failure">tags: filter:exact level:1 op:dcn
+(from function `assert_output&#39; in file testsuites/../thirdparty/bats-assert/src/assert_output.bash, line 194,
+ in test file testsuites/percentile_metric.bats, line 123)
+  `assert_output &quot;PASS&quot;&#39; failed
+Going to read port from the the file &#39;/home/cavisson/work/QueryHead/.port&#39;
+Port 10967 found from the file &#39;/home/cavisson/work/QueryHead/.port&#39;
+
+start_time: 1717568470 2024-06-05 06:21:10 GMT, end_time: 1717568530 2024-06-05 06:22:10 GMT,Preset: 0
+
+/home/cavisson/work/TSDB/tsdb/automation/lib/percentile/percentile_lib: line 68: [: 184: unary operator expected
+
+-- output differs --
+expected : PASS
+actual   : Hierarchy is not same in both hier request and response\nGraph name is not same in both request and response\n
+--</failure>
+    </testcase>
+    <testcase classname="percentile_metric.bats" name="[PER012]Hierarchy=Tier,Server, OP=Data Query, Metric=graph_name_001 p84" time="0.350">
+        <failure type="failure">tags: filter:exact level:1 op:dcn
+(from function `assert_output&#39; in file testsuites/../thirdparty/bats-assert/src/assert_output.bash, line 194,
+ in test file testsuites/percentile_metric.bats, line 135)
+  `assert_output &quot;PASS&quot;&#39; failed
+Going to read port from the the file &#39;/home/cavisson/work/QueryHead/.port&#39;
+Port 10967 found from the file &#39;/home/cavisson/work/QueryHead/.port&#39;
+
+start_time: 1717568470 2024-06-05 06:21:10 GMT, end_time: 1717568530 2024-06-05 06:22:10 GMT,Preset: 0
+
+/home/cavisson/work/TSDB/tsdb/automation/lib/percentile/percentile_lib: line 68: [: 212: unary operator expected
+
+-- output differs --
+expected : PASS
+actual   : Hierarchy is not same in both hier request and response\nGraph name is not same in both request and response\n
+--</failure>
+    </testcase>
+    <testcase classname="percentile_metric.bats" name="[PER013]Hierarchy=Tier,Server, OP=Data Query, Metric=L3 Cache Memory(KB)" time="0.264" />
+    <testcase classname="percentile_metric.bats" name="[PER014]Hierarchy=Tier,Server, OP=Data Query, Metric=graph_name_001 p22, Live uproll" time="0.371">
+        <failure type="failure">tags: Data_mode:Unroll filter:exact level:1 op:dcn
+(from function `assert_output&#39; in file testsuites/../thirdparty/bats-assert/src/assert_output.bash, line 194,
+ in test file testsuites/percentile_metric.bats, line 160)
+  `assert_output &quot;PASS&quot;&#39; failed
+Going to read port from the the file &#39;/home/cavisson/work/QueryHead/.port&#39;
+Port 10967 found from the file &#39;/home/cavisson/work/QueryHead/.port&#39;
+
+start_time: 1718109390 2024-06-11 12:36:30 GMT, end_time: 1718109400 2024-06-11 12:36:40 GMT,Preset: 0
+
+/home/cavisson/work/TSDB/tsdb/automation/lib/percentile/percentile_lib: line 68: [: 150: unary operator expected
+
+-- output differs --
+expected : PASS
+actual   : Hierarchy is not same in both hier request and response\nGraph name is not same in both request and response\n
+--</failure>
+    </testcase>
+    <testcase classname="percentile_metric.bats" name="[PER015]Hierarchy=Tier,Server, OP=Data Query, Metric=graph_name_001 p36, Live uproll" time="0.369">
+        <failure type="failure">tags: Data_mode:Unroll filter:exact level:1 op:dcn
+(from function `assert_output&#39; in file testsuites/../thirdparty/bats-assert/src/assert_output.bash, line 194,
+ in test file testsuites/percentile_metric.bats, line 174)
+  `assert_output &quot;PASS&quot;&#39; failed
+Going to read port from the the file &#39;/home/cavisson/work/QueryHead/.port&#39;
+Port 10967 found from the file &#39;/home/cavisson/work/QueryHead/.port&#39;
+
+start_time: 1718109390 2024-06-11 12:36:30 GMT, end_time: 1718109400 2024-06-11 12:36:40 GMT,Preset: 0
+
+/home/cavisson/work/TSDB/tsdb/automation/lib/percentile/percentile_lib: line 68: [: 164: unary operator expected
+
+-- output differs --
+expected : PASS
+actual   : Hierarchy is not same in both hier request and response\nGraph name is not same in both request and response\n
+--</failure>
+    </testcase>
+    <testcase classname="percentile_metric.bats" name="[PER016]Hierarchy=Tier,Server, OP=Data Query, Metric=graph_name_001 p45, Live uproll" time="0.372">
+        <failure type="failure">tags: Data_mode:Unroll filter:exact level:1 op:dcn
+(from function `assert_output&#39; in file testsuites/../thirdparty/bats-assert/src/assert_output.bash, line 194,
+ in test file testsuites/percentile_metric.bats, line 188)
+  `assert_output &quot;PASS&quot;&#39; failed
+Going to read port from the the file &#39;/home/cavisson/work/QueryHead/.port&#39;
+Port 10967 found from the file &#39;/home/cavisson/work/QueryHead/.port&#39;
+
+start_time: 1718109390 2024-06-11 12:36:30 GMT, end_time: 1718109400 2024-06-11 12:36:40 GMT,Preset: 0
+
+/home/cavisson/work/TSDB/tsdb/automation/lib/percentile/percentile_lib: line 68: [: 173: unary operator expected
+
+-- output differs --
+expected : PASS
+actual   : Hierarchy is not same in both hier request and response\nGraph name is not same in both request and response\n
+--</failure>
+    </testcase>
+    <testcase classname="percentile_metric.bats" name="[PER017]Hierarchy=Tier,Server, OP=Data Query, Metric=graph_name_001 p52, Live uproll" time="0.374">
+        <failure type="failure">tags: Data_mode:Unroll filter:exact level:1 op:dcn
+(from function `assert_output&#39; in file testsuites/../thirdparty/bats-assert/src/assert_output.bash, line 194,
+ in test file testsuites/percentile_metric.bats, line 202)
+  `assert_output &quot;PASS&quot;&#39; failed
+Going to read port from the the file &#39;/home/cavisson/work/QueryHead/.port&#39;
+Port 10967 found from the file &#39;/home/cavisson/work/QueryHead/.port&#39;
+
+start_time: 1718109390 2024-06-11 12:36:30 GMT, end_time: 1718109400 2024-06-11 12:36:40 GMT,Preset: 0
+
+/home/cavisson/work/TSDB/tsdb/automation/lib/percentile/percentile_lib: line 68: [: 180: unary operator expected
+
+-- output differs --
+expected : PASS
+actual   : Hierarchy is not same in both hier request and response\nGraph name is not same in both request and response\n
+--</failure>
+    </testcase>
+    <testcase classname="percentile_metric.bats" name="[PER018]Hierarchy=Tier,Server, OP=Data Query, Metric=graph_name_001 p56, Live uproll" time="0.374">
+        <failure type="failure">tags: Data_mode:Unroll filter:exact level:1 op:dcn
+(from function `assert_output&#39; in file testsuites/../thirdparty/bats-assert/src/assert_output.bash, line 194,
+ in test file testsuites/percentile_metric.bats, line 216)
+  `assert_output &quot;PASS&quot;&#39; failed
+Going to read port from the the file &#39;/home/cavisson/work/QueryHead/.port&#39;
+Port 10967 found from the file &#39;/home/cavisson/work/QueryHead/.port&#39;
+
+start_time: 1718109390 2024-06-11 12:36:30 GMT, end_time: 1718109400 2024-06-11 12:36:40 GMT,Preset: 0
+
+/home/cavisson/work/TSDB/tsdb/automation/lib/percentile/percentile_lib: line 68: [: 184: unary operator expected
+
+-- output differs --
+expected : PASS
+actual   : Hierarchy is not same in both hier request and response\nGraph name is not same in both request and response\n
+--</failure>
+    </testcase>
+    <testcase classname="percentile_metric.bats" name="[PER019]Hierarchy=Tier,Server, OP=Data Query, Metric=graph_name_001 p84, Live uproll" time="0.420">
+        <failure type="failure">tags: Data_mode:Unroll filter:exact level:1 op:dcn
+(from function `assert_output&#39; in file testsuites/../thirdparty/bats-assert/src/assert_output.bash, line 194,
+ in test file testsuites/percentile_metric.bats, line 230)
+  `assert_output &quot;PASS&quot;&#39; failed
+Going to read port from the the file &#39;/home/cavisson/work/QueryHead/.port&#39;
+Port 10967 found from the file &#39;/home/cavisson/work/QueryHead/.port&#39;
+
+start_time: 1718109390 2024-06-11 12:36:30 GMT, end_time: 1718109400 2024-06-11 12:36:40 GMT,Preset: 0
+
+/home/cavisson/work/TSDB/tsdb/automation/lib/percentile/percentile_lib: line 68: [: 212: unary operator expected
+
+-- output differs --
+expected : PASS
+actual   : Hierarchy is not same in both hier request and response\nGraph name is not same in both request and response\n
+--</failure>
+    </testcase>
+
+</testsuite>
+</testsuites>

@@ -1,0 +1,118 @@
+{
+    "cctx": {
+        "cck": "cavisson.242437.1715231586399",
+        "pk": "cavisson:127.0.0.1:05-09-2024 00-13-05.298",
+        "u": "cavisson",
+        "prodType": "Netdiagnostics"
+    },
+    "opType": 31,
+    "clientId": "-1",
+    "appId": "-1",
+    "rules": [
+        {
+            "name": "ch",
+            "id": -1,
+            "attributes": {
+                "enable": true,
+                "chkStatus": true,
+                "chkStatusTime": 900,
+                "level": 0,
+                "conditionType": 0,
+                "groups": "0",
+                "skipSamples": false,
+                "applyRuleAfter": 5,
+                "genAlertForNaN": false,
+                "severity": [
+                    {
+                        "id": 3,
+                        "condition": "C1",
+                        "conditionList": [
+                            {
+                                "type": 1,
+                                "mName": "A",
+                                "grpAffLevel": 0,
+                                "gAffLevfTh": -1,
+                                "gAffLevrTh": -1,
+                                "changeType": {
+                                    "dataType": 0,
+                                    "operator": 0,
+                                    "change": 0,
+                                    "fThreshold": 1,
+                                    "sThreshold": -1,
+                                    "srThreshold": -1,
+                                    "windowType": 0,
+                                    "pctType": 0,
+                                    "pct": 100,
+                                    "timeWindow": 5,
+                                    "twUnit": 0,
+                                    "pastWindow": 5,
+                                    "pwUnit": 0,
+                                    "frThreshold": -1
+                                },
+                                "id": 0,
+                                "name": "C1"
+                            }
+                        ]
+                    }
+                ],
+                "actions": [],
+                "tags": [],
+                "metric": [
+                    {
+                        "subject": [
+                            {
+                                "tags": [
+                                    {
+                                        "key": "Tier",
+                                        "mode": 2,
+                                        "value": "ALL"
+                                    },
+                                    {
+                                        "key": "Server",
+                                        "mode": 2,
+                                        "value": "ALL"
+                                    }
+                                ]
+                            }
+                        ],
+                        "measure": {
+                            "metric": "Idle CPU (%)",
+                            "metricId": 9,
+                            "mg": "MPStat Linux",
+                            "mgId": 10010,
+                            "mgType": "CPU core stats for linux.",
+                            "mgTypeId": -1
+                        },
+                        "glbMetricId": null,
+                        "derivedFormula": null,
+                        "attribute": 0,
+                        "name": "A",
+                        "mode": 0
+                    }
+                ],
+                "schedule": false,
+                "mailIds": [],
+                "extensions": [],
+                "message": null,
+                "description": null,
+                "recommendation": null,
+                "actionsEvents": {
+                    "minorToMajor": true,
+                    "minorToCritical": false,
+                    "majorToMinor": true,
+                    "majorToCritical": false,
+                    "criticalToMajor": false,
+                    "criticalToMinor": false,
+                    "forceClear": false,
+                    "continuousEvent": false,
+                    "endedMinor": false,
+                    "endedMajor": false,
+                    "endedCritical": false,
+                    "startedMinor": false,
+                    "startedMajor": false,
+                    "startedCritical": false
+                }
+            }
+        }
+    ]
+}

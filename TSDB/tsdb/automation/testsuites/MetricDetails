@@ -1,0 +1,18 @@
+#!/bin/bash
+#Please Create subject and measure accordingly given below
+
+#export SUBJECT="customer:Default>application:Default>Tier:TIERNAME>Server:SERVER_NAME>Instance:INSTANCE_NAME"
+#export MEASURE="MGType:MGTYPE>MGroup:MGROUP>Metric:METRIC_NAME,GDF_ID,GRAPH_ID"
+#export DATA_RANGE=MIN-MAX
+
+export SUBJECT="customer:Default>application:Default>Tier:datacall-tier-2>Server:datacall-server-3>Processor:Processor-4"
+export MEASURE="MGType:System Metrics>MGroup:MPStat Linux>Metric:User CPU Busy (Pct),10010,1"
+export AGGR_TYPE="avg"
+export SUB_NAME="Tier"
+export AGG_SUB_TYPE="1"
+export DECIMAL_PLACES="3"
+export ROLL_UP_BY="avg"
+export UNIT="2"
+export AGGR_ARG1=""
+export TRANS_OP="1"
+export SUB_TAGS="OS=all"

@@ -1,0 +1,33 @@
+#!bin/bash
+
+validate_ingestion_response()  {
+
+  if [ "$1" != "$2" ]; then
+   case $3 in
+	  "1") ERR_MSG=$ERR_MSG"TIER of ingestion $1 and metric.txt $2 not matched";;
+	  "3") ERR_MSG=$ERR_MSG"Metric id of log $1 and metric.txt $2 not matched";;
+	  "4") ERR_MSG=$ERR_MSG"Frequency of ingestion file $1 and metric.txt file $2 is not matched";;
+	  "5") ERR_MSG=$ERR_MSG"Data type of the gdf $1 and log $2  is not matched";;
+	  "7") ERR_MSG=$ERR_MSG"This is not a percentile metric due to absent of val 1 and present $1 in 10th fld of gdf file";;
+	  "9") ERR_MSG=$ERR_MSG"Mg_Tag $1 is not added successfully";;
+	 "10") ERR_MSG=$ERR_MSG"delete mt_id $1 is not present in tsdb_delete_metrics.txt";;
+	 "11") ERR_MSG=$ERR_MSG"actual total metric is $1 and response file total metrics is $2";;
+	 "12") ERR_MSG=$ERR_MSG"actual total metric is $1 and response file total metrics is $2";;
+	 "13") ERR_MSG=$ERR_MSG"response file avg is $1 and desired avg is $2";;
+   esac;
+  fi
+ 
+  if [ ${#ERR_MSG} -gt 0 ]; then
+    echo "FAIL : $ERR_MSG"
+  else
+    echo "PASS"
+  fi
+}
+
+validate_flds_response() {
+  if [ "$1" ]; then
+    echo "PASS"
+  else
+    echo "FAIL : Desired field is not present for this subject"
+  fi
+}

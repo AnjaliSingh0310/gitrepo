@@ -1,0 +1,23 @@
+1,Tier
+1,Cavisson
+1,Server
+1,NDAppliance
+1,Process CPU Core Usage(Pct)
+1,IPAddress
+2,Connection
+2,CPU
+2,Total
+2,Total
+2,Extended
+2,ICMP
+2,Files
+3,*Core*
+3,Cav*
+3,Tie*
+3,*Appliance
+3,NDA*
+3,cprod-*
+3, *Memory
+3,Network*
+3,*Queue*
+3,cprod-acc-redis*

@@ -1,0 +1,6 @@
+opcode: 999, msg_size: 121 bytes, version: 1, hdr_flags: 16, corr_id: 0, tx_name_offset: 110, flags 0
+tsdb_nodes: 1, qhead_rt: 84 us
+tx_name: DCN_Error_2000
+
+tsdb_id: 1, tsdb_rt: 84 us
+Error Code: 2000, Http Code: 400, ErrorMsg: Invalid metric name(s), DetailErrMsg: Subject/Measure does not exist

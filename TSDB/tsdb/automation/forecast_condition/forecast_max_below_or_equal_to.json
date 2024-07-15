@@ -1,0 +1,124 @@
+{
+    "cctx": {
+        "cck": "cavisson.111224.1681734440105",
+        "pk": "cavisson:172.24.1.144:04-17-2023 17-57-18",
+        "u": "cavisson",
+        "prodType": "Netdiagnostics"
+    },
+    "opType": 31,
+    "clientId": "-1",
+    "appId": "-1",
+    "rules": [
+        {
+            "name": "forecast_max_below_or_equal_to",
+            "id": -1,
+            "attributes": {
+                "enable": true,
+                "chkStatus": true,
+                "chkStatusTime": 900,
+                "level": 0,
+                "conditionType": 0,
+                "groups": "0",
+                "skipSamples": false,
+                "applyRuleAfter": 5,
+                "genAlertForNaN": false,
+                "severity": [
+                    {
+                        "id": 3,
+                        "condition": "C1",
+                        "conditionList": [
+                            {
+                                "type": 4,
+                                "mName": "A",
+                                "grpAffLevel": 0,
+                                "gAffLevfTh": -1,
+                                "gAffLevrTh": -1,
+                                "id": 0,
+                                "name": "C1",
+                                "forcastType": {
+                                    "dataType": 2,
+                                    "operator": 3,
+                                    "fThreshold": 132,
+                                    "sThreshold": -1,
+                                    "frThreshold": -1,
+                                    "srThreshold": -1,
+                                    "timeWindow": 5,
+                                    "twUnit": 0,
+                                    "windowType": 0,
+                                    "trendWindow": 5,
+                                    "trendWindowUnit": 0,
+                                    "pctType": 0,
+                                    "pct": -1,
+                                    "forecastModel": 0,
+                                    "forecastType": 0
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "actions": [],
+                "tags": [],
+                "metric": [
+                    {
+                        "subject": [
+                            {
+                                "tags": [
+                                    {
+                                        "key": "Tier",
+                                        "mode": 2,
+                                        "value": "ALL"
+                                    },
+                                    {
+                                        "key": "Server",
+                                        "mode": 2,
+                                        "value": "ALL"
+                                    },
+                                    {
+                                        "key": "Processor",
+                                        "mode": 2,
+                                        "value": "ALL"
+                                    }
+                                ]
+                            }
+                        ],
+                        "measure": {
+                            "metric": "Guest CPU (Pct)",
+                            "metricId": 8,
+                            "mg": "MPStat Linux",
+                            "mgId": 10010,
+                            "mgType": "CPU core stats for linux.",
+                            "mgTypeId": -1
+                        },
+                        "glbMetricId": null,
+                        "derivedFormula": null,
+                        "attribute": 0,
+                        "name": "A",
+                        "mode": 0
+                    }
+                ],
+                "schedule": false,
+                "mailIds": [],
+                "extensions": [],
+                "message": null,
+                "description": null,
+                "recommendation": null,
+                "actionsEvents": {
+                    "minorToMajor": true,
+                    "minorToCritical": false,
+                    "majorToMinor": true,
+                    "majorToCritical": false,
+                    "criticalToMajor": false,
+                    "criticalToMinor": false,
+                    "forceClear": false,
+                    "continuousEvent": false,
+                    "endedMinor": false,
+                    "endedMajor": false,
+                    "endedCritical": false,
+                    "startedMinor": false,
+                    "startedMajor": false,
+                    "startedCritical": false
+                }
+            }
+        }
+    ]
+}

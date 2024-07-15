@@ -1,0 +1,6 @@
+Info|3.1|111|112|11113|9913750|60000|04/16/20  18:00:00
+Group|group_name_003|45001|scalar|4|0|group_type_001|tier>host>instance>bt|group_description
+Graph|graph_name_001|1|scalar|sample|100|-|0|AS|-1|-1|NA|NA|graph_description_001|SUM
+Graph|graph_name_002|2|scalar|sample|100|-|0|AS|-1|-1|NA|NA|graph_description_002|AVG
+Graph|graph_name_003|3|scalar|rate|100|-|0|AS|-1|-1|NA|NA|graph_description_003|AVG|kb
+Graph|graph_name_004|4|scalar|cumulative|100|-|0|AS|-1|-1|NA|NA|graph_description_004

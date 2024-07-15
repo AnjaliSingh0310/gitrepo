@@ -1,0 +1,129 @@
+#!bin/bash
+
+file_path="$NS_WDIR/logs/TR$TR_NUM/tsdb/alerts/.tmp/debug"
+
+check_global_config() {
+  if [ -f "$file_path" ]; then
+      field_5=$(awk -F ',' '{print $5}' "$file_path")
+
+      if [ "$field_5" -eq 12 ]; then
+          automation_log "The 5th field is equal to 12. Ended due to global config change."
+	  result=0 #pass
+      else
+          ERR_MSG=$ERR_MSG"Global config is enabled"
+	  result=1 #fail
+      fi
+  else
+      echo
+  fi
+}
+
+check_global_maintenance() {
+if [ -f "$file_path" ]; then
+      field_5=$(awk -F ',' '{print $5}' "$file_path")
+
+      if [ "$field_5" -eq 10 ]; then
+          automation_log "The 5th field is equal to 10. Ended due to global maintenance"
+	  result=0 #pass
+      else
+          ERR_MSG=$ERR_MSG"Global maintenance is enabled"
+	  result=1 #fail
+      fi
+  else
+      echo
+  fi
+}
+
+file_path_log="$NS_WDIR/logs/TR$TR_NUM/tsdb/logs/alert_trace.log.1"
+
+check_rule_scheduling_global_config() {
+  if [ -f "$file_path_log" ]; then
+      last_line=$(grep "Alert Engine is Global configuration rule scheduling is disabled" "$file_path_log" | tail -n 1)
+
+      if [ -n "$last_line" ]; then
+          automation_log "Alert Engine is Global configuration rule scheduling is disabled"
+	  result=0 #pass
+      else
+          ERR_MSG=$ERR_MSG"Rule scheduling is enabled for global config"
+	  result=1 #fail
+      fi
+  else
+      echo "File not found: $file_path"
+  fi
+}
+
+check_rule_recovery() {
+  #in case of Recovery
+  # Check if the file exists
+  if [ -f "$file_path_log" ]; then
+      if grep -q "recovery_flg_done" "$file_path_log"; then
+          automation_log "The line 'recovery_flg_done' is present in the file."
+	  result=0 #pass
+      else
+          ERR_MSG=$ERR_MSG"The line 'recovery_flg_done' is not present in the file."
+	  result=1 #fail
+      fi
+  else
+      echo "File not found: $file_path_log"
+  fi
+}
+
+check_force_clear() {
+  #in case of force clear
+  if [ -f "$file_path" ]; then
+      field_5=$(awk -F ',' '{print $5}' "$file_path")
+
+      if [ "$field_5" -eq 9 ]; then
+          automation_log "The 5th field is equal to 9. Force clear alert"
+	  result=0 #pass
+      else
+          ERR_MSG=$ERR_MSG"Force clear is disabled"
+	  result=1 #fail
+      fi
+  else
+      echo
+  fi
+}
+check_persistence() {
+  # Function
+  get_rule_id() {
+    echo "$1" | cut -d '_' -f 2 | cut -d '.' -f 1
+  }
+
+  # Function to extract TR number from file path
+  get_tr_num() {
+    echo "$1" | grep -oE 'TR[0-9]+' | cut -c 3-
+  }
+
+  # Test case function
+  test_rule_id_consistency() {
+    # Loop through each file in the directory
+    for file in $NS_WDIR/logs/TR*/tsdb/alerts/.tmp/debug; do
+      # Get TR number and rule_id for current file
+      current_tr_num=$(get_tr_num "$file")
+      current_rule_id=$(get_rule_id "$(basename "$file")")
+
+      # Check if rule_id exists for current TR number
+      if [ -f "$NS_WDIR/logs/TR$TR_NUM/tsdb/alerts/.tmp/debug/rule_$current_rule_id.debug" ]; then
+        # Get rule_id for the TR number being tested against
+        new_rule_id=$(get_rule_id "rule_$current_rule_id.debug")
+
+        # Compare rule_ids
+        if [ "$current_rule_id" != "$new_rule_id" ]; then
+          automation_log "Test Failed: Rule ID changed for TR $current_tr_num"
+          exit 1
+        fi
+      fi
+    done
+    result=0
+    echo "Test Passed: Rule IDs remain consistent for all TR numbers"
+  }
+}
+
+validate_alert_response() {
+	if [ "$result" -eq 1 ];then
+		echo "$ERR_MSG"
+	else
+		echo "PASS"
+	fi
+}

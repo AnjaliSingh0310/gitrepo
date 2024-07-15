@@ -1,0 +1,9 @@
+Thu 11 Jul 2024 11:46:50 AM IST|TESTIDX=777777, TR_PATH=/home/cavisson/work/logs/TR777777, METRIC_FILE=/home/cavisson/work/logs/TR777777/tsdb/tsdb_metrics.txt, TSDB_PORT=15763
+Thu 11 Jul 2024 11:46:50 AM IST|
+Thu 11 Jul 2024 11:46:50 AM IST|TC - [PER012]Hierarchy=Tier,Server, OP=Data Query, Metric=Number Of CPU Cores p84
+Thu 11 Jul 2024 11:46:51 AM IST|tsdb_admin --tr 777777 --op dcn --subject "customer:Default>application:Default>Tier:percentile-tier>Server:percentile-server-1" --measure "MGType:System Metrics>MGroup:CPU Stats>Metric:Number Of CPU Cores p84,44498,212" --st "1720678685" --et "1720678745" --out-file "/home/cavisson/work/TSDB/tsdb/automation/responses/percentile/PER_1.txt"
+Thu 11 Jul 2024 11:46:51 AM IST|/home/cavisson/work/TSDB/tsdb/automation/responses/percentile/PER_1.txt
+Thu 11 Jul 2024 11:46:51 AM IST|Data in percentile file =
+Thu 11 Jul 2024 11:46:51 AM IST|Data in response file =
+Thu 11 Jul 2024 11:46:51 AM IST|Req - percentile-tier>percentile-server-1
+Thu 11 Jul 2024 11:46:51 AM IST|Resp -

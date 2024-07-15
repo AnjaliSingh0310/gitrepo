@@ -1,0 +1,5 @@
+#Ctrl_ip, ctrl_port, backup_ip, backupPort, Protocol
+100,184.105.177.99,6162,184.105.177.99,6162,wss,cprod-snb-redis
+#25,184.105.177.101,7897,184.105.177.101,7897,ws,cprod-acc-redis
+#25,184.105.52.68,7893,184.105.52.68,7893,wss,cprod-cnc-redis
+#25,38.101.155.137,7966,38.101.155.137,7966,wss,cprod-solr-redis

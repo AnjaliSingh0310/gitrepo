@@ -1,0 +1,19 @@
+#!/bin/bash
+
+export BATS="${PWD}/thirdparty/bats-core/bin/bats"
+
+<<com
+while getopts ":m:t:" flag;
+do
+    case $flag in
+    "m")export MODE=$OPTARG;;
+    "t")export SUITES="$OPTARG";;
+    esac
+done
+
+if [ -Z $MODE ];then
+   export MODE=0
+fi
+com
+
+$BATS $*

@@ -1,0 +1,18 @@
+nsl_decl_var(rec_buffer);
+nsl_decl_var(rec_buffer_1);
+nsl_decl_var(SubjectMode);
+nsl_decl_var(CallMode);
+nsl_decl_var(MetricDataMode);
+nsl_decl_var(MonitorGroup);
+nsl_decl_var(TSDB_RES_Time_TX);
+nsl_decl_var(buffer);
+nsl_decl_var(msg_len);
+nsl_decl_var(send_data);
+nsl_decl_var(TSDB_HOST);
+nsl_decl_var(MIN_CUSTOM_HRS_BACK);
+nsl_decl_var(MAX_CUSTOM_HRS_BACK);
+nsl_decl_var(CUSTOM_DURATION);
+nsl_decl_var(MAX_TIME_PERIOD);
+nsl_decl_var(FILTER_TYPE);
+nsl_decl_var(METRIC_FILTER_OPTION);
+nsl_static_var(ControllerIP:1,ControllerPort:2, File=tsdb_machine_info.seq, Refresh=SESSION, Mode=SEQUENTIAL, FirstDataLine=2, EncodeMode=All);

@@ -1,0 +1,12 @@
+#subject,measure(MGType and MGGroup)
+Tier:Cavisson>Server:NDAppliance,MGType:System Metrics>MGroup:Memory Stats,Total Memory (MB),10007,1,1617690290
+Tier:Cavisson>Server:NDAppliance,MGType:System Metrics>MGroup:Memory Stats,Used Memory (MB),10007,2,1617690290
+Tier:Cavisson>Server:NDAppliance,MGType:System Metrics>MGroup:Memory Stats,Free Memory (MB),10007,3,1617690290
+Tier:Cavisson>Server:NDAppliance,MGType:System Metrics>MGroup:Memory Stats,Shared Memory (MB),10007,4,1617690290
+Tier:Cavisson>Server:NDAppliance,MGType:System Metrics>MGroup:Memory Stats,Buffers Memory (MB),10007,5,1617690290
+Tier:Cavisson>Server:NDAppliance,MGType:System Metrics>MGroup:Memory Stats,Cached Memory (MB),10007,6,1617690290
+Tier:Cavisson>Server:NDAppliance,MGType:Network Metrics>MGroup:ICMP Stats,ICMP Messages Received/Sec,10633,1,1617690290
+Tier:Cavisson>Server:NDAppliance,MGType:Network Metrics>MGroup:ICMP Stats,ICMP Input Message Failed/Sec,10633,2,1617690290
+Tier:Cavisson>Server:NDAppliance,MGType:Network Metrics>MGroup:ICMP Stats,ICMP Input Csum Errors/Sec,10633,3,1617690290
+Tier:Cavisson>Server:NDAppliance,MGType:Network Metrics>MGroup:ICMP Stats,ICMP Input Destination Unreachable/Sec,10633,4,1617690290
+Tier:Cavisson>Server:NDAppliance,MGType:Network Metrics>MGroup:ICMP Stats,ICMP Timeout In Transit/Sec,10633,5,1617690290

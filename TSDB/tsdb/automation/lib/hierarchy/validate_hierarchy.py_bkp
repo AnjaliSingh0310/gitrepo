@@ -1,0 +1,152 @@
+import os
+import json
+import sys
+
+out_msg = str()
+level = int(os.environ['LEVEL'])
+rep_file = os.environ['RESPONSE_FILE']
+all_subjects = os.environ['ALL_SUBJECT']
+sub_lvl = os.environ['SUB_LVL']
+content = dict()
+
+
+def log(msg):
+    with open(os.environ['LOG_FILE'],'a') as logger:
+        logger.write(msg+"\n")
+
+
+def check_rep_status():
+    global content
+    with open(rep_file,'r') as rfile:
+        content = json.load(rfile)
+    if content['status']['code'] != 200:
+        return "FAIL : {}".format(content['status']['msg'])
+    else:
+        return "PASS"
+
+def get_exp_subjects():
+    subjects = list()
+    with open(all_subjects,'r') as reader:
+        subjects = reader.readlines()
+    return subjects
+
+
+def get_exp_tier_list():
+    subjects = get_exp_subjects()
+    tiers = set()
+    for subject in subjects:
+        tier = subject.split('>')[0].split(':')[1].strip()
+        tiers.add(tier)
+    log("Exp Tiers = {}".format(list(tiers)))
+    return list(tiers)
+
+
+def get_act_tier_list():
+    tree = content['hierarchy']
+    if tree[0]['metadata'] == "Tier":
+        log("Act Tiers = {}".format(tree[0]['vectorList']))
+        return tree[0]['vectorList']
+
+
+def get_exp_servers(req_tier):
+    subjects = get_exp_subjects()
+    servers = set()
+    for subject in subjects:
+        if len(subject.split('>')) >= 2:
+            tier = subject.split('>')[0].split(':')[1].strip()
+            if tier == req_tier:
+                server = subject.split('>')[1].split(':')[1].strip()
+                servers.add(server)
+    log("Tier = {} ,Exp Servers = {}".format(req_tier,list(servers)))
+    return list(servers)
+
+
+def get_exp_lvl3_subjects(req_server):
+    subjects = get_exp_subjects()
+    lvl3_subjects = set()
+    for subject in subjects:
+        if len(subject.split('>')) >= 3:
+            server = subject.split('>')[1].split(':')[1].strip()
+            if server == req_server:
+                lvl3_subject = subject.split('>')[2].split(':')[0].strip()
+                lvl3_subjects.add(lvl3_subject)
+    log("Server = {} , Exp_lvl3_subjects = {}".format(req_server,list(lvl3_subjects)))
+    return list(lvl3_subjects)
+
+
+def get_exp_lvl3_vectors(req_lvl3_subject):
+    subjects = get_exp_subjects()
+    lvl3_vectors = set()
+    for subject in subjects:
+        if len(subject.split('>')) >= 3:
+            lvl3_subject = subject.split('>')[2].split(':')[0].strip()
+            if lvl3_subject == req_lvl3_subject:
+                lvl3_vector = subject.split('>')[2].split(':')[1].strip()
+                lvl3_vectors.add(lvl3_vector)
+    log("lvl3_subject = {} , Exp_lvl3_vectors = {}".format(req_lvl3_subject,list(lvl3_vectors)))
+    return list(lvl3_vectors)
+
+
+def validate_hierarchy():
+    global out_msg
+    global level
+    if level == 1:
+        act_tiers = get_act_tier_list()
+        exp_tiers = get_exp_tier_list()
+        act_tiers.sort()
+        exp_tiers.sort()
+        if act_tiers != exp_tiers:
+            out_msg = "FAIL : expected_tiers = [ {} ] , actual_tiers = [ {} ]".format(exp_tiers,act_tiers)
+        else:
+            out_msg = "PASS"
+
+    if level >= 2:
+        act_servers = set()
+        exp_tiers = get_exp_tier_list()
+        tree = content['hierarchy'] 
+        #iterate through tiers in hierarchy list
+        for i in range(0,len(tree)):
+            if tree[i]['vector'] in exp_tiers:
+                exp_servers = get_exp_servers(tree[i]['vector'])
+                lvl1_subjects = tree[i]['subjects']
+                #iterate through servers in tier subject
+                for vector in lvl1_subjects:
+                    if vector['metadata'] == "Server":
+                        server = vector['vector']
+                        log("Act Server = [ {} ]".format(server))
+                        if server not in exp_servers:
+                            out_msg = out_msg+"Unknown server name - {}\n".format(vector['vector'])
+                            break
+                        if level == 3:
+                            exp_lvl3_subjects = get_exp_lvl3_subjects(server)
+                            lvl3_subjects = vector['subjects']
+                            if len(lvl3_subjects) > 0:
+                                for lvl3_subject in lvl3_subjects:
+                                    if lvl3_subject['metadata'] not in exp_lvl3_subjects:
+                                        out_msg = out_msg+"unknown lvl3 subject - {}\n".format(lvl3_subject['metadata'])
+                                        break
+                                    exp_lvl3_vectors = get_exp_lvl3_vectors(lvl3_subject['metadata'])
+                                    if lvl3_subject['vector'] not in exp_lvl3_vectors:
+                                        out_msg = out_msg+"Unknown lvl3 vector - {}\n".format(lvl3_subject['vector'])
+                                        break
+                    else:
+                        out_msg = out_msg+"Unknown metadata of lvl1 subject - {}\n".format(vector['metadata'])
+                        break
+            else:
+                out_msg = out_msg+"Unknown tier name - {}\n".format(tree[i]['vector'])
+                break
+    if len(out_msg) == 0:
+        out_msg = "PASS"
+
+def validate_hierarchy_with_subject():
+
+
+msg = check_rep_status()
+if msg == "PASS":
+    if sub_lvl > 0:
+        validate_hierarchy_with_subject()
+    else:
+        validate_hierarchy()
+    print(out_msg)
+else:
+    print(msg)

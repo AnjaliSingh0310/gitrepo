@@ -1,0 +1,112 @@
+{
+    "cctx": {
+        "cck": "cavisson.242440.1715670132793",
+        "pk": "cavisson:172.24.0.206:05-14-2024 02-02-11.816",
+        "u": "cavisson",
+        "prodType": "Netdiagnostics"
+    },
+    "clientId": "-1",
+    "appId": "-1",
+    "rules": [
+        {
+            "id": 9068,
+            "name": "ch",
+            "createdTs": 0,
+            "lastModifiedTs": 1715236865418,
+            "modifiedBy": "cavisson",
+            "venderRule": false,
+            "attributes": {
+                "enable": true,
+                "chkStatus": true,
+                "chkStatusTime": 900,
+                "level": 0,
+                "conditionType": 0,
+                "groups": "0",
+                "skipSamples": false,
+                "applyRuleAfter": 5,
+                "genAlertForNaN": false,
+                "schedule": false,
+                "tags": [],
+                "metric": [
+                    {
+                        "name": "A",
+                        "measure": {
+                            "metric": "Idle CPU (%)",
+                            "metricId": 9,
+                            "mg": "MPStat Linux",
+                            "mgId": 10010,
+                            "mgType": "CPU core stats for linux.",
+                            "mgTypeId": -1
+                        },
+                        "glbMetricId": 0,
+                        "attribute": 0,
+                        "subject": [
+                            {
+                                "tags": [
+                                    {
+                                        "key": "Tier",
+                                        "value": "ALL",
+                                        "mode": 2
+                                    },
+                                    {
+                                        "key": "Server",
+                                        "value": "ALL",
+                                        "mode": 2
+                                    },
+                                    {
+                                        "key": "Processor",
+                                        "value": "ALL",
+                                        "mode": 2
+                                    }
+                                ],
+                                "tagInfo": "",
+                                "value": "-1"
+                            }
+                        ],
+                        "mode": 0
+                    }
+                ],
+                "severity": [
+                    {
+                        "id": 3,
+                        "condition": "C1",
+                        "conditionList": [
+                            {
+                                "id": 0,
+                                "name": "C1",
+                                "mName": "A",
+                                "type": 1,
+                                "grpAffLevel": 0,
+                                "gAffLevfTh": -1,
+                                "gAffLevrTh": -1,
+                                "changeType": {
+                                    "dataType": 0,
+                                    "operator": 0,
+                                    "change": 1,
+                                    "fThreshold": 1,
+                                    "sThreshold": -1,
+                                    "frThreshold": -1,
+                                    "srThreshold": -1,
+                                    "windowType": 0,
+                                    "pctType": 0,
+                                    "pct": 100,
+                                    "timeWindow": 5,
+                                    "twUnit": 0,
+                                    "pastWindow": 5,
+                                    "pwUnit": 0
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "actions": [],
+                "mailIds": [],
+                "extensions": [],
+                "message": "",
+                "description": "",
+                "recommendation": ""
+            }
+        }
+    ],
+    "opType": 34
+}

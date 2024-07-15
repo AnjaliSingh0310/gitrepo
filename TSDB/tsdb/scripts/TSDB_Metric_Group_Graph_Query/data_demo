@@ -1,0 +1,4 @@
+#metric_id,frequency_type,subject,measure
+030001000200000000000000000000000000000000000000,1,customer:Default>application:Default>Tier:cprod-acc-redis-6>Server:cprod-acc-redis-6-2-5-0,MGType:System Metrics>MGroup:System Load Stats>Metric:Load Average Over 1 Minute,10004,1,1624859166
+030001000200000000000000000000000000000001000000,1,customer:Default>application:Default>Tier:cprod-acc-redis-6>Server:cprod-acc-redis-6-2-5-0,MGType:System Metrics>MGroup:System Load Stats>Metric:Load Average Over 5 Minute,10004,2,1624859166
+030001000200000000000000000000000000000002000000,1,customer:Default>application:Default>Tier:cprod-acc-redis-6>Server:cprod-acc-redis-6-2-5-0,MGType:System Metrics>MGroup:System Load Stats>Metric:Load Average Over 15 Minute,10004,3,1624859166

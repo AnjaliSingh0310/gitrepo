@@ -1,0 +1,10 @@
+#metric_id,frequency_type,subject,measure,gdf_id,graph_id,discovery_ts
+030001000200000000000000000000000000000000000000,1,customer:Default>application:Default>Tier:Cavisson>Server:NDAppliance,MGType:Network Metrics>MGroup:ICMP Stats>Metric:ICMP Messages Received/Sec,10633,1,1622705409
+030001000200000000000000000000000000000001000000,1,customer:Default>application:Default>Tier:Cavisson>Server:NDAppliance,MGType:Network Metrics>MGroup:ICMP Stats>Metric:ICMP Input Message Failed/Sec,10633,2,1622705409
+030001000200000000000000000000000000000002000000,1,customer:Default>application:Default>Tier:Cavisson>Server:NDAppliance,MGType:Network Metrics>MGroup:ICMP Stats>Metric:ICMP Input Csum Errors/Sec,10633,3,1622705409
+030001000200000000000000000000000000000003000000,1,customer:Default>application:Default>Tier:Cavisson>Server:NDAppliance,MGType:Network Metrics>MGroup:ICMP Stats>Metric:ICMP Input Destination Unreachable/Sec,10633,4,1622705409
+030001000200000000000000000000000000000004000000,1,customer:Default>application:Default>Tier:Cavisson>Server:NDAppliance,MGType:Network Metrics>MGroup:ICMP Stats>Metric:ICMP Timeout In Transit/Sec,10633,5,1622705409
+030001000200000000000000000000000000000005000000,1,customer:Default>application:Default>Tier:Cavisson>Server:NDAppliance,MGType:Network Metrics>MGroup:ICMP Stats>Metric:ICMP Input Wrong Parameters/Sec,10633,6,1622705409
+030001000200000000000000000000000000000006000000,1,customer:Default>application:Default>Tier:Cavisson>Server:NDAppliance,MGType:Network Metrics>MGroup:ICMP Stats>Metric:ICMP Input Source Quenches/Sec,10633,7,1622705409
+030001000200000000000000000000000000000007000000,1,customer:Default>application:Default>Tier:Cavisson>Server:NDAppliance,MGType:Network Metrics>MGroup:ICMP Stats>Metric:ICMP Input Redirects/Sec,10633,8,1622705409
+030001000200000000000000000000000000000008000000,1,customer:Default>application:Default>Tier:Cavisson>Server:NDAppliance,MGType:Network Metrics>MGroup:ICMP Stats>Metric:ICMP Input Echo Requests/Sec,10633,9,1622705409

@@ -1,0 +1,103 @@
+#!/bin/bash
+function log_cmd()
+{
+   automation_log "$CMD"
+}
+
+function run_query()
+{
+   #export CMD="tsdb_admin --tr $TESTIDX --port $TSDB_PORT"
+   export CMD="tsdb_admin --tr $TESTIDX"
+   ARGS=("$@")
+   length=${#ARGS[@]}
+   for (( i=0; i<length; i++ ))
+   do
+      arg=$(echo ${ARGS[i]}| cut -d'=' -f1)
+      if [ "$arg" == "TAG_NAME" ];then
+        arg_val=$(echo ${ARGS[i]} | cut -d'=' -f2-)
+      elif [ "$arg" == "SUB_TAGS" ];then
+        arg_val=$(echo ${ARGS[i]} | cut -d'=' -f2-)
+      else
+        arg_val=$(echo ${ARGS[i]}| cut -d'=' -f2)
+      fi
+      case $arg in
+      "OP")CMD=$CMD" --op $arg_val";;
+      "TP_TYPE") if [ "$arg_val" == "preset" ];then
+                    TP_FLAG=1
+                 elif [ "$arg_val" == "custom" ];then
+                    TP_FLAG=2
+		 fi
+                 ;;
+      "DURATION")if [ $TP_FLAG -eq 1 ];then
+		    CMD=$CMD" --back $arg_val"
+                  fi
+                  ;;
+      "STIME")if [ $TP_FLAG -eq 2 ];then
+                    CMD=$CMD" --st $arg_val"
+                  fi
+                  ;;
+      "ETIME")if [ $TP_FLAG -eq 2 ];then
+                    CMD=$CMD" --et $arg_val"
+                  fi
+                  ;;
+      "INPFILE")CMD=$CMD" --f \"$arg_val\"";;	  
+      #for all query
+      "TAGNAME")CMD=$CMD" --tag_name \"$arg_val\"";;
+      "SUBJECT")CMD=$CMD" --subject \"$arg_val\"";;
+      "MEASURE")CMD=$CMD" --measure \"$arg_val\"";;
+      "ID")CMD=$CMD" --id \"$arg_val\"";;
+
+      #for derived metric
+      "NUM_DERIVED_METRIC")CMD=$CMD" --num_derived_metric \"$arg_val\"";;
+      "DMG_NAME")CMD=$CMD" --dmg_name \"$arg_val\"";;
+      "GROUP_DESC")CMD=$CMD" --group_desc \"$arg_val\"";;
+      "DERIVED_METRIC_NAME")CMD=$CMD" --derived_metric_name \"$arg_val\"";;
+      "DERIVED_METRIC_DESC")CMD=$CMD" --derived_metric_desc \"$arg_val\"";;
+      "FORMULA")CMD=$CMD" --formula \"$arg_val\"";;
+      "TAG_ATT_GRP_BY")CMD=$CMD" --tag_attr_group_by \"$arg_val\"";;
+      "AGG_TYPE")CMD=$CMD" --agg_type \"$arg_val\"";;
+      "AGG_BY")CMD=$CMD" --agg_by \"$arg_val\"";;
+      "D_LEVEL")CMD=$CMD" --d_level \"$arg_val\"";;
+      "NUM_VARIABLE")CMD=$CMD" --num_variable \"$arg_val\"";;
+      "VAR_EXP")CMD=$CMD" --var_exp \"$arg_val\"";;
+      "AGG_FN")CMD=$CMD" --aggr_fn \"$arg_val\"";;
+      "UNARY_FN_CNT")CMD=$CMD" --unaryfn_count \"$arg_val\"";;
+      "UNARY_FN")CMD=$CMD" --unaryfn \"$arg_val\"";;
+
+      "VAR_NAME")CMD=$CMD" --var_name \"$arg_val\"";;
+      "GCTX_LEN")CMD=$CMD" --gctx_len \"$arg_val\"";;
+      "TAG_NAME")CMD=$CMD" --tag_name \"$arg_val\"";;
+      "MG_NAME")CMD=$CMD" --mg_name \"$arg_val\"";;
+      "DT")CMD=$CMD" --dt \"$arg_val\"";;
+      "ST")CMD=$CMD" --st \"$arg_val\"";;
+      "ET")CMD=$CMD" --et \"$arg_val\"";;
+      "VIEW_BY")CMD=$CMD" --g $arg_val";;
+      "ID")CMD=$CMD" --id \"$arg_val\"";;
+      "LEVEL")CMD=$CMD" --level $arg_val";;
+      "VERSION")CMD=$CMD" --version $arg_val";;
+
+      #for metric configuration
+      "SUB_NAME")CMD=$CMD" --sub_name $arg_val";;
+      "AGGR_TYPE")CMD=$CMD" --aggr_type $arg_val";;
+      "AGG_SUB_TYPE")CMD=$CMD" --aggr_sub_type $arg_val";;
+      "ROLL_UP_BY")CMD=$CMD" --roll_upby $arg_val";;
+      "DECIMAL_PLACES")CMD=$CMD" --decimal_places $arg_val";;
+      "UNIT")CMD=$CMD" --unit_id $arg_val";;
+      "TRANS_OP")CMD=$CMD" --trans_op $arg_val";;
+      "SUB_TAGS")CMD=$CMD" --sub_tags $arg_val";;
+      "AGGR_ARG1")CMD=$CMD" --aggr_arg1 $arg_val";;
+
+      #for non business hour 
+      "NON_BUSINESS_HOUR")CMD=$CMD" --bucket_conf_ft $arg_val";;
+
+      #for output file
+      "OUTFILE")OUTFILE="$arg_val"
+	      CMD=$CMD" --out-file \"$arg_val\"";;
+      esac
+   done
+   log_cmd
+   eval $CMD
+   #automation_log "Command Execution Status - $?"
+   #echo ${OUTFILE}
+}
+

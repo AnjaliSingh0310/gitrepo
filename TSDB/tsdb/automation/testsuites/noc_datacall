@@ -1,0 +1,76 @@
+#!/bin/bash
+
+get_mgroups()
+{
+    run_query "OP=mgn" "OUTFILE=${TEMP_DIR}/mgroup.txt"
+    GRP_LIST=($(grep -o 'gdf_id.*,' ${TEMP_DIR}/mgroup.txt| cut -d',' -f1 | awk '{print $2}' | xargs))
+    TOT_GRP=${#GRP_LIST[@]}
+    #automation_log "GROUPS=${GRP_LIST[@]}"
+}
+
+get_random_subject()
+{
+    automation_log "GRPID=$GRPID"
+#    RAND_METRIC=$(grep ",${GRPID}," ${METRIC_FILE} | grep -v 'tags:' | egrep -v 'Tier:Cavisson|Tier:Default' | shuf -n 1)
+    RAND_METRIC=$(grep ",${GRPID}," ${METRIC_FILE} | grep -v 'tags:' | shuf -n 1)
+    SUBJECT=$(echo ${RAND_METRIC} | cut -d',' -f3)
+    #automation_log "SUBJECT=$SUBJECT"
+}
+
+get_metrics()
+{
+    FILE=${DATACALL_TEMP}/metrics.txt
+    #search_pattrn="${SUBJECT}.*,${GRPID},"
+    #automation_log "${search_pattrn}"
+    #eval "grep \"${search_pattern}\" ${METRIC_FILE} >${FILE}"
+#    eval "grep \"${SUBJECT}\" ${METRIC_FILE} | grep \"${GRPID}\" | egrep -v \"Tier:Cavisson|Tier:Default|tags:\" >${FILE}"
+    eval "grep \"${SUBJECT}\" ${METRIC_FILE} | egrep -v \"p[0-9]*,\" | grep \"${GRPID}\" | egrep -v \"tags:\" > ${FILE}"
+}
+
+setup()
+{
+   source ./testsuites/common
+   source ./lib/tsdbRequests
+   common_setup
+   get_mgroups
+   BATS_FILE="${PWD}/testsuites/online.bats"
+   echo -e "#!${PWD}/thirdparty/bats-core/bin/bats\n" >$BATS_FILE
+   j=1
+}
+
+
+setup
+for i in ${GRP_LIST[@]};
+do
+  GRPID=$i
+  get_random_subject
+  get_metrics
+  while read -r line
+  do
+    nfidx=`echo $line | cut -d',' -f2`
+    subject=`echo $line | cut -d',' -f3`
+    measure=`echo $line | awk -F',' '{print $((NF-3))","$((NF-2))","$((NF-1))}'`
+    echo -e "@test \"[TC-$j]Subject:$(echo $subject| cut -d',' -f3 | tr '>' '\n' | cut -d':' -f2 | xargs | tr ' ' '>'), $(echo $measure|cut -d',' -f1|awk -F'>' '{print $NF}')\" {
+       run_query OP=dcn TP_TYPE=preset DURATION=5 OUTFILE=\$RESPONSE_FILE SUBJECT=\"$subject\" MEASURE=\"$measure\"
+       assert_equal \"X\$(grep 'Error Code:' \$RESPONSE_FILE | awk -F',' '{print \$NF}' | xargs)\" \"X\"
+       set_values \"$subject\" \"$measure\" \"$nfidx\"
+       set_dcn_expected_values \"5\" \"Exact\"
+       extract_actual_output
+       output=\$(validate_response)
+       assert_output \"PASS\"
+    }\n" >> $BATS_FILE
+    j=$((j+1))
+  done < $FILE
+done
+echo -e "setup() {
+         source ./testsuites/common
+         common_setup
+         source ./lib/tsdbRequests
+         source \$DATACALL_LIB/datacall_lib_noc
+         export GDF_CONF_FILE=GDF.conf
+         export RESPONSE_FILE=\$ONLINE_REP/DC_\$BATS_TEST_NUMBER.txt
+         }" >> $BATS_FILE
+
+echo "Created TestSuite - $BATS_FILE"
+echo "Command to run - ./bats <bats_file> --report-formatter junit -o ."
+#./bats $BATS_FILE

@@ -1,0 +1,97 @@
+{
+    "cctx": {
+        "cck": "cavisson.44443.1714629272035",
+        "pk": "cavisson:172.24.1.8:05-02-2024 05-54-31.371",
+        "u": "cavisson",
+        "prodType": "Netdiagnostics"
+    },
+    "opType": 32,
+    "clientId": "-1",
+    "appId": "-1",
+    "rules": [
+        {
+            "name": "llll",
+            "id": 10,
+            "attributes": {
+                "enable": true,
+                "chkStatus": true,
+                "chkStatusTime": 900,
+                "level": 0,
+                "conditionType": 0,
+                "groups": "0",
+                "skipSamples": false,
+                "applyRuleAfter": 5,
+                "genAlertForNaN": false,
+                "severity": [
+                    {
+                        "id": 3,
+                        "condition": "C1",
+                        "conditionList": [
+                            {
+                                "type": 2,
+                                "mName": "A",
+                                "grpAffLevel": 0,
+                                "gAffLevfTh": -1,
+                                "gAffLevrTh": -1,
+                                "id": 0,
+                                "name": "C1",
+                                "anomalyType": {
+                                    "dataType": $DATA_TYPE,
+                                    "operator": $OPERATOR,
+                                    "windowType": $WINDOW_TYPE,
+                                    "timeWindow": 5,
+                                    "twUnit": 0,
+                                    "pctType": 0,
+                                    "pct": 100,
+                                    "algoType": 0,
+                                    "deviation": 2
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "actions": [],
+                "tags": [],
+                "metric": [
+                    {
+                        "subject": [
+                            {
+                                "tags": [
+                                    {
+                                        "key": "Tier",
+                                        "mode": 2,
+                                        "value": "ALL"
+                                    },
+                                    {
+                                        "key": "Server",
+                                        "mode": 2,
+                                        "value": "ALL"
+                                    }
+                                ]
+                            }
+                        ],
+                        "measure": {
+                            "metric": "L1i Cache Memory (KB)",
+                            "metricId": 3,
+                            "mg": "CPU Stats",
+                            "mgId": 10729,
+                            "mgType": "CPU architecture information",
+                            "mgTypeId": -1
+                        },
+                        "glbMetricId": null,
+                        "derivedFormula": null,
+                        "attribute": 0,
+                        "name": "A",
+                        "mode": 0
+                    }
+                ],
+                "schedule": false,
+                "mailIds": [],
+                "extensions": [],
+                "message": "",
+                "description": "",
+                "recommendation": ""
+            }
+        }
+    ]
+}

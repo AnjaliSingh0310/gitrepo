@@ -1,0 +1,88 @@
+{
+    "cctx": {
+        "cck": "cavisson.242437.1715231586399",
+        "pk": "cavisson:127.0.0.1:05-09-2024 00-13-05.298",
+        "u": "cavisson"
+    },
+    "config": {
+        "id": "Default_Setting",
+        "createdTs": 1708603958701,
+        "lastModifiedTs": 1715149235876,
+        "creator": "cavisson",
+        "modifiedBy": "cavisson",
+        "enable": true,
+        "rSeverityLevel": 1,
+        "clearEvent": false,
+        "restEvent": true,
+        "clearRestEvent": true,
+        "clearRestEventOnInterval": true,
+        "clearRestEventInterval": 30,
+        "historyLog": true,
+        "maintenance": true,
+        "extension": {
+            "microsoftteams": {
+                "protocol": "",
+                "hostName": "",
+                "apiVersion": "",
+                "msgContentType": 2,
+                "default_msg_format_value_as_urlencoded": false,
+                "appConfig": [
+                    {
+                        "id": 0,
+                        "key": "unknown",
+                        "app_used_for": -1,
+                        "path_variable": {
+                            "send_message": "https://interfacial.webhook.office.com/webhookb2/f43c69e0-4713-498f-9d92-6a5bcfac7cbe@66ad22b3-ca8f-49e0-b0ba-8f7d2ac144f0/IncomingWebhook/89a0b4895c4c4b3198fc4c3bdc20b2f3/649a0ace-28ad-464d-bdb8-e408ce2e3e9a"
+                        }
+                    }
+                ]
+            }
+        },
+        "clrEventOnMaintenance": true,
+        "minBaselineValue": 0,
+        "numSkipSampleOnSR": 0,
+        "graphTime": 30,
+        "autoScaleSkipDuration": 0,
+        "actionsEvents": {
+            "startedMinor": false,
+            "startedMajor": false,
+            "startedCritical": false,
+            "continuousEvent": false,
+            "minorToMajor": false,
+            "minorToCritical": false,
+            "majorToCritical": false,
+            "majorToMinor": false,
+            "criticalToMajor": false,
+            "criticalToMinor": false,
+            "endedMinor": false,
+            "endedMajor": false,
+            "endedCritical": false,
+            "deleteRule": false,
+            "updateRule": false,
+            "disableRule": false,
+            "forceClear": false,
+            "endMaintenance": false,
+            "endRuleSchedule": false,
+            "endConfig": false,
+            "info": false,
+            "enable": false
+        },
+        "policy": {
+            "enablePolicy": false,
+            "mail": false,
+            "sms": false,
+            "snmp": false,
+            "threadDump": false,
+            "heapDump": false,
+            "tcpDump": false,
+            "cpuProfile": false,
+            "jfr": false,
+            "runScript": false,
+            "extension": false,
+            "snapshot": false
+        },
+        "moduleLog": [],
+        "validSamplePct": 50
+    },
+    "opType": 2
+}

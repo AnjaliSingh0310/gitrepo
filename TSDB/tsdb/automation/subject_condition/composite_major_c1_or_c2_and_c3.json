@@ -1,0 +1,244 @@
+{
+    "cctx": {
+        "cck": "cavisson.33338.1714805806591",
+        "pk": "cavisson:172.24.1.8:05-04-2024 06-56-45.911",
+        "u": "cavisson",
+        "prodType": "Netdiagnostics"
+    },
+    "opType": 32,
+    "clientId": "-1",
+    "appId": "-1",
+    "rules": [
+        {
+            "name": "composite_case",
+            "id": 15,
+            "attributes": {
+                "enable": true,
+                "chkStatus": true,
+                "chkStatusTime": 900,
+                "level": "0",
+                "conditionType": 1,
+                "groups": "0",
+                "skipSamples": false,
+                "applyRuleAfter": 5,
+                "genAlertForNaN": false,
+                "severity": [
+                    {
+                        "id": 3,
+                        "condition": "",
+                        "conditionList": [
+                            {
+                                "type": 4,
+                                "forcastType": {
+                                    "dataType": 4,
+                                    "operator": 0,
+                                    "timeWindow": 5,
+                                    "twUnit": 0,
+                                    "windowType": 0,
+                                    "trendWindow": 5,
+                                    "trendWindowUnit": 0,
+                                    "pctType": 0,
+                                    "pct": -1,
+                                    "forecastModel": 0,
+                                    "forecastType": 0,
+                                    "fThreshold": 1,
+                                    "sThreshold": -1,
+                                    "frThreshold": -1,
+                                    "srThreshold": -1
+                                },
+                                "id": -1,
+                                "name": "C1",
+                                "mName": "A",
+                                "grpAffLevel": 0,
+                                "gAffLevfTh": -1,
+                                "gAffLevrTh": -1
+                            },
+                            {
+                                "type": 1,
+                                "changeType": {
+                                    "dataType": 4,
+                                    "operator": 0,
+                                    "change": 0,
+                                    "fThreshold": 1,
+                                    "sThreshold": -1,
+                                    "frThreshold": -1,
+                                    "srThreshold": -1,
+                                    "windowType": 0,
+                                    "pctType": 0,
+                                    "pct": 100,
+                                    "timeWindow": 5,
+                                    "twUnit": 0,
+                                    "pastWindow": 5,
+                                    "pwUnit": 0
+                                },
+                                "id": 0,
+                                "name": "C2",
+                                "mName": "A",
+                                "grpAffLevel": 0,
+                                "gAffLevfTh": -1,
+                                "gAffLevrTh": -1
+                            },
+                            {
+                                "type": 0,
+                                "thresholdType": {
+                                    "dataType": 4,
+                                    "operator": 1,
+                                    "windowType": 0,
+                                    "fThreshold": 2,
+                                    "sThreshold": -1,
+                                    "frThreshold": -1,
+                                    "srThreshold": -1,
+                                    "pctType": 0,
+                                    "pct": 100,
+                                    "timeWindow": 5,
+                                    "twUnit": 0
+                                },
+                                "id": 1,
+                                "name": "C3",
+                                "mName": "A",
+                                "grpAffLevel": 0,
+                                "gAffLevfTh": -1,
+                                "gAffLevrTh": -1
+                            }
+                        ]
+                    },
+                    {
+                        "id": 2,
+                        "condition": "C1 || C2 && C3",
+                        "conditionList": [
+                            {
+                                "type": 1,
+                                "changeType": {
+                                    "dataType": 0,
+                                    "operator": 0,
+                                    "change": 0,
+                                    "fThreshold": 2,
+                                    "sThreshold": -1,
+                                    "frThreshold": -1,
+                                    "srThreshold": -1,
+                                    "windowType": 0,
+                                    "pctType": 0,
+                                    "pct": 100,
+                                    "timeWindow": 5,
+                                    "twUnit": 0,
+                                    "pastWindow": 5,
+                                    "pwUnit": 0
+                                },
+                                "id": -1,
+                                "name": "C1",
+                                "mName": "A",
+                                "grpAffLevel": 0,
+                                "gAffLevfTh": -1,
+                                "gAffLevrTh": -1
+                            },
+                            {
+                                "type": 4,
+                                "forcastType": {
+                                    "dataType": 2,
+                                    "operator": 0,
+                                    "timeWindow": 5,
+                                    "twUnit": 0,
+                                    "windowType": 0,
+                                    "trendWindow": 5,
+                                    "trendWindowUnit": 0,
+                                    "pctType": 0,
+                                    "pct": -1,
+                                    "forecastModel": 0,
+                                    "forecastType": 0,
+                                    "fThreshold": 3,
+                                    "sThreshold": -1,
+                                    "frThreshold": -1,
+                                    "srThreshold": -1
+                                },
+                                "id": 0,
+                                "name": "C2",
+                                "mName": "B",
+                                "grpAffLevel": 0,
+                                "gAffLevfTh": -1,
+                                "gAffLevrTh": -1
+                            },
+                            {
+                                "type": 0,
+                                "thresholdType": {
+                                    "dataType": 4,
+                                    "operator": 0,
+                                    "windowType": 0,
+                                    "fThreshold": 4,
+                                    "sThreshold": -1,
+                                    "frThreshold": -1,
+                                    "srThreshold": -1,
+                                    "pctType": 0,
+                                    "pct": 100,
+                                    "timeWindow": 5,
+                                    "twUnit": 0
+                                },
+                                "id": 1,
+                                "name": "C3",
+                                "mName": "C",
+                                "grpAffLevel": 0,
+                                "gAffLevfTh": -1,
+                                "gAffLevrTh": -1
+                            }
+                        ]
+                    },
+                    {
+                        "id": 1,
+                        "condition": "",
+                        "conditionList": [
+                            {
+                                "type": 3,
+                                "outliersType": {
+                                    "dataType": 5,
+                                    "pctType": 0,
+                                    "pct": 100,
+                                    "timeWindow": 5,
+                                    "twUnit": 0,
+                                    "windowType": 0,
+                                    "algoType": 0,
+                                    "tolerance": 0.33
+                                },
+                                "id": -1,
+                                "name": "C1",
+                                "mName": "B",
+                                "grpAffLevel": 0,
+                                "gAffLevfTh": -1,
+                                "gAffLevrTh": -1
+                            },
+                            {
+                                "type": 4,
+                                "forcastType": {
+                                    "dataType": 4,
+                                    "operator": 0,
+                                    "timeWindow": 5,
+                                    "twUnit": 0,
+                                    "windowType": 0,
+                                    "trendWindow": 5,
+                                    "trendWindowUnit": 0,
+                                    "pctType": 0,
+                                    "pct": -1,
+                                    "forecastModel": 0,
+                                    "forecastType": 0,
+                                    "fThreshold": 2,
+                                    "sThreshold": -1,
+                                    "frThreshold": -1,
+                                    "srThreshold": -1
+                                },
+                                "id": 0,
+                                "name": "C2",
+                                "mName": "A",
+                                "grpAffLevel": 0,
+                                "gAffLevfTh": -1,
+                                "gAffLevrTh": -1
+                            },
+                            {
+                                "type": 3,
+                                "outliersType": {
+                                    "dataType": 4,
+                                    "pctType": 0,
+                                    "pct": 100,
+                                    "timeWindow": 5,
+                                    "twUnit": 0,
+                                    "windowType": 0,
+                                    "algoType": 0,
+                                    "tolerance": 0.33
+                                },"Show more

@@ -1,0 +1,14 @@
+Fri 12 Jul 2024 04:29:26 PM IST|TESTIDX=777777, TR_PATH=/home/cavisson/work/logs/TR777777, METRIC_FILE=/home/cavisson/work/logs/TR777777/tsdb/tsdb_metrics.txt, TSDB_PORT=15763
+Fri 12 Jul 2024 04:29:26 PM IST|
+Fri 12 Jul 2024 04:29:26 PM IST|TC - [DC025]OP=DCN, TP=L10m, MDM=Normal, SUB_MODE=Pattern, PatternOn=tier, Data-filter=Min
+Fri 12 Jul 2024 04:29:26 PM IST|tsdb_admin --port 15763 --op dcn --subject "customer:Default>application:Default>Tier:datacall-tier-*>Server:datacall-server-2>Processor:Processor-2" --measure "MGType:System Metrics>MGroup:MPStat Linux>Metric:Guest CPU (%),10010,8" --dt "min"
+Fri 12 Jul 2024 04:29:26 PM IST|TP=10 , SUB_MODE=Pattern
+Fri 12 Jul 2024 04:29:26 PM IST|EXP_MC=4
+Fri 12 Jul 2024 04:29:26 PM IST|MIN_VALUE=1
+Fri 12 Jul 2024 04:29:26 PM IST|MAX_VALUE=10
+Fri 12 Jul 2024 04:29:26 PM IST|df_length=1
+Fri 12 Jul 2024 04:29:26 PM IST|DATA_MIN_ARR=10 10 10 10 10 10 10 10
+Fri 12 Jul 2024 04:29:27 PM IST|MIN_VALUE=1
+Fri 12 Jul 2024 04:29:27 PM IST|MAX_VALUE=10
+Fri 12 Jul 2024 04:29:27 PM IST|df_length=1
+Fri 12 Jul 2024 04:29:27 PM IST|DATA_MIN_ARR=10 10 10 10 10 10 10 10

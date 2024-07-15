@@ -1,0 +1,496 @@
+#!/bin/bash
+
+function create_input_file()
+{
+  export GDF_PATH="$NS_WDIR/sys/$GDF_FILE"
+  export PATTERN_FILE=${METADATA_TEMP}/${BATS_TEST_NUMBER}.txt
+  automation_log "FILTER=$FILTER"
+  if [ "${FILTER^^}" == "EXACT" ];then
+     HIERARCHY=`echo $SUBJECT | cut -d">" -f3-`
+     automation_log "$HIERARCHY"
+  elif [ "${FILTER^^}" == "ALL" ];then
+     HIERARCHY=`echo $SUBJECT | cut -d">" -f3- | tr '>' '\n' | sed "s/:.*/:all/g" | xargs | tr ' ' '>'`
+     automation_log "$HIERARCHY"
+  elif [ "${FILTER^^}" == "PATTERN" ];then
+     TIER=`echo $SUBJECT | cut -d">" -f3`
+     TIER_PATT=`echo $TIER | awk -F'-' '{print $NF}'`
+     TIER_HIER=`echo $TIER | sed "s/${TIER_PATT}/*/g"`
+     automation_log "TIER=$TIER, TIER_PATT=$TIER_PATT, TIER_HIER=$TIER_HIER"
+     HIERARCHY="${TIER_HIER}"
+
+     if [ $HIER_LEVEL -ge 2 ];then
+       SERVER=`echo $SUBJECT | cut -d">" -f4`
+       SERVER_PATT=`echo $SERVER | awk -F'-' '{print $NF}'`
+       SERVER_HIER=`echo $SERVER | sed "s/${SERVER_PATT}/*/g"`
+       HIERARCHY=$HIERARCHY">${SERVER_HIER}"
+     fi
+
+     if [ $HIER_LEVEL -ge 3 ];then
+       INSTANCE=`echo $SUBJECT | cut -d">" -f5`
+       INSTANCE_PATT=`echo $INSTANCE | awk -F'-' '{print $NF}'`
+       INSTANCE_HIER=`echo $INSTANCE | sed "s/$INSTANCE_PATT/*/g"`
+       HIERARCHY=$HIERARCHY">${INSTANCE_HIER}"
+     fi
+     #TODO: ADD Hierarchy level 4
+
+     if [ $HIER_LEVEL -ge 4 ];then
+       BT=`echo $SUBJECT | cut -d">" -f4`
+       BT_PATT=`echo $BT | awk -F'-' '{print $NF}'`
+       BT_HIER=`echo $BT | sed "s/$BT_PATT/*/g"`
+       HIERARCHY=$HIERARCHY">${BT_HIER}"
+     fi
+     automation_log "HIERARCHY=$HIERARCHY"
+  fi
+
+  if [ "${SKIP^^}" == "ENABLE" ];then
+  IFS=":" read -a SKIP_ARR <<< ${SKIP_MODE}
+    if [ ${SKIP_ARR[0]} -eq 1 ];then
+      TIER=`echo $HIERARCHY | cut -d'>' -f1`
+      TIER_HIER=`echo $TIER | sed 's/$/!/g'`
+    elif [ ${SKIP_ARR[0]} -eq 0 ];then
+      TIER=`echo $HIERARCHY | cut -d'>' -f1`
+      TIER_HIER=$TIER
+    fi
+
+    if [ ${SKIP_ARR[1]} -eq 1 ];then
+      SERVER=`echo $HIERARCHY | cut -d'>' -f2`
+      SERVER_HIER=`echo $SERVER | sed 's/$/!/g'`
+    elif [ ${SKIP_ARR[1]} -eq 0 ];then
+      SERVER=`echo $HIERARCHY | cut -d'>' -f2`
+      SERVER_HIER=$SERVER
+    fi
+
+    if [ ${SKIP_ARR[2]} -eq 1 ];then
+      INSTANCE=`echo $HIERARCHY | cut -d'>' -f3`
+      INSTANCE_HIER=`echo $INSTANCE | sed 's/$/!/g'`
+    elif [ ${SKIP_ARR[2]} -eq 0 ];then
+      INSTANCE=`echo $HIERARCHY | cut -d'>' -f3`
+      INSTANCE_HIER=$INSTANCE
+    fi
+    HIERARCHY=$TIER_HIER">"$SERVER_HIER">"$INSTANCE_HIER
+  fi
+
+  MGTYPE=`echo $MEASURE | cut -d">" -f1`
+  MGROUP=`echo $MEASURE | cut -d">" -f2`
+  MGROUP_NAME=`grep "^Group" $GDF_PATH | cut -d'|' -f2`
+  export MGID=`grep "^Group|" $GDF_PATH | cut -d'|' -f3`
+  GRAPHS=`grep "^Graph" $GDF_PATH | cut -d"|" -f2-3 | sed 's/|/:/g' | tr -s '\r\n' '|' | sed "s/|$//"`
+
+  automation_log "TAGS = $TAGS"
+
+  if [ "${TYPE}" == "Derived" ];then
+    echo "${HIERARCHY},${MGTYPE}>MGroup:derived_${MGROUP_NAME},1000005,${GRAPHS}" > ${PATTERN_FILE}
+  elif [ "${TYPE}" == "Derived_BT" ];then
+    Hier_patt1=`echo $HIERARCHY | cut -d'>' -f1`
+    Hier_patt2=`echo $HIERARCHY | cut -d'>' -f4`
+    HIERARCHY=$Hier_patt1">"$Hier_patt2
+    echo "${HIERARCHY},${MGTYPE}>MGroup:Business Transactions GroupBy BTs,1000005,${GRAPHS}" > ${PATTERN_FILE}
+  elif [ "${TYPE}" == "Derived_TSI" ];then
+    HIERARCHY=`echo $HIERARCHY | cut -d'>' -f1-3`
+    echo "${HIERARCHY},${MGTYPE}>MGroup:Business Transactions By Tier,Server,Instance,1000005,${GRAPHS}" > ${PATTERN_FILE}
+  elif [ "${TYPE}" == "Derived_T" ];then
+    HIERARCHY=`echo $HIERARCHY | cut -d'>' -f1`
+    echo "${HIERARCHY},${MGTYPE}>MGroup:Business Transactions By Tier,1000005,${GRAPHS}" > ${PATTERN_FILE}
+  elif [ $TAG_FLAG -eq 1 ];then
+    echo "${HIERARCHY},${TAGS},${MGTYPE}>${MGROUP},${MGID},${GRAPHS}" >${PATTERN_FILE}
+  else
+    echo "${HIERARCHY},${MGTYPE}>${MGROUP},${MGID},${GRAPHS}" >${PATTERN_FILE}
+  fi
+
+}
+
+function create_open_related_file()
+{
+  export GDF_PATH="$NS_WDIR/sys/$GDF_FILE"
+  automation_log "FILE=$GDF_FILE, GDF_PATH=$GDF_PATH, HIER=$HIER_LEVEL"
+  export MGID=`grep "^Group|" $GDF_PATH | cut -d'|' -f3`
+  if [ $TAG_FLAG -eq 1 ];then
+    if [ $HIER_LEVEL -eq 1 ];then
+      LINE1=`grep "$MGID" $METRIC_FILE | grep "tags" | cut -d'>' -f3- | rev | cut -d',' -f2- | rev`
+      LINE2=`echo $LINE1 | rev | cut -d'>' -f2- | rev`
+    else
+      SERVER_LIST=($(cat $METRIC_FILE |cut -d',' -f3 |sort |uniq |grep "Tier:.*metadata*.*>"|grep "Server:"| cut -d'>' -f4|sort| uniq| xargs))
+      INSTANCE_LIST=($(cat $METRIC_FILE |cut -d',' -f3 |sort|uniq |grep "Tier:.*metadata*.*>"|grep "Server:"| cut -d'>' -f4|sort| uniq|xargs))
+
+      if [ $HIER_LEVEL -eq 2 ];then
+        LINE1=`grep "${SERVER_LIST[0]}" $METRIC_FILE | grep "$MGID" | grep "tags" | head -1 | cut -d'>' -f3- | rev | cut -d',' -f2- | rev`
+        LINE2=`echo $LINE1 | rev | cut -d'>' -f2- | rev`
+      elif [ $HIER_LEVEL -eq 3 ];then
+        LINE1=`grep "${SERVER_LIST[0]}" $METRIC_FILE | grep "$MGID" | grep "tags" | head -1 | cut -d'>' -f3- | rev | cut -d',' -f2- | rev`
+        LINE2=`echo $LINE1 | rev | cut -d'>' -f2- | rev`
+      fi
+    fi
+  else
+    if [ $HIER_LEVEL -eq 1 ];then
+      LINE1=`grep "$MGID" $METRIC_FILE |grep -v "tags"| cut -d',' -f3-6 | cut -d'>' -f3-`
+      LINE2=`echo $LINE1 | cut -d'>' -f1-2`
+    else
+      SERVER_LIST=($(cat $METRIC_FILE |cut -d',' -f3 |sort |uniq |grep "Tier:.*metadata*.>"|grep "Server:"| cut -d'>' -f4| sort| uniq| xargs))
+      INSTANCE_LIST=($(cat $METRIC_FILE |cut -d',' -f3 |sort|uniq |grep "Tier:.*metadata*.>"|grep "Server:"| cut -d'>' -f4| sort| uniq|xargs))
+
+      if [ $HIER_LEVEL -eq 2 ];then
+        LINE1=`grep "${SERVER_LIST[0]}" $METRIC_FILE | grep "$MGID" | head -1 | cut -d',' -f3-6 | cut -d'>' -f3-`
+        LINE2=`echo $LINE1 | cut -d'>' -f1-3`
+      elif [ $HIER_LEVEL -eq 3 ];then
+        LINE1=`grep "${SERVER_LIST[0]}" $METRIC_FILE | grep "$MGID" | head -1 | cut -d',' -f3-6 | cut -d'>' -f3-`
+        LINE2=`echo $LINE1 | cut -d'>' -f1-4`
+      fi
+    fi
+  fi
+
+  automation_log "LINE1=$LINE1, LINE2=$LINE2"
+  automation_log "MGID=$MGID"
+  export PATTERN_FILE=${METADATA_TEMP}/${BATS_TEST_NUMBER}.txt
+  var=$(grep '^Graph' $GDF_PATH | cut -d'|' -f2-3 | sed 's/|/:/g' | tr '\n' '|' | sed "s/|$//g")
+  echo $var | tr '|' '\n' > ${METADATA_TEMP}/.all_metric
+ 
+  echo "#open_related_file" > $PATTERN_FILE
+  echo "$LINE1" >> $PATTERN_FILE
+
+  while IFS= read -r line;
+  do
+    echo "${LINE2},${MGID},$line" >> $PATTERN_FILE
+  done < ${METADATA_TEMP}/.all_metric
+  
+  if [ "${TYPE^^}" == "DERIVED" ];then
+     sed -i 's/MGroup:/MGroup:derived_/g' $PATTERN_FILE
+     ID=`cat $PATTERN_FILE | cut -d',' -f3 | tail -1`
+     sed -i "s/${ID}/1000005/g" $PATTERN_FILE
+  fi
+
+  if [ "${FILTER^^}" == "ALL" ];then
+     var1=`echo $LINE1 | cut -d',' -f1`
+     automation_log "var1=$var1"
+     patt=`echo $var1 | cut -d'>' -f1 | sed 's/:.*$/:all/g'`
+     automation_log "patt=$patt"
+     if [ $HIER_LEVEL -ge 2 ];then
+	automation_log "HIER=$HIER_LEVEL"
+	patt2=`echo $var1 | cut -d'>' -f2 | sed 's/:.*$/:all/g'`
+	patt="${patt}>${patt2}"
+	automation_log "patt2=$patt2"
+	automation_log "patt=$patt"
+     fi
+     if [ $HIER_LEVEL -ge 3 ];then
+	automation_log "HIER=$HIER_LEVEL"
+	patt3=`echo $var1 | cut -d'>' -f3 | sed 's/:.*$/:all/g'`
+	patt="${patt}>${patt3}"
+	automation_log "patt=$patt"
+	automation_log "patt3=$patt3"
+     fi
+     sed -i "s/$var1/$patt/g" $PATTERN_FILE
+  fi 
+
+
+  if [ "${FILTER^^}" == "PATTERN" ];then
+     var2=`echo $LINE1 | cut -d',' -f1`
+     TIER=`echo $LINE1 | cut -d"," -f1 | cut -d'>' -f1`
+     TIER_PATT=`echo $TIER | awk -F'-' '{print $NF}'`
+     TIER_HIER=`echo $TIER | sed "s/${TIER_PATT}/*/g"`
+     automation_log "TIER=$TIER, TIER_PATT=$TIER_PATT, TIER_HIER=$TIER_HIER"
+     PATT="${TIER_HIER}"
+
+     if [ $HIER_LEVEL -ge 2 ];then
+       SERVER=`echo $LINE1 |cut -d',' -f1 | cut -d">" -f2`
+       SERVER_PATT=`echo $SERVER | awk -F'-' '{print $NF}'`
+       SERVER_HIER=`echo $SERVER | sed "s/${SERVER_PATT}/*/g"`
+       PATT="${PATT}>${SERVER_HIER}"
+       automation_log "SERVER=$SERVER, SERVER_PATT=$SERVER_PATT, SERVER_HIER=$SERVER_HIER, PATT=$PATT"
+     fi
+
+     if [ $HIER_LEVEL -ge 3 ];then
+       INSTANCE=`echo $LINE1 |cut -d',' -f1| cut -d">" -f3`
+       INSTANCE_PATT=`echo $INSTANCE | awk -F'-' '{print $NF}'`
+       INSTANCE_HIER=`echo $INSTANCE | sed "s/$INSTANCE_PATT/*/g"`
+       PATT="${PATT}>${INSTANCE_HIER}"
+     fi
+     automation_log "PATT=$PATT"
+     sed -i "s/$var2/$PATT/g" $PATTERN_FILE
+  fi
+}
+
+
+function create_pattern_match_file() 
+{
+  source ${MT_DETAIL_FILE}
+  automation_log "tsdb_admin --op dci --tr $TESTIDX --port ${TSDB_PORT} --id $METRIC_ID"
+  tsdb_admin --op dci --tr $TESTIDX --port ${TSDB_PORT} --id $METRIC_ID >.dci_file
+  export ACT_SC=$(grep "Freq specs:" .dci_file | cut -d"," -f6 | tr -d " " | cut -d":" -f2)
+  data_sln=$(($(grep -n "^Data:" .dci_file | cut -d':' -f1)+ 4))
+  data_eln=$((data_sln + ACT_SC))
+
+  DATA_ARR=($(cat .dci_file | awk 'NR==25, NR==84' | awk '{print $8}' | xargs |tr ' ' ','))
+  automation_log "DATA_ARR=$DATA_ARR"
+  export GDF_PATH="$NS_WDIR/sys/$GDF_FILE"
+  automation_log "FILE=$GDF_FILE, GDF_PATH=$GDF_PATH, HIER=$HIER_LEVEL"
+  export MGID=`grep "^Group|" $GDF_PATH | cut -d'|' -f3`
+  if [ $TAG_FLAG -eq 1 ];then
+    if [ $HIER_LEVEL -eq 1 ];then
+      LINE1=`grep "$MGID" $METRIC_FILE | grep "tags" | cut -d'>' -f3- | rev | cut -d',' -f2- | rev`
+      LINE2=`echo $LINE1 | rev | cut -d'>' -f2- | rev`
+    else
+      SERVER_LIST=($(cat $METRIC_FILE |cut -d',' -f3 |sort |uniq |grep "Tier:.*metadata*.*>"|grep "Server:"| cut -d'>' -f4|sort| uniq| xargs))
+      INSTANCE_LIST=($(cat $METRIC_FILE |cut -d',' -f3 |sort|uniq |grep "Tier:.*metadata*.*>"|grep "Server:"| cut -d'>' -f4|sort| uniq|xargs))
+
+      if [ $HIER_LEVEL -eq 2 ];then
+        LINE1=`grep "${SERVER_LIST[0]}" $METRIC_FILE | grep "$MGID" | grep "tags" | head -1 | cut -d'>' -f3- | rev | cut -d',' -f2- | rev`
+        LINE2=`echo $LINE1 | rev | cut -d'>' -f2- | rev`
+      elif [ $HIER_LEVEL -eq 3 ];then
+        LINE1=`grep "${SERVER_LIST[0]}" $METRIC_FILE | grep "$MGID" | grep "tags" | head -1 | cut -d'>' -f3- | rev | cut -d',' -f2- | rev`
+        LINE2=`echo $LINE1 | rev | cut -d'>' -f2- | rev`
+      fi
+    fi
+  else
+    if [ $HIER_LEVEL -eq 1 ];then
+      LINE1=`grep "$MGID" $METRIC_FILE |grep -v "tags"| cut -d',' -f3-6 | cut -d'>' -f3-`
+      LINE2=`echo $LINE1 | cut -d'>' -f1-2`
+    else
+      SERVER_LIST=($(cat $METRIC_FILE |cut -d',' -f3 |sort |uniq |grep "Tier:.*metadata*.>"|grep "Server:"| cut -d'>' -f4| sort| uniq| xargs))
+      INSTANCE_LIST=($(cat $METRIC_FILE |cut -d',' -f3 |sort|uniq |grep "Tier:.*metadata*.>"|grep "Server:"| cut -d'>' -f4| sort| uniq|xargs))
+
+      if [ $HIER_LEVEL -eq 2 ];then
+        LINE1=`grep "${SERVER_LIST[0]}" $METRIC_FILE | grep "$MGID" | head -1 | cut -d',' -f3-6 | cut -d'>' -f3-`
+        LINE2=`echo $LINE1 | cut -d'>' -f1-3`
+      elif [ $HIER_LEVEL -eq 3 ];then
+        LINE1=`grep "${SERVER_LIST[0]}" $METRIC_FILE | grep "$MGID" | head -1 | cut -d',' -f3-6 | cut -d'>' -f3-`
+        LINE2=`echo $LINE1 | cut -d'>' -f1-4`
+      fi
+    fi
+  fi
+
+  automation_log "LINE1=$LINE1, LINE2=$LINE2"
+  automation_log "MGID=$MGID"
+  export PATTERN_FILE=${METADATA_TEMP}/${BATS_TEST_NUMBER}.txt
+  var=$(grep '^Graph' $GDF_PATH | cut -d'|' -f2-3 | awk 'NR>=2' | sed 's/|/:/g' | tr '\n' '|' | sed "s/|$//g")
+  echo $var | tr '|' '\n' > ${METADATA_TEMP}/.all_metric
+ 
+  echo "${DATA_ARR}," > $PATTERN_FILE
+  echo "$LINE1" >> $PATTERN_FILE
+
+  while IFS= read -r line;
+  do
+    echo "${LINE2},${MGID},$line" >> $PATTERN_FILE
+  done < ${METADATA_TEMP}/.all_metric
+
+  if [ "${TYPE^^}" == "DERIVED" ];then
+     sed -i 's/MGroup:/MGroup:derived_/g' $PATTERN_FILE
+     ID=`cat $PATTERN_FILE | cut -d',' -f3 | tail -1`
+     sed -i "s/${ID}/1000005/g" $PATTERN_FILE
+  fi
+
+  if [ "${FILTER^^}" == "ALL" ];then
+     var1=`echo $LINE1 | cut -d',' -f1`
+     automation_log "var1=$var1"
+     patt=`echo $var1 | cut -d'>' -f1 | sed 's/:.*$/:all/g'`
+     automation_log "patt=$patt"
+     if [ $HIER_LEVEL -ge 2 ];then
+	automation_log "HIER=$HIER_LEVEL"
+	patt2=`echo $var1 | cut -d'>' -f2 | sed 's/:.*$/:all/g'`
+	patt="${patt}>${patt2}"
+	automation_log "patt2=$patt2"
+	automation_log "patt=$patt"
+     fi
+     if [ $HIER_LEVEL -ge 3 ];then
+	automation_log "HIER=$HIER_LEVEL"
+	patt3=`echo $var1 | cut -d'>' -f3 | sed 's/:.*$/:all/g'`
+	patt="${patt}>${patt3}"
+	automation_log "patt=$patt"
+	automation_log "patt3=$patt3"
+     fi
+     sed -i "s/$var1/$patt/g" $PATTERN_FILE
+  fi 
+
+
+  if [ "${FILTER^^}" == "PATTERN" ];then
+     var2=`echo $LINE1 | cut -d',' -f1`
+     TIER=`echo $LINE1 | cut -d"," -f1 | cut -d'>' -f1`
+     TIER_PATT=`echo $TIER | awk -F'-' '{print $NF}'`
+     TIER_HIER=`echo $TIER | sed "s/${TIER_PATT}/*/g"`
+     automation_log "TIER=$TIER, TIER_PATT=$TIER_PATT, TIER_HIER=$TIER_HIER"
+     PATT="${TIER_HIER}"
+
+     if [ $HIER_LEVEL -ge 2 ];then
+       SERVER=`echo $LINE1 |cut -d',' -f1 | cut -d">" -f2`
+       SERVER_PATT=`echo $SERVER | awk -F'-' '{print $NF}'`
+       SERVER_HIER=`echo $SERVER | sed "s/${SERVER_PATT}/*/g"`
+       PATT=$PATT">${SERVER_HIER}"
+     fi
+
+     if [ $HIER_LEVEL -ge 3 ];then
+       INSTANCE=`echo $LINE1 |cut -d',' -f1| cut -d">" -f3`
+       INSTANCE_PATT=`echo $INSTANCE | awk -F'-' '{print $NF}'`
+       INSTANCE_HIER=`echo $INSTANCE | sed "s/$INSTANCE_PATT/*/g"`
+       PATT=$PATT">${INSTANCE_HIER}"
+     fi
+     sed -i "s/$var2/$PATT/g" $PATTERN_FILE
+  fi
+}
+
+
+function get_exp_subjects()
+{
+   automation_log "op=$OP"
+   if [ "${OP}" == "MOR" ];then
+     if [ "${FILTER^^}" == "EXACT" ];then
+	automation_log "LINE1=$LINE1"
+	var=`echo $LINE1 | cut -d',' -f1`
+	automation_log "var=$var"
+        echo "$var" > ${METADATA_TEMP}/exp_subjects
+     elif [ "${FILTER^^}" == "ALL" ];then
+        grep "$MGID" $METRIC_FILE | cut -d"," -f3 | cut -d'>' -f3- | uniq >${METADATA_TEMP}/exp_subjects
+     elif [ "${FILTER^^}" == "PATTERN" ];then
+        grep "$MGID" $METRIC_FILE | cut -d"," -f3 | cut -d'>' -f3- | uniq >${METADATA_TEMP}/exp_subjects
+     fi
+   elif [ "${OP}" == "MPM" ];then
+     if [ "${FILTER^^}" == "EXACT" ];then
+        automation_log "LINE1=$LINE1"
+        var=`echo $LINE1 | cut -d',' -f1`
+        automation_log "var=$var"
+        echo "$var" > ${METADATA_TEMP}/exp_subjects
+     elif [ "${FILTER^^}" == "ALL" ];then
+        grep "$MGID" $METRIC_FILE | cut -d"," -f3 | cut -d'>' -f3- | uniq >${METADATA_TEMP}/exp_subjects
+     elif [ "${FILTER^^}" == "PATTERN" ];then
+        grep "$MGID" $METRIC_FILE | cut -d"," -f3 | cut -d'>' -f3- | uniq >${METADATA_TEMP}/exp_subjects
+     fi
+
+   elif [ "${OP}" == "MOM" ];then 
+     if [ "${FILTER^^}" == "EXACT" ];then
+        echo "$HIERARCHY" >${METADATA_TEMP}/exp_subjects
+     elif [ "${FILTER^^}" == "ALL" ];then
+        grep "$MGID" $METRIC_FILE | cut -d"," -f3 | cut -d'>' -f3- | uniq >${METADATA_TEMP}/exp_subjects
+     elif [ "${FILTER^^}" == "PATTERN" ];then
+        grep "$MGID" $METRIC_FILE | cut -d"," -f3 | cut -d'>' -f3- | uniq >${METADATA_TEMP}/exp_subjects
+    fi
+   fi
+}
+
+function get_act_subjects()
+{
+   if [ $VERSION -eq 1 ];then
+     if [ "${FILTER^^}" == "EXACT" ];then
+       grep "^subject:" $OUTPUTFILE | awk '{print $2}' | cut -d'>' -f3- | sort | uniq >${METADATA_TEMP}/act_subjects
+     elif [ "${FILTER^^}" == "ALL" ];then
+       grep "^subject:" $OUTPUTFILE | awk '{print $2}' | cut -d'>' -f3- | sort | uniq >${METADATA_TEMP}/act_subjects
+     elif [ "${FILTER^^}" == "PATTERN" ];then
+       grep "^subject:" $OUTPUTFILE | awk '{print $2}' | cut -d'>' -f3- | sort | uniq >${METADATA_TEMP}/act_subjects
+     fi
+   else
+     if [ "${FILTER^^}" == "EXACT" ];then
+       grep "^subject:" $OUTPUTFILE | awk '{print $2}' | sort | uniq >${METADATA_TEMP}/act_subjects
+     elif [ "${FILTER^^}" == "ALL" ];then
+       grep "^subject:" $OUTPUTFILE | awk '{print $2}' | sort | uniq >${METADATA_TEMP}/act_subjects
+     elif [ "${FILTER^^}" == "PATTERN" ];then
+       grep "^subject:" $OUTPUTFILE | awk '{print $2}' | sort | uniq >${METADATA_TEMP}/act_subjects
+     fi
+   fi
+}
+
+function validate_subjects()
+{
+   get_exp_subjects
+   get_act_subjects
+   while IFS= read -r line
+   do
+     if [ $(grep -c "$line" ${METADATA_TEMP}/exp_subjects) -eq 0 ];then
+        ERR_MSG=$ERR_MSG"wrong subject - $line "
+     fi
+   done < ${METADATA_TEMP}/act_subjects
+   if [ ${#ERR_MSG} -gt 0 ];then
+      result1="FAIL"
+   else
+      result1="PASS"
+   fi
+}
+
+function get_exp_measures()
+{
+   >${METADATA_TEMP}/exp_measures
+   IFS=',' read -a graphs <<< "$(grep "^Graph|" $GDF_PATH | cut -d"|" -f2-3 | sed 's/|/:/g' | tr '\n' ',')"
+   length=${#graphs[@]}
+   automation_log "No. of graph present=$length"
+   if [ "${OP}" == "MOR" ];then
+     if [ $TAG_FLAG -eq 1 ];then
+        MGROUP=$(echo $LINE1 | rev | cut -d',' -f1-3 | rev | cut -d',' -f1 | cut -d'>' -f2)
+     else
+        MGROUP=$(echo $LINE1 |cut -d',' -f2 | cut -d'>' -f2)
+     fi
+   fi
+   if [ "${OP}" == "MPM" ];then
+     MGROUP=$(echo $LINE1 |cut -d',' -f2 | cut -d'>' -f2)
+   fi
+   automation_log "MGROUP=$MGROUP"
+   for ((i=0 ; i<length ; i++))
+   do
+       echo "$MGROUP:$MGID>Metric:${graphs[i]}" >>${METADATA_TEMP}/exp_measures
+   done
+}
+
+function get_act_measures()
+{
+   grep "^measure:" $OUTPUTFILE | cut -d':' -f2- | cut -d'>' -f2- | sort | uniq >${METADATA_TEMP}/act_measures
+}
+
+function validate_measures()
+{
+   get_exp_measures
+   get_act_measures
+   while IFS= read -r line
+   do
+      if [ $(grep -c "$line" ${METADATA_TEMP}/exp_measures) -eq 0 ];then
+        ERR_MSG=$ERR_MSG"wrong measure - $line "
+     fi
+   done < ${METADATA_TEMP}/act_measures
+   if [ ${#ERR_MSG} -gt 0 ];then
+      result2="FAIL"
+   else
+      result2="PASS"
+   fi
+}
+
+#------------------Tags validation starts ---------------------------
+
+function get_exp_tags()
+{
+   grep "tags" $METRIC_FILE |grep "$MGID" | cut -d'"' -f2 |uniq > ${METADATA_TEMP}/exp_tags
+}
+
+function get_act_tags()
+{
+   grep "Tag : " $OUTPUTFILE  | cut -d':' -f2 | uniq |xargs | rev | cut -d',' -f2-|rev > ${METADATA_TEMP}/act_tags
+}
+
+function validate_tags()
+{
+   get_exp_tags
+   get_act_tags
+   while IFS=read -r line
+   do
+     if [ $(grep -c "$line" ${METADATA_TEMP}/exp_tags) -eq 0 ];then
+        ERR_MSG=$ERR_MSG"wrong tags - $line "
+     fi
+   done < ${METADATA_TEMP}/act_tags
+   if [ ${#ERR_MSG} -gt 0 ];then
+      result3="FAIL"
+   else
+      result3="PASS"
+   fi
+}
+
+#------------------Tags validation ends------------------------------
+
+function validate_output()
+{
+   if [ "${TYPE^^}" == "DERIVED" ];then
+      validate_subjects
+      validate_tags
+   else
+      validate_subjects
+      validate_measures
+      validate_tags
+   fi
+
+   if [ "$result1" == "FAIL" ] || [ "$result2" == "FAIL" ] || [ "$result3" == "FAIL" ];then
+      echo "$ERR_MSG"
+   else
+      echo "PASS"
+   fi
+}

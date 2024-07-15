@@ -1,0 +1,183 @@
+#!/bin/bash
+SERVER=$(cat ${TREECALL_TEMP}/server_info.txt | head -1 | cut -d'|' -f1)
+INSTANCE=$(cat ${TREECALL_TEMP}/instance_info.txt | head -1 | cut -d'|' -f1)
+INSTANCE_NAME=$(cat ${TREECALL_TEMP}/instance_info.txt | head -1 | cut -d'|' -f2)
+function get_exp_mgroups()
+{
+   if [ $HI_LEVEL -ge 1 ];then
+      subject="Tier:${TIER}"
+   fi
+   if [ $HI_LEVEL -ge 2 ];then
+      subject=$subject">Server:${SERVER}"
+   fi
+   if [ $HI_LEVEL -ge 3 ];then
+      subject=$subject">${INSTANCE}:${INSTANCE_NAME}"
+   fi
+   automation_log "subject = [ $subject ]"
+   export EXP_MG_IDS=($(grep "$subject," $METRIC_FILE | awk -F',' '{print $(NF-2)}' | sort | uniq | xargs))
+
+   automation_log "EXP_MG_IDS = [ $(echo ${EXP_MG_IDS[@]} | tr ' ' ',') ]"
+}
+function get_act_mgroups()
+{
+   #if [ $HI_LEVEL -eq 1 ];then
+      export ACT_MG_IDS=($(jq '.tree[] | select(.name=="MetricGroups") | .children[].gdfId' ${RESPONSE_FILE} | cut -d'"' -f2 | xargs))
+   #fi
+   automation_log "ACT_MG_IDS = [ $(echo ${ACT_MG_IDS[@]}| tr ' ' ',') ]"
+}
+function validate_graphs()
+{
+   get_act_mgroups
+   tot_ids=${#ACT_MG_IDS[@]}
+   for ((i=0 ; i<tot_ids ; i++))
+   do
+       MGID=${ACT_MG_IDS[i]}
+       gdf=$(grep "^Group|*.*$MGID" $NS_WDIR/sys/*.gdf | cut -d":" -f1)
+       automation_log "MGID=$MGID GDF=$gdf"
+       cat $gdf | grep "^Graph|" | cut -d"|" -f2 >.expected_graphs
+      # if [ "$HIERARCHY" == "tier" ];then
+          jq ".tree[] | select(.name==\"MetricGroups\") | .children[] | select(.gdfId==${MGID}) | .children[].name" ${RESPONSE_FILE} | cut -d'"' -f2  >.act_graphs
+	  automation_log "graphs = [ $(cat .act_graphs | tr '\n' ',') ]"
+	  while IFS= read -r line
+	  do
+	      if [ $(grep -c "$line" .act_graphs) -eq 0 ];then
+		 ERR_MSG=$ERR_MSG"[ $graph ] - not present in tree"
+	      fi
+	  done < .expected_graphs
+       #fi
+   done
+   if [ ${#ERR_MSG} -gt 0 ];then
+      echo "FAILED : $ERR_MSG"
+   else
+      echo "PASS"
+   fi
+}
+function get_exp_servers()
+{
+   grep "metadata_tree-tier.*Server:" ${METRIC_FILE} | cut -d',' -f3 | cut -d'>' -f4 | cut -d':' -f2 | sort | uniq  >.exp_servers
+   automation_log "EXP_SERVERS = [ $(cat .exp_servers | tr '\n' ',') ]"
+}
+function get_act_servers()
+{
+   jq ".tree[] | select(.name==\"Subjects\") | .children[] | select(.name==\"Server\") | .children[].name" ${RESPONSE_FILE} | cut -d'"' -f2 >.act_servers
+   automation_log "ACT_SERVERS = [ $(cat .act_servers | tr '\n' ',') ]"
+}
+function validate_servers()
+{
+   get_exp_servers
+   get_act_servers
+   while IFS= read -r line
+   do
+     if [ $(grep -c "$line" .act_servers) -eq 0 ];then
+	ERR_MSG=$ERR_MSG"[ $graph ] - not present in tree"
+     fi
+   done < .exp_servers
+   if [ ${#ERR_MSG} -gt 0 ];then
+      echo "FAILED : $ERR_MSG"
+   else
+      echo "PASS"
+   fi
+}
+function get_exp_lvl3_subjects()
+{
+   cat ${TREECALL_TEMP}/all_subjects.txt | grep "Tier:$TIER>Server:$SERVER>*" | cut -d'>' -f3 | cut -d':' -f1 | sort | uniq | sed '/^$/d' > ${TREECALL_TEMP}/exp_lvl3_subjects
+}
+function get_act_lvl3_subjects()
+{
+    jq ".tree[] | select(.name==\"Subjects\") | .children[].name" ${RESPONSE_FILE} | cut -d'"' -f2 >${TREECALL_TEMP}/act_lvl3_subjects
+}
+function validate_lvl3_subjects()
+{
+   get_exp_lvl3_subjects
+   get_act_lvl3_subjects
+   while IFS= read -r line
+   do
+     if [ $(grep -c "$line" ${TREECALL_TEMP}/act_lvl3_subjects) -eq 0 ];then
+	     ERR_MSG=$ERR_MSG"$line is missing in tree\n"
+     fi
+   done < ${TREECALL_TEMP}/exp_lvl3_subjects
+
+   if [ ${#ERR_MSG} -gt 0 ];then
+      echo "FAIL : $ERR_MSG"
+   else
+      echo "PASS"
+   fi
+}
+
+function validate_lvl3_instances()
+{
+   #get expected instances
+   cat ${TREECALL_TEMP}/all_subjects.txt|grep "Tier:$TIER>Server:$SERVER>$INSTANCE:$INSTANCE_NAME"|cut -d'>' -f3|cut -d':' -f2|sort|uniq|sed '/^$/d' > ${TREECALL_TEMP}/exp_lvl3_instances
+   #get actual instances
+   jq ".tree[] | select(.name==\"Subjects\") |.children[] | select(.name==\"$INSTANCE\") | .children[].name" ${RESPONSE_FILE}|cut -d'"' -f2 >${TREECALL_TEMP}/act_lvl3_instances
+   
+   while IFS= read -r line
+   do
+     if [ $(grep -c "$line" ${TREECALL_TEMP}/act_lvl3_instances) -eq 0 ];then
+        ERR_MSG=$ERR_MSG"$line - instance is missing \n"
+     fi
+   done < ${TREECALL_TEMP}/exp_lvl3_instances
+
+    if [ ${#ERR_MSG} -gt 0 ];then
+      echo "FAIL : $ERR_MSG"
+   else
+      echo "PASS"
+   fi
+}
+
+# function for getting actual tags and expected tags and validating it
+
+function get_act_tags()
+{
+	if [ $HI_LEVEL -ge 2 ];then
+	        `grep "metadata_tree-server-1,tags" ${METRIC_FILE}  | tail -1 | cut -d'"' -f2 | tr ',' '\n' > t_list_act`
+	fi
+
+	if [ $HI_LEVEL -ge 3 ];then
+		`grep "metadata_tree-server*.*.>.*.*tags" ${METRIC_FILE} | tail -1 | cut -d '"' -f 2 | tr ',' '\n'  > t_list_act `
+	fi
+}
+
+function get_expect_tags()
+{
+  json_data=$(jq '.tree[0].tagsList' ${RESPONSE_FILE} )
+  key_value_array=$(echo "$json_data" | jq -r '.[][] | "\(.key)=\(.value)"')
+
+  # Convert the space-separated string into an array
+  IFS=$'\n' read -rd '' -a key_value_array <<< "$key_value_array"
+  
+  >t_list_ex
+  # Print the array elements
+  for element in "${key_value_array[@]}"; do
+     echo "$element" >> t_list_ex
+  done
+}
+
+function tag_validation()
+{            
+	get_act_tags
+	get_expect_tags
+	file1="t_list_ex"
+
+        file2="t_list_act"
+
+        if cmp -s "$file1" "$file2"; then
+           automation_log "The contents of $file1 and $file2 are exactly the same."
+        else
+           automation_log "The contents of $file1 and $file2 are different."
+           ERR_MSG=$ERR_MSG"Wrong tags = `diff -y --suppress-common-lines "$file1" "$file2"`"
+        fi
+
+	if [ ${#ERR_MSG} -gt 0 ];then 
+	   result1="FAIL"
+	else
+	   result1="PASS"
+	fi
+
+	if [ "$result1" == "FAIL" ];then
+	   echo "$ERR_MSG"
+	else
+	   echo "PASS"
+	fi
+}
+

@@ -1,0 +1,2 @@
+#Ctrl_ip, ctrl_port, backup_ip, backupPort, Protocol
+100,184.105.177.101,7961,184.105.177.98,7961,wss

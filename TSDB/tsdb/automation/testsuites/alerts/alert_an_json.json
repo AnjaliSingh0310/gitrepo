@@ -1,0 +1,96 @@
+{
+    "cctx": {
+        "cck": "cavisson.343434.1715236992495",
+        "pk": "cavisson:172.24.1.8:05-09-2024 06-42-42.160",
+        "u": "cavisson",
+        "prodType": "Netdiagnostics"
+    },
+    "opType": 31,
+    "clientId": "-1",
+    "appId": "-1",
+    "rules": [
+        {
+            "name": "sss",
+            "id": -1,
+            "attributes": {
+                "enable": true,
+                "chkStatus": true,
+                "chkStatusTime": 900,
+                "level": 0,
+                "conditionType": 0,
+                "groups": "0",
+                "skipSamples": false,
+                "applyRuleAfter": 5,
+                "genAlertForNaN": false,
+                "severity": [
+                    {
+                        "id": 3,
+                        "condition": "C1",
+                        "conditionList": [
+                            {
+                                "type": 2,
+                                "mName": "A",
+                                "grpAffLevel": 0,
+                                "gAffLevfTh": -1,
+                                "gAffLevrTh": -1,
+                                "id": 0,
+                                "name": "C1",
+                                "anomalyType": {
+                                    "dataType": 4,
+                                    "operator": 0,
+                                    "windowType": 0,
+                                    "timeWindow": 5,
+                                    "twUnit": 0,
+                                    "pctType": 0,
+                                    "pct": 100,
+                                    "algoType": 1,
+                                    "deviation": 2
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "actions": [],
+                "tags": [],
+                "metric": [
+                    {
+                        "subject": [
+                            {
+                                "tags": [
+                                    {
+                                        "key": "Tier",
+                                        "mode": 2,
+                                        "value": "ALL"
+                                    },
+                                    {
+                                        "key": "Server",
+                                        "mode": 2,
+                                        "value": "ALL"
+                                    }                                ]
+                            }
+                        ],
+                        "measure": {
+                            "metric": "AL 2xx/Sec",
+                            "metricId": 7,
+                            "mg": "Access Log ",
+                            "mgId": 35385,
+                            "mgType": "Request stats using access Log such as Requests/Sec, Service Time, Receive Throughtput.",
+                            "mgTypeId": -1
+                        },
+                        "glbMetricId": null,
+                        "derivedFormula": null,
+                        "attribute": 1,
+                        "name": "A",
+                        "mode": 0
+                    }
+                ],
+                "schedule": false,
+                "mailIds": [],
+                "extensions": [],
+                "message": "",
+                "description": "",
+                "recommendation": ""
+            }
+        }
+    ]
+}

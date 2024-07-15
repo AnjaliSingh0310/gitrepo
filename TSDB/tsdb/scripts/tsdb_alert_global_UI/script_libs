@@ -1,0 +1,6 @@
+-I/home/cavisson/cavisson-saas/opensource/aeron/aeron-client/src/main/c
+-I/home/cavisson/cavisson-saas/opensource/C-Thread-Pool
+-I/home/cavisson/cavisson-saas/utils/hash/src
+-I/home/cavisson/cavisson-saas/catalog/src
+-I/home/cavisson/cavisson-saas/catalog/src
+

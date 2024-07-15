@@ -1,0 +1,26 @@
+#!/bin/bash
+
+run_query()
+{
+   echo "Function Name : run_query"
+   echo "Parameters :		  "
+   echo "   OP : specify opcode , example - tci,dcn,mor etc."
+   echo "   TP_TYPE : specify time period type (preset or custom)"
+   echo "   DURATION : specify time duration in minutes"
+   echo "   STIME : specify start time in utc"
+   echo "   ETIME : specify end time in utc"
+   echo "   INPFILE : specify input file"
+   echo "   SUBJECT : specify tsdb subject"
+   echo "   MEASURE : specify measure"
+   echo "   VIEW_BY : specify granularity"
+   echo "   ID : specify id"
+   echo "   LEVEL : specify level (used in tree_call , hierarchy_call)"
+   echo "   VERSION : specify tsdb version"
+   echo "   OUTFILE : specify response filename"
+   echo "Function Call Example :"
+   echo "   run_query OP=mom INPFILE=file1.txt VERSION=2 OUTFILE=response.txt"
+}
+
+case $1 in
+"run_query")run_query;;
+esac

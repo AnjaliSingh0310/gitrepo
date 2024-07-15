@@ -1,0 +1,6 @@
+#gdf_name   event_id  no_of_element   Upper_limit    lower_limit   num_vector     min_vectors    max_vectors    monitortype(0 - custom, 1 - dynamic) server    vectorprefix new_vector_interval
+cm_nd_bt_mon_data 74 40 30 3 20 10 10 1 AtgTier BT
+cm_nd_backend_call_mon_data 75 20 50 5 20 10 10 1 AtgTier IT
+cm_nd_method_mon_data_ex 61 10 60 6 30 10 10 1 AtgTier MT
+cm_java_gc_jmx_sun8 76 42 20 2 1 10 10 0 AtgTier JavaGC
+cm_nd_thread_hot_spot_data 53 10 80 8 1 10 10 0 AtgTier ThreadHotspot

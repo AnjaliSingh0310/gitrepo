@@ -1,0 +1,88 @@
+#!/bin/bash
+
+source $NS_WDIR/TSDB/tsdb/automation/testsuites/common
+common_setup
+
+check_group_attr() {
+   tag_name_in_response=$1
+   RESPONSE=$2
+   get_gdf_id=`cat $RESPONSE | grep 'gdf_id:' | cut -d':' -f2 | cut -d',' -f1 | xargs`
+   get_file_name=`grep "$get_gdf_id" $NS_WDIR/sys/*.gdf | cut -d':' -f1`
+   automation_log "$get_file_name"
+   cat $get_file_name | grep "^Group" | cut -d'|' -f12 | tr ',' '\n' > $NS_WDIR/TSDB/tsdb/automation/.tmp/group/mgroup_tags
+   automation_log "$tag_name_in_response"
+   if grep -qi "$tag_name_in_response" "$NS_WDIR/TSDB/tsdb/automation/.tmp/group/mgroup_tags"; then
+    	automation_log "Tags in response and tags in request are same"
+   else
+    	automation_log "Tags in response and tags in request are not same"
+	ERR_MSG=$ERR_MSG"Wrong tags"
+   fi
+}
+
+check_no_group_found(){
+   RESPONSE=$1
+   output_msg=`cat $RESPONSE |grep "DetailErrMsg" | cut -d':' -f5 | xargs`
+   if [ "$output_msg" == "No groups found" ];then
+	   automation_log "No groups found, Test cases passed. Invalid Keyword/Tag"
+   else
+	automation_log "Testcase Failed"
+	ERR_MSG=$ERR_MSG"Groups found"
+   fi
+
+   if [ ${#ERR_MSG} -gt 0 ];then
+      result2="FAIL"
+   else
+      result2="PASS"
+   fi
+
+
+   if [ "$result2" == "FAIL" ] ;then
+      echo "$ERR_MSG"
+   else
+      echo "PASS"
+   fi
+
+
+}
+
+check_without_tag_name(){
+   RESPONSE=$1
+   KEY=$2
+   `cat $RESPONSE | grep "name:" |grep -v "Group desc" | cut -d ":" -f2` > $NS_WDIR/TSDB/tsdb/automation/.tmp/group/get_output
+   automation_log "$KEY"
+    if grep -qiF "$KEY" "$NS_WDIR/TSDB/tsdb/automation/.tmp/group/get_output" ; then
+      automation_log "File 1 content is present in File 2."
+    else
+      automation_log "File 1 content is not present in File 2."
+      ERR_MSG=$ERR_MSG"Wrong graphs - $file1_content"
+    fi
+   if [ ${#ERR_MSG} -gt 0 ];then
+      result3="FAIL"
+   else
+      result3="PASS"
+   fi
+
+
+   if [ "$result3" == "FAIL" ] ;then
+      echo "$ERR_MSG"
+   else
+      echo "PASS"
+   fi
+}
+
+validate_results() {
+   TAG_NAME=$1
+   RESPONSE_FILE=$2
+   check_group_attr "$TAG_NAME" "$RESPONSE_FILE"
+   if [ ${#ERR_MSG} -gt 0 ];then
+      result1="FAIL"
+   else
+      result1="PASS"
+   fi
+
+   if [ "$result1" == "FAIL" ];then
+      echo "$ERR_MSG"
+   else
+      echo "PASS"
+   fi
+}

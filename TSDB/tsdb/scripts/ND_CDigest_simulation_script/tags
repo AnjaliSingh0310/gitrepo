@@ -1,0 +1,143 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	//
+BUFF_SIZE	flow_util.h	/^ #define BUFF_SIZE /;"	d
+CUSTOM_MONITOR	flow_util.h	/^#define CUSTOM_MONITOR /;"	d
+DVM_MONITOR	flow_util.h	/^#define DVM_MONITOR /;"	d
+FlowReturn	runlogic.c	/^typedef void FlowReturn;$/;"	t	typeref:typename:void	file:
+GDF_DELTA_ENTRIES	flow_util.h	/^#define GDF_DELTA_ENTRIES /;"	d
+K	tdigest.h	/^     int K;$/;"	m	struct:td_histogram	typeref:typename:int
+MAX_BUF_SIZE	flow_util.h	/^#define MAX_BUF_SIZE /;"	d
+MAX_SIZE	flow_util.h	/^#define MAX_SIZE /;"	d
+M_PI	tdigest.c	/^#define M_PI /;"	d	file:
+NSLB_T_DIGEST_QUANTILE_H	nslb_t_digest_quantile.h	/^#define NSLB_T_DIGEST_QUANTILE_H$/;"	d
+SLEEP_INTERVAL	flow_util.h	/^#define SLEEP_INTERVAL /;"	d
+_T_DIGEST_H_	tdigest.h	/^#define _T_DIGEST_H_$/;"	d
+addInterval	flow_util.h	/^  int addInterval;\/\/ In seconds$/;"	m	struct:gdf_data	typeref:typename:int
+app_name	flow_util.h	/^  char app_name[256];$/;"	m	struct:gdf_file_struct	typeref:typename:char[256]
+cap	tdigest.h	/^     int cap;$/;"	m	struct:td_histogram	typeref:typename:int
+cap_from_compression	tdigest.c	/^static int cap_from_compression(double compression) {$/;"	f	typeref:typename:int	file:
+compare_nodes	tdigest.c	/^static int compare_nodes(const void *v1, const void *v2) {$/;"	f	typeref:typename:int	file:
+compression	tdigest.h	/^     double compression; $/;"	m	struct:td_histogram	typeref:typename:double
+count	tdigest.h	/^     double count;$/;"	m	struct:td_node	typeref:typename:double
+create_gdf_table_entry	flow_util.c	/^int create_gdf_table_entry(int *row_num, int *max_gdf_entries, int *total_gdf_entries, char **pt/;"	f	typeref:typename:int
+curr_vectors	flow_util.h	/^  int curr_vectors;$/;"	m	struct:gdf_data	typeref:typename:int
+curr_vectors	flow_util.h	/^  int curr_vectors;$/;"	m	struct:gdf_file_struct	typeref:typename:int
+data	flow_util.h	/^  char data[12];$/;"	m	struct:vector	typeref:typename:char[12]
+data_len	flow_util.h	/^  int data_len;$/;"	m	struct:gdf_data	typeref:typename:int
+data_len	flow_util.h	/^  int data_len;$/;"	m	struct:gdf_file_struct	typeref:typename:int
+debug_level	flow_util.c	/^int debug_level = 0;$/;"	v	typeref:typename:int
+decode	flow_util.c	/^char *decode(char *input)$/;"	f	typeref:typename:char *
+delInterval	flow_util.h	/^  int delInterval; \/\/In seconds$/;"	m	struct:gdf_data	typeref:typename:int
+delta	tdigest.h	/^     double delta; $/;"	m	struct:td_histogram	typeref:typename:double
+dump_gdf_struct_info	flow_util.c	/^void dump_gdf_struct_info(gdf_file_struct **gdf_data_struct, int total_gdf_entries)$/;"	f	typeref:typename:void
+eventId	flow_util.h	/^  int eventId;$/;"	m	struct:gdf_file_struct	typeref:typename:int
+exit_script	exit_script.c	/^int exit_script()$/;"	f	typeref:typename:int
+fill_gdf_data	flow_util.c	/^int fill_gdf_data(gdf_data **gdf_data_struct, char *gdf_name, int mon_id, int *total_gdf_entries/;"	f	typeref:typename:int
+flow	flow.c	/^void flow()$/;"	f	typeref:typename:void
+gdf_data	flow_util.h	/^typedef struct gdf_data$/;"	s
+gdf_data	flow_util.h	/^}gdf_data;$/;"	t	typeref:struct:gdf_data
+gdf_file_struct	flow_util.h	/^typedef struct gdf_file_struct$/;"	s
+gdf_file_struct	flow_util.h	/^}gdf_file_struct;$/;"	t	typeref:struct:gdf_file_struct
+gdf_name	flow_util.h	/^  char gdf_name[256];$/;"	m	struct:gdf_data	typeref:typename:char[256]
+gdf_name	flow_util.h	/^  char gdf_name[256];$/;"	m	struct:gdf_file_struct	typeref:typename:char[256]
+gen_random_val	flow_util.c	/^float gen_random_val(float minVal, float maxVal)$/;"	f	typeref:typename:float
+get_custom_monitor_data	flow_util.c	/^void get_custom_monitor_data (gdf_file_struct *gdf_file_temp, char *outBuff, int total_gdf_entri/;"	f	typeref:typename:void
+get_dvm_monitor_data	flow_util.c	/^void get_dvm_monitor_data (gdf_file_struct *gdf_file_temp, char *outBuff, int total_gdf_entries,/;"	f	typeref:typename:void
+get_ms_stamp	nslb_t_digest_quantile.c	/^static unsigned long get_ms_stamp() {$/;"	f	typeref:typename:unsigned long	file:
+get_nd_agent_details	flow_util.c	/^void get_nd_agent_details(char *app_name, char *nd_app_server_host, char *tier_name, char *bci_s/;"	f	typeref:typename:void
+get_random_tdigest	flow_util.c	/^void *get_random_tdigest(void **buf, int *alloc_sz, int min_count, int max_count, double min_val/;"	f	typeref:typename:void *
+get_server_ip_name	flow_util.c	/^void get_server_ip_name(char *server_ip, char *server_name, char *tier_name, char *cmon_pid)$/;"	f	typeref:typename:void
+group_id	flow_util.h	/^  int group_id;$/;"	m	struct:gdf_data	typeref:typename:int
+group_id	flow_util.h	/^  int group_id;$/;"	m	struct:gdf_file_struct	typeref:typename:int
+init_script	init_script.c	/^int init_script()$/;"	f	typeref:typename:int
+main	nslb_t_digest_quantile.c	/^int main (int argc, char **argv)$/;"	f	typeref:typename:int
+make_control_conn_with_ndc	flow.c	/^int make_control_conn_with_ndc(char *ndc_ip,  char *ndc_port)$/;"	f	typeref:typename:int
+make_data_conn_with_ndc	flow.c	/^int make_data_conn_with_ndc(char *ndc_ip, char *ndc_port)$/;"	f	typeref:typename:int
+make_monitor_data	flow_util.c	/^void  make_monitor_data(gdf_data *gdf_data_struct, int total_gdf_entries, char *buffer, gdf_file/;"	f	typeref:typename:void
+maxData	flow_util.h	/^  float maxData;$/;"	m	struct:gdf_data	typeref:typename:float
+maxData	flow_util.h	/^  float maxData;$/;"	m	struct:gdf_file_struct	typeref:typename:float
+maxVectors	flow_util.h	/^  int maxVectors;$/;"	m	struct:gdf_data	typeref:typename:int
+mean	tdigest.h	/^     double mean;$/;"	m	struct:td_node	typeref:typename:double
+merge	tdigest.c	/^void merge(td_histogram_t *h) {$/;"	f	typeref:typename:void
+merged_count	tdigest.h	/^     double merged_count;$/;"	m	struct:td_histogram	typeref:typename:double
+merged_nodes	tdigest.h	/^     int merged_nodes;$/;"	m	struct:td_histogram	typeref:typename:int
+minData	flow_util.h	/^  float minData;$/;"	m	struct:gdf_data	typeref:typename:float
+minData	flow_util.h	/^  float minData;$/;"	m	struct:gdf_file_struct	typeref:typename:float
+minVectors	flow_util.h	/^  int minVectors;$/;"	m	struct:gdf_data	typeref:typename:int
+mon_id	flow_util.h	/^  int mon_id;$/;"	m	struct:gdf_data	typeref:typename:int
+mon_id	flow_util.h	/^  int mon_id;$/;"	m	struct:gdf_file_struct	typeref:typename:int
+monitor_type	flow_util.h	/^  int monitor_type;$/;"	m	struct:gdf_data	typeref:typename:int
+monitor_type	flow_util.h	/^  int monitor_type;$/;"	m	struct:gdf_file_struct	typeref:typename:int
+my_quantile	tdigest.c	/^static double my_quantile(double index, double previous_index, double next_index, double previou/;"	f	typeref:typename:double	file:
+new_vect_interval	flow_util.h	/^  int new_vect_interval;$/;"	m	struct:gdf_data	typeref:typename:int
+new_vect_interval	flow_util.h	/^  int new_vect_interval;$/;"	m	struct:gdf_file_struct	typeref:typename:int
+next_node	tdigest.c	/^static int next_node(td_histogram_t *h) {$/;"	f	typeref:typename:int	file:
+nodes	tdigest.h	/^     td_node_t nodes[0];$/;"	m	struct:td_histogram	typeref:typename:td_node_t[0]
+nslb_t_digest_debug	nslb_t_digest_quantile.c	/^int nslb_t_digest_debug(char *buf)$/;"	f	typeref:typename:int
+nslb_t_digest_debug_ex	nslb_t_digest_quantile.c	/^int nslb_t_digest_debug_ex(char *buf, char *out_buf)$/;"	f	typeref:typename:int
+nslb_t_digest_deserialize	nslb_t_digest_quantile.c	/^tdg_key *nslb_t_digest_deserialize(char *buf, unsigned int K)$/;"	f	typeref:typename:tdg_key *
+nslb_t_digest_destroy	nslb_t_digest_quantile.c	/^void nslb_t_digest_destroy(tdg_key *p_key)$/;"	f	typeref:typename:void
+nslb_t_digest_get_data_count	nslb_t_digest_quantile.c	/^int nslb_t_digest_get_data_count(tdg_key *p_key)$/;"	f	typeref:typename:int
+nslb_t_digest_get_ncentroids	nslb_t_digest_quantile.c	/^int nslb_t_digest_get_ncentroids(tdg_key *p_key)$/;"	f	typeref:typename:int
+nslb_t_digest_getquantile_at	nslb_t_digest_quantile.c	/^double nslb_t_digest_getquantile_at(tdg_key *p_key, double quantile)$/;"	f	typeref:typename:double
+nslb_t_digest_getquantile_of	nslb_t_digest_quantile.c	/^double nslb_t_digest_getquantile_of(tdg_key *p_key, double value)$/;"	f	typeref:typename:double
+nslb_t_digest_merge	nslb_t_digest_quantile.c	/^void nslb_t_digest_merge(tdg_key **p_key1, tdg_key *p_key2)$/;"	f	typeref:typename:void
+nslb_t_digest_reset	nslb_t_digest_quantile.c	/^void nslb_t_digest_reset(tdg_key *p_key)$/;"	f	typeref:typename:void
+numOfElement	flow_util.h	/^  int numOfElement;$/;"	m	struct:gdf_data	typeref:typename:int
+numOfElement	flow_util.h	/^  int numOfElement;$/;"	m	struct:gdf_file_struct	typeref:typename:int
+num_vector	flow_util.h	/^  int num_vector;$/;"	m	struct:gdf_file_struct	typeref:typename:int
+numvectors	flow_util.h	/^  int numvectors;$/;"	m	struct:gdf_data	typeref:typename:int
+numvectors	flow_util.h	/^  int numvectors;$/;"	m	struct:gdf_file_struct	typeref:typename:int
+parse_gdf_file	flow_util.c	/^int parse_gdf_file(gdf_file_struct **gdf_file, char *gdf_file_path, int *total_gdf_entries, int /;"	f	typeref:typename:int
+parse_hb_response_message	flow_util.c	/^int parse_hb_response_message(char *recd_msg, int recd_msg_size, gdf_data **gdf_data_struct, int/;"	f	typeref:typename:int
+parse_start_instrumentation_message	flow_util.c	/^int parse_start_instrumentation_message(char *recd_msg, int recd_msg_size, int *tier_id, int *se/;"	f	typeref:typename:int
+print_usage_and_exit	nslb_t_digest_quantile.c	/^static inline void print_usage_and_exit(char *progname)$/;"	f	typeref:typename:void	file:
+read_msg_from_ndc_on_ctrl_conn	flow_util.c	/^void read_msg_from_ndc_on_ctrl_conn(char *resp_body, char *msg_type, int *resp_size)$/;"	f	typeref:typename:void
+runlogic	runlogic.c	/^void runlogic()$/;"	f	typeref:typename:void
+send_control_conn_request_to_ndc	flow.c	/^int send_control_conn_request_to_ndc(char *app_name, char *nd_app_server_host, char *tier_name, /;"	f	typeref:typename:int
+send_data_conn_request_to_ndc	flow.c	/^int send_data_conn_request_to_ndc(int testidx, int tier_id, int server_id, int app_id, char *app/;"	f	typeref:typename:int
+send_monitor_data_to_ndc_on_data_conn	flow.c	/^int send_monitor_data_to_ndc_on_data_conn(gdf_data *gdf_data_struct, int total_gdf_entries, char/;"	f	typeref:typename:int
+send_msg_to_ndc_on_control_connection	flow.c	/^int send_msg_to_ndc_on_control_connection(char *msg, char *msg_type)$/;"	f	typeref:typename:int
+server_name	flow_util.h	/^  char server_name[256];$/;"	m	struct:gdf_file_struct	typeref:typename:char[256]
+should_merge	tdigest.c	/^static bool should_merge(td_histogram_t *h) {$/;"	f	typeref:typename:bool	file:
+slot_used	flow_util.h	/^  int slot_used;$/;"	m	struct:gdf_data	typeref:typename:int
+slot_used	flow_util.h	/^  int slot_used;$/;"	m	struct:gdf_file_struct	typeref:typename:int
+sock_cmon	sock_cmon.c	/^void sock_cmon()$/;"	f	typeref:typename:void
+t_digest_init	nslb_t_digest_quantile.c	/^void t_digest_init(tdg_key **p_key, double delta, unsigned int K)$/;"	f	typeref:typename:void
+t_digest_insert	nslb_t_digest_quantile.c	/^void t_digest_insert(tdg_key **p_key, double mean, int count)$/;"	f	typeref:typename:void
+t_digest_serialize	nslb_t_digest_quantile.c	/^void *t_digest_serialize(tdg_key *p_key, int mode, char **buf, int *bufmalloclen, int *tdgsz)$/;"	f	typeref:typename:void *
+td_add	tdigest.c	/^void td_add(td_histogram_t *h, double mean, double count) {$/;"	f	typeref:typename:void
+td_centroid_count	tdigest.c	/^int td_centroid_count(td_histogram_t *p_key)$/;"	f	typeref:typename:int
+td_debug	tdigest.c	/^int td_debug(char *buf)$/;"	f	typeref:typename:int
+td_debug_dump_output_in_buf	tdigest.c	/^int td_debug_dump_output_in_buf(char *buf, char *out_buf)$/;"	f	typeref:typename:int
+td_deserialize	tdigest.c	/^td_histogram_t *td_deserialize(char *buf, unsigned int K)$/;"	f	typeref:typename:td_histogram_t *
+td_free	tdigest.c	/^void td_free(td_histogram_t *h) {$/;"	f	typeref:typename:void
+td_histogram	tdigest.h	/^struct td_histogram {$/;"	s
+td_histogram_t	tdigest.h	/^typedef struct td_histogram td_histogram_t;$/;"	t	typeref:struct:td_histogram
+td_init	tdigest.c	/^static td_histogram_t *td_init(double delta, unsigned int K, size_t buf_size, char *buf) {$/;"	f	typeref:typename:td_histogram_t *	file:
+td_merge	tdigest.c	/^void td_merge(td_histogram_t *into, td_histogram_t *from) {$/;"	f	typeref:typename:void
+td_new	tdigest.c	/^td_histogram_t *td_new(double delta, unsigned int K)$/;"	f	typeref:typename:td_histogram_t *
+td_node	tdigest.h	/^typedef struct td_node {$/;"	s
+td_node_t	tdigest.h	/^} td_node_t;$/;"	t	typeref:struct:td_node
+td_quantile_of	tdigest.c	/^double td_quantile_of(td_histogram_t *h, double val) {$/;"	f	typeref:typename:double
+td_required_buf_size	tdigest.c	/^static size_t td_required_buf_size(double compression) {$/;"	f	typeref:typename:size_t	file:
+td_reset	tdigest.c	/^void td_reset(td_histogram_t *h) {$/;"	f	typeref:typename:void
+td_serialize	tdigest.c	/^void *td_serialize(td_histogram_t *p_key, int mode, char **buf, int *bufmalloclen, int *tdgsz)$/;"	f	typeref:typename:void *
+td_total_count	tdigest.c	/^double td_total_count(td_histogram_t *h) {$/;"	f	typeref:typename:double
+td_value_at	tdigest.c	/^double td_value_at(td_histogram_t *h, double q) {$/;"	f	typeref:typename:double
+tdg_key	nslb_t_digest_quantile.h	/^#define tdg_key /;"	d
+tier_name	flow_util.h	/^  char tier_name[256];$/;"	m	struct:gdf_file_struct	typeref:typename:char[256]
+unmerged_count	tdigest.h	/^     double unmerged_count;$/;"	m	struct:td_histogram	typeref:typename:double
+unmerged_nodes	tdigest.h	/^     int unmerged_nodes;$/;"	m	struct:td_histogram	typeref:typename:int
+vec	flow_util.h	/^  vector *vec;$/;"	m	struct:gdf_data	typeref:typename:vector *
+vecName	flow_util.h	/^  char vecName[256];$/;"	m	struct:vector	typeref:typename:char[256]
+vec_name	flow_util.h	/^  char vec_name[256];$/;"	m	struct:gdf_file_struct	typeref:typename:char[256]
+vec_prefix	flow_util.h	/^  char vec_prefix[128];$/;"	m	struct:gdf_data	typeref:typename:char[128]
+vec_prefix	flow_util.h	/^  char vec_prefix[128];$/;"	m	struct:gdf_file_struct	typeref:typename:char[128]
+vector	flow_util.h	/^typedef struct vector$/;"	s
+vector	flow_util.h	/^}vector;$/;"	t	typeref:struct:vector

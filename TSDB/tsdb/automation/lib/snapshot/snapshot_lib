@@ -1,0 +1,57 @@
+#!/bin/bash
+
+check_recovery_from_snapshot() {
+    TR_number=$(nsu_show_netstorm | awk 'NR==2{print $1}')
+
+    # Check if the TR number is empty
+    if [ -z "$TR_number" ]; then
+        automation_log "Failed to retrieve the TR number."
+        exit 1
+    fi
+
+    file_path="$NS_WDIR/logs/TR${TR_number}/tsdb/.recovery.control"
+      
+      if [ ! -f "$file_path" ]; then
+          echo "File $file_path does not exist."
+          exit 1
+      fi
+    
+    first_field=$(cat "$file_path" | awk -F '|' '{print $1}')
+    
+    if [ "$first_field" -eq -1 ]; then
+        automation_log "Recovery is not done from snapshot. It is done from Dram "
+	result=0 # Pass
+    else
+        automation_log "Recovery is done from snapshot."
+	result=1 # Fail
+        
+    fi
+}
+
+check_cav_tsdb_running() {
+    TR_number=$(nsu_show_netstorm | tail -n 1 | awk '{print $1}')
+
+    # Get the cav_tsdb processes
+    cav_tsdb_processes=$(ps -ef | grep "cav_tsdb")
+
+    # Extract TR ID from process details
+    TR_IDX=$(echo "$cav_tsdb_processes" | awk -F "-t " 'NR==1 {print $2}' | awk '{print $1}')
+
+    # Check if TR_IDX matches TR_number
+    if [ "$TR_IDX" = "$TR_number" ]; then
+        automation_log "cav_tsdb process is running for TR number: $TR_number\n"
+        result=0  
+    else
+        automation_log "cav_tsdb is not running for TR number: $TR_number\n"
+        result=1 # Fail
+    fi
+}
+
+
+validate_response() {
+  if [ "$result" -eq 1 ];then
+        echo "FAIL"
+  else
+        echo "PASS"
+  fi
+}

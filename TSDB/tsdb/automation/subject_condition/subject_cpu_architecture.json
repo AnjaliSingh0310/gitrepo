@@ -1,0 +1,129 @@
+{
+    "cctx": {
+        "cck": "cavisson.44443.1714629272035",
+        "pk": "cavisson:172.24.1.8:05-02-2024 05-54-31.371",
+        "u": "cavisson",
+        "prodType": "Netdiagnostics"
+    },
+    "opType": 31,
+    "clientId": "-1",
+    "appId": "-1",
+    "rules": [
+        {
+            "name": "pppp",
+            "id": -1,
+            "attributes": {
+                "enable": true,
+                "chkStatus": true,
+                "chkStatusTime": 900,
+                "level": 0,
+                "conditionType": 0,
+                "groups": "0",
+                "skipSamples": false,
+                "applyRuleAfter": 5,
+                "genAlertForNaN": false,
+                "severity": [
+                    {
+                        "id": 3,
+                        "condition": "C1",
+                        "conditionList": [
+                            {
+                                "type": 0,
+                                "mName": "A",
+                                "grpAffLevel": 0,
+                                "gAffLevfTh": -1,
+                                "gAffLevrTh": -1,
+                                "thresholdType": {
+                                    "dataType": 0,
+                                    "operator": 0,
+                                    "windowType": 0,
+                                    "fThreshold": 1,
+                                    "sThreshold": -1,
+                                    "srThreshold": -1,
+                                    "pctType": 0,
+                                    "pct": 100,
+                                    "timeWindow": 5,
+                                    "twUnit": 0,
+                                    "frThreshold": -1
+                                },
+                                "id": 0,
+                                "name": "C1"
+                            }
+                        ]
+                    }
+                ],
+                "actions": [],
+                "tags": [],
+                "metric": [
+                    {
+                        "subject": [
+                            {
+                                "tags": [
+                                    {
+                                        "key": "Tier",
+                                        "mode": 1,
+                                        "value": "metadata_tree-tier"
+                                    },
+                                    {
+                                        "key": "Server",
+                                        "mode": 1,
+                                        "value": "metadata_tree-server-1"
+                                    }
+                                ]
+                            },
+                            {
+                                "tags": [
+                                    {
+                                        "key": "Tier",
+                                        "mode": 1,
+                                        "value": "metadata_tree-tier"
+                                    },
+                                    {
+                                        "key": "Server",
+                                        "mode": 1,
+                                        "value": "metadata_tree-server-2"
+                                    }
+                                ]
+                            }
+                        ],
+                        "measure": {
+                            "metric": "L1i Cache Memory (KB)",
+                            "metricId": 3,
+                            "mg": "CPU Stats",
+                            "mgId": 10729,
+                            "mgType": "CPU architecture information",
+                            "mgTypeId": -1
+                        },
+                        "glbMetricId": null,
+                        "derivedFormula": null,
+                        "attribute": 0,
+                        "name": "A",
+                        "mode": 1
+                    }
+                ],
+                "schedule": false,
+                "mailIds": [],
+                "extensions": [],
+                "message": null,
+                "description": null,
+                "recommendation": null,
+                "actionsEvents": {
+                    "minorToMajor": true,
+                    "minorToCritical": false,
+                    "majorToMinor": true,
+                    "majorToCritical": false,
+                    "criticalToMajor": false,
+                    "criticalToMinor": false,
+                    "forceClear": false,
+                    "continuousEvent": false,
+                    "endedMinor": false,
+                    "endedMajor": false,
+                    "endedCritical": false,
+                    "startedMinor": false,
+                    "startedMajor": false,
+                    "startedCritical": false
+                }
+            }
+        }
+    ]
+}

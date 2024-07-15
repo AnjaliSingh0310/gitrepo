@@ -1,0 +1,126 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+CHAR_SIZE	bkp_tsdb_msg_interface.h	7;"	d
+DUMMY_TSDB_HOST	cpy_of_tcp_tsdb_client.c	17;"	d	file:
+DUMMY_TSDB_HOST	main_function.c	17;"	d	file:
+DUMMY_TSDB_HOST	request_function.c	19;"	d	file:
+DUMMY_TSDB_HOST	tcp_tsdb_client.c	19;"	d	file:
+DataSpec_t	bkp_tsdb_msg_interface.h	/^} __attribute__((packed)) DataSpec_t;$/;"	t	typeref:struct:__anon9
+FlowReturn	runlogic.c	/^typedef void FlowReturn;$/;"	t	file:
+LONG_SIZE	bkp_tsdb_msg_interface.h	6;"	d
+MetricDataSpecName_t	bkp_tsdb_msg_interface.h	/^} __attribute__((packed)) MetricDataSpecName_t;$/;"	t	typeref:struct:__anon7
+MetricDataSpec_t	bkp_tsdb_msg_interface.h	/^} __attribute__((packed)) MetricDataSpec_t;$/;"	t	typeref:struct:__anon8
+MsgHdr_t	bkp_tsdb_msg_interface.h	/^} __attribute__((packed)) MsgHdr_t;$/;"	t	typeref:struct:__anon10
+TSDB_Data_Summary_t	bkp_tsdb_msg_interface.h	/^} __attribute__((packed)) TSDB_Data_Summary_t;$/;"	t	typeref:struct:__anon5
+TSDB_MSG_INTERFACE_H	bkp_tsdb_msg_interface.h	2;"	d
+TSDB_ReqMsg_Drop_Tree_ID_With_Filter_t	bkp_tsdb_msg_interface.h	/^} __attribute__((packed)) TSDB_ReqMsg_Drop_Tree_ID_With_Filter_t;$/;"	t	typeref:struct:__anon2
+TSDB_ReqMsg_Drop_Tree_ID_t	bkp_tsdb_msg_interface.h	/^} __attribute__((packed)) TSDB_ReqMsg_Drop_Tree_ID_t;$/;"	t	typeref:struct:__anon1
+TSDB_ReqMsg_Drop_Tree_Name_With_Filter_t	bkp_tsdb_msg_interface.h	/^} __attribute__((packed)) TSDB_ReqMsg_Drop_Tree_Name_With_Filter_t;$/;"	t	typeref:struct:__anon4
+TSDB_ReqMsg_Drop_Tree_Name_t	bkp_tsdb_msg_interface.h	/^} __attribute__((packed)) TSDB_ReqMsg_Drop_Tree_Name_t;$/;"	t	typeref:struct:__anon3
+TSDB_RespMsg_t	bkp_tsdb_msg_interface.h	/^} __attribute__((packed)) TSDB_RespMsg_t;$/;"	t	typeref:struct:__anon6
+avg	bkp_tsdb_msg_interface.h	/^    uint64_t avg;$/;"	m	struct:__anon5
+count	bkp_tsdb_msg_interface.h	/^    uint64_t count;$/;"	m	struct:__anon5
+create_dummy_req_for_id	cpy_of_tcp_tsdb_client.c	/^int create_dummy_req_for_id(void **buffer)$/;"	f
+create_dummy_req_for_id	create_function.c	/^int create_dummy_req_for_id(void **buffer)$/;"	f
+create_dummy_req_for_id	tcp_tsdb_client.c	/^int create_dummy_req_for_id(void **buffer)$/;"	f
+create_dummy_req_for_id_with_filter	cpy_of_tcp_tsdb_client.c	/^int create_dummy_req_for_id_with_filter(void **buffer)$/;"	f
+create_dummy_req_for_id_with_filter	create_function.c	/^int create_dummy_req_for_id_with_filter(void **buffer)$/;"	f
+create_dummy_req_for_id_with_filter	tcp_tsdb_client.c	/^int create_dummy_req_for_id_with_filter(void **buffer)$/;"	f
+create_dummy_req_for_name	cpy_of_tcp_tsdb_client.c	/^int create_dummy_req_for_name(void **buffer)$/;"	f
+create_dummy_req_for_name	create_function.c	/^int create_dummy_req_for_name(void **buffer)$/;"	f
+create_dummy_req_for_name	tcp_tsdb_client.c	/^int create_dummy_req_for_name(void **buffer)$/;"	f
+create_dummy_req_for_name_with_filter	cpy_of_tcp_tsdb_client.c	/^int create_dummy_req_for_name_with_filter(void **buffer)$/;"	f
+create_dummy_req_for_name_with_filter	create_function.c	/^int create_dummy_req_for_name_with_filter(void **buffer)$/;"	f
+create_dummy_req_for_name_with_filter	tcp_tsdb_client.c	/^int create_dummy_req_for_name_with_filter(void **buffer)$/;"	f
+data_type	bkp_tsdb_msg_interface.h	/^    dataTypeSpec_t data_type;$/;"	m	struct:__anon1
+data_type	bkp_tsdb_msg_interface.h	/^    dataTypeSpec_t data_type;$/;"	m	struct:__anon2
+data_type	bkp_tsdb_msg_interface.h	/^    dataTypeSpec_t data_type;$/;"	m	struct:__anon3
+data_type	bkp_tsdb_msg_interface.h	/^    dataTypeSpec_t data_type;$/;"	m	struct:__anon4
+endTimeStamp	bkp_tsdb_msg_interface.h	/^    unsigned long endTimeStamp; \/\/ Response timestamps will be rounded based on granularity being used.$/;"	m	struct:__anon9
+exit_script	exit_script.c	/^int exit_script()$/;"	f
+filter	bkp_tsdb_msg_interface.h	/^    filterSpec_t filter;$/;"	m	struct:__anon2
+filter	bkp_tsdb_msg_interface.h	/^    filterSpec_t filter;$/;"	m	struct:__anon4
+flow	flow.c	/^void flow()$/;"	f
+granularity	bkp_tsdb_msg_interface.h	/^    u_int16_t granularity;  \/\/ Granularity of the data. Redundant = duration \/ value_count$/;"	m	struct:__anon9
+hdr	bkp_tsdb_msg_interface.h	/^    MsgHdr_t hdr;$/;"	m	struct:__anon1
+hdr	bkp_tsdb_msg_interface.h	/^    MsgHdr_t hdr;$/;"	m	struct:__anon2
+hdr	bkp_tsdb_msg_interface.h	/^    MsgHdr_t hdr;$/;"	m	struct:__anon3
+hdr	bkp_tsdb_msg_interface.h	/^    MsgHdr_t hdr;$/;"	m	struct:__anon4
+hdr	bkp_tsdb_msg_interface.h	/^    MsgHdr_t hdr;$/;"	m	struct:__anon6
+id_spec	bkp_tsdb_msg_interface.h	/^    IDSpec_t id_spec; \/\/ TODO: Why do we need id?$/;"	m	struct:__anon4
+id_spec	bkp_tsdb_msg_interface.h	/^    IDSpec_t id_spec;$/;"	m	struct:__anon1
+id_spec	bkp_tsdb_msg_interface.h	/^    IDSpec_t id_spec;$/;"	m	struct:__anon2
+id_spec	bkp_tsdb_msg_interface.h	/^    IDSpec_t id_spec;$/;"	m	struct:__anon3
+init_script	init_script.c	/^int init_script()$/;"	f
+last_sample	bkp_tsdb_msg_interface.h	/^    uint64_t last_sample;$/;"	m	struct:__anon5
+main	client_demo.c	/^int main()$/;"	f
+main	cpy_of_tcp_tsdb_client.c	/^int main(int argc, char **argv)$/;"	f
+main	main_function.c	/^int main(int argc, char **argv)$/;"	f
+main	mix.c	/^int main()$/;"	f
+main	server_demo.c	/^int main() {$/;"	f
+main	tcp_tsdb_client.c	/^int main(int argc, char **argv)$/;"	f
+max	bkp_tsdb_msg_interface.h	/^    uint64_t max;$/;"	m	struct:__anon5
+metadataOffset	bkp_tsdb_msg_interface.h	/^    u_int16_t metadataOffset; \/\/ Offset into var_data for meta data array of type MetricDataSpec_t$/;"	m	struct:__anon9
+metric_count	bkp_tsdb_msg_interface.h	/^    u_int16_t metric_count; \/\/ Number of time series' being returned$/;"	m	struct:__anon9
+min	bkp_tsdb_msg_interface.h	/^    uint64_t min;$/;"	m	struct:__anon5
+msg_size	bkp_tsdb_msg_interface.h	/^    u_int32_t msg_size;    \/\/ Size of the message on the wire.$/;"	m	struct:__anon10
+msg_type	bkp_tsdb_msg_interface.h	/^    u_int16_t msg_type;    \/\/ Determines the C struct for the rest of the message$/;"	m	struct:__anon10
+mt_id	bkp_tsdb_msg_interface.h	/^    long mt_id; \/\/Thsi is to save Metric ID$/;"	m	struct:__anon8
+mt_id	bkp_tsdb_msg_interface.h	/^    long mt_id;$/;"	m	struct:__anon7
+mt_lvl_count	bkp_tsdb_msg_interface.h	/^    u_int8_t mt_lvl_count;\/\/how many levels are there in metric$/;"	m	struct:__anon7
+mt_offset	bkp_tsdb_msg_interface.h	/^    uint16_t mt_offset;\/\/At offset we wil have mt level(tag) len(uint16_t) and mt level(tag), mt value len(uint16_t) and mt value$/;"	m	struct:__anon7
+mt_spec	bkp_tsdb_msg_interface.h	/^    MetricSpec_t  mt_spec;$/;"	m	struct:__anon3
+mt_spec	bkp_tsdb_msg_interface.h	/^    MetricSpec_t  mt_spec;$/;"	m	struct:__anon4
+network_socket	client_demo.c	/^int network_socket;$/;"	v
+new_tcp	new_tcp.c	/^void new_tcp()$/;"	f
+ns_socket_open	client_demo.c	/^int ns_socket_open(char *STEP, char *ID, char *PROTOCOL, char *REMOTE_HOST)$/;"	f
+num_fields	bkp_tsdb_msg_interface.h	/^    unsigned char num_fields;\/\/This is the number of fields in TSDB_Data_Summary_t struct$/;"	m	struct:__anon5
+parse_id_resp	cpy_of_tcp_tsdb_client.c	/^void parse_id_resp(void *resp_buffer)$/;"	f
+parse_id_resp	response_function.c	/^void parse_id_resp(void *resp_buffer)$/;"	f
+parse_id_resp	tcp_tsdb_client.c	/^void parse_id_resp(void *resp_buffer)$/;"	f
+parse_name_resp	cpy_of_tcp_tsdb_client.c	/^void parse_name_resp(void *resp_buffer)$/;"	f
+parse_name_resp	response_function.c	/^void parse_name_resp(void *resp_buffer)$/;"	f
+parse_name_resp	tcp_tsdb_client.c	/^void parse_name_resp(void *resp_buffer)$/;"	f
+query_op	bkp_tsdb_msg_interface.h	/^    OpSpec_t query_op;$/;"	m	struct:__anon1
+query_op	bkp_tsdb_msg_interface.h	/^    OpSpec_t query_op;$/;"	m	struct:__anon2
+query_op	bkp_tsdb_msg_interface.h	/^    OpSpec_t query_op;$/;"	m	struct:__anon3
+query_op	bkp_tsdb_msg_interface.h	/^    OpSpec_t query_op;$/;"	m	struct:__anon4
+reqNum	bkp_tsdb_msg_interface.h	/^    u_int32_t reqNum;      \/\/ Request num, which is returned back to client in response$/;"	m	struct:__anon10
+reserved	bkp_tsdb_msg_interface.h	/^    u_int16_t reserved; \/\/ Number of samples per time series being returned$/;"	m	struct:__anon9
+reserved	bkp_tsdb_msg_interface.h	/^    u_int8_t  reserved[5]; \/\/ $/;"	m	struct:__anon10
+reserved	bkp_tsdb_msg_interface.h	/^    uint16_t reserved;$/;"	m	struct:__anon7
+runlogic	runlogic.c	/^void runlogic()$/;"	f
+server	mix.c	/^void server()$/;"	f
+startTimeStamp	bkp_tsdb_msg_interface.h	/^    unsigned long startTimeStamp; \/\/ Response timestamps will be rounded based on granularity being used.$/;"	m	struct:__anon9
+std_dev	bkp_tsdb_msg_interface.h	/^    uint64_t std_dev;$/;"	m	struct:__anon5
+sub_lvl_count	bkp_tsdb_msg_interface.h	/^    u_int8_t sub_lvl_count;\/\/how many levels are there in subject$/;"	m	struct:__anon7
+sub_offset	bkp_tsdb_msg_interface.h	/^    uint16_t sub_offset;\/\/At offset we wil have subject level(tag) len(uint16_t) and subject level(tag), subject value len(uint16_t) and subject value$/;"	m	struct:__anon7
+sub_spec	bkp_tsdb_msg_interface.h	/^    SubjectSpec_t sub_spec;$/;"	m	struct:__anon3
+sub_spec	bkp_tsdb_msg_interface.h	/^    SubjectSpec_t sub_spec;$/;"	m	struct:__anon4
+tcp	cpy_of_tcp.c	/^void tcp()$/;"	f
+tcp	tcp.c	/^void tcp()$/;"	f
+tsData	bkp_tsdb_msg_interface.h	/^    DataSpec_t tsData;$/;"	m	struct:__anon6
+tsdb_fd	cpy_of_tcp_tsdb_client.c	/^int tsdb_fd;$/;"	v
+tsdb_fd	main_function.c	/^int tsdb_fd;$/;"	v
+tsdb_fd	tcp_tsdb_client.c	/^int tsdb_fd;$/;"	v
+tsdb_parse_response	cpy_of_tcp_tsdb_client.c	/^void tsdb_parse_response(void *resp_buffer)$/;"	f
+tsdb_parse_response	response_function.c	/^void tsdb_parse_response(void *resp_buffer)$/;"	f
+tsdb_parse_response	tcp_tsdb_client.c	/^void tsdb_parse_response(void *resp_buffer)$/;"	f
+tsdb_send_request	cpy_of_tcp_tsdb_client.c	/^void tsdb_send_request(void *req_buffer, int size)$/;"	f
+tsdb_send_request	request_function.c	/^void tsdb_send_request(void *req_buffer, int size)$/;"	f
+tsdb_send_request	tcp_tsdb_client.c	/^void tsdb_send_request(void *req_buffer, int size)$/;"	f
+valueOffset	bkp_tsdb_msg_interface.h	/^    u_int32_t valueOffset; \/\/ Offset into var_data for values array. TODO: This can be more than 65K??? Made int instead of short$/;"	m	struct:__anon8
+value_count	bkp_tsdb_msg_interface.h	/^    uint16_t value_count; \/\/ Number of samples per time series being returned$/;"	m	struct:__anon7
+value_data_type	bkp_tsdb_msg_interface.h	/^    u_int16_t value_data_type; \/\/ used by client to determine how to use the data    u_int16_t value_count; \/\/ Number of samples per time series being returned: TODO: Is it possible that different MT will have different numbers of value_count or it will be same for all MTs. ??$/;"	m	struct:__anon8
+value_data_type	bkp_tsdb_msg_interface.h	/^    uint16_t value_data_type; \/\/This is the type of data. Ex: Scalar, TIMES, TIMES_STD$/;"	m	struct:__anon7
+value_offset	bkp_tsdb_msg_interface.h	/^    uint32_t value_offset;$/;"	m	struct:__anon7
+var_data	bkp_tsdb_msg_interface.h	/^    unsigned char var_data[]; \/\/ Contains variable length arrays, strings etc$/;"	m	struct:__anon6
+var_data	bkp_tsdb_msg_interface.h	/^    unsigned char var_data[];$/;"	m	struct:__anon1
+var_data	bkp_tsdb_msg_interface.h	/^    unsigned char var_data[];$/;"	m	struct:__anon2
+var_data	bkp_tsdb_msg_interface.h	/^    unsigned char var_data[];$/;"	m	struct:__anon3
+var_data	bkp_tsdb_msg_interface.h	/^    unsigned char var_data[];$/;"	m	struct:__anon4
+version	bkp_tsdb_msg_interface.h	/^    u_int8_t  version;     \/\/ Version for message format.$/;"	m	struct:__anon10

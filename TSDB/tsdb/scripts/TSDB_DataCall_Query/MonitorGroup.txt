@@ -1,0 +1,40 @@
+#Monitor Group,min value,max value
+MPStat Linux,0,80
+System Load Stats,0,1.1
+System Load Stats Ex,0,1.1
+SysStats Linux Extended,0,1.1
+Process States Count,0,1.1
+Memory Stats Extended,0,1.1
+Memory Stats,0,1.1
+TCP states counts,0,1.1
+TCP Stats Rate (Linux),0,1.1
+Socket Statistics,0,1.1
+TCP States V2,0,1.1
+MPStat Lite,0,80
+CPU Stats,0,10
+Device Stats,0,1.1
+TCP Stats (Linux),0,1.1
+UDP stats (Linux),0,1.1
+UDP stats rate (Linux),0,1.1
+File System stats,0,10
+Process Stats Ex V2,0,1.1
+Process Stats Ex DVM,0,1.1
+Network traffic,0,1.1
+Ethernet Throughput,0,1.1
+ICMP Stats,0,1.1
+ICMP Message Stats,0,5
+TCP Listen Queue Stats,0,5
+Process Thread Stats,0,5
+Process Stats Ex DVM V2,0,5
+Memory Stats Extended3,0,1.1
+Memory Stats Extended2,0,1.1
+Instance Running Check,0,1
+Network Device Health Stats,0,1
+Network Device Env Stats,0,1
+Process Stats,0,1.1
+Process Stats V3,0,1.1
+Process Stats Ex Linux,0,1.1
+File Stats,0,1.1
+Memcache Stats,0,1.1
+TCP States V3,0,1.1
+Datatype Testing,0,1.1

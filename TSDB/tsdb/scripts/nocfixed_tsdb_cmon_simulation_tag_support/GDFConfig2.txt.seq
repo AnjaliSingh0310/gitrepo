@@ -1,0 +1,2 @@
+#Gdfname(Index on this member), numberelements, monitortype(0 - custom, 1 - dynamic), vectorprefix, min vectors, max vectors, deleteinterval, addinterval, mindata:max data
+cm_mpstat.gdf,NA,9,1,CPU,13,13,0,0,1:50|1:100|50:100|1:60|10:50|10:40|20:60|10:80|20:80

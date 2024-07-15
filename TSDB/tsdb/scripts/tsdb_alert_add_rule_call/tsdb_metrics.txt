@@ -1,0 +1,2 @@
+#metric_id,frequency_type,subject,measure,gdf_id,graph_id,discovery_ts
+030103001B00000000000000000000000400010003000000,1,Tier:Tier1>Server:Tier1-0-0-0,MGType:System Metrics>MGroup:System Load Stats>Metric:Uptime (Days),10004,4,1638342647

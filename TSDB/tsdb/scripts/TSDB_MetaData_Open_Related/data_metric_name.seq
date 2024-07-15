@@ -1,0 +1,13 @@
+#metric_id,frequency_type,subject,measure,gdf_id,graph_id,discovery_ts
+Tier:cprod-acc-redis-10>Server:cprod-acc-redis-10-7-9-0,MGType:System Metrics>MGroup:System Load Stats,Load Average Over 1 Minute,10004,1,1624872542
+Tier:cprod-acc-redis-10>Server:cprod-acc-redis-10-7-9-0,MGType:System Metrics>MGroup:System Load Stats,Load Average Over 5 Minute,10004,2,1624872542
+Tier:cprod-acc-redis-10>Server:cprod-acc-redis-10-7-9-0,MGType:System Metrics>MGroup:System Load Stats,Load Average Over 15 Minute,10004,3,1624872542
+Tier:cprod-acc-redis-10>Server:cprod-acc-redis-10-7-9-0,MGType:System Metrics>MGroup:System Load Stats,Uptime (Days),10004,4,1624872542
+Tier:cprod-acc-redis-10>Server:cprod-acc-redis-10-7-9-0,MGType:System Metrics>MGroup:System Load Stats,Number of Users,10004,5,1624872542
+Tier:cprod-acc-redis-9>Server:cprod-acc-redis-9-7-8-0,MGType:System Metrics>MGroup:System Load Stats,Load Average Over 1 Minute,10004,1,1624872542
+Tier:cprod-acc-redis-9>Server:cprod-acc-redis-9-7-8-0,MGType:System Metrics>MGroup:System Load Stats,Load Average Over 5 Minute,10004,2,1624872542
+Tier:cprod-acc-redis-9>Server:cprod-acc-redis-9-7-8-0,MGType:System Metrics>MGroup:System Load Stats,Load Average Over 15 Minute,10004,3,1624872542
+Tier:cprod-acc-redis-9>Server:cprod-acc-redis-9-7-8-0,MGType:System Metrics>MGroup:System Load Stats,Uptime (Days),10004,4,1624872542
+Tier:cprod-acc-redis-9>Server:cprod-acc-redis-9-7-8-0,MGType:System Metrics>MGroup:System Load Stats,Number of Users,10004,5,1624872542
+Tier:cprod-acc-redis-10>Server:cprod-acc-redis-10-2-9-0,MGType:System Metrics>MGroup:System Load Stats,Load Average Over 1 Minute,10004,1,1624872542
+

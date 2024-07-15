@@ -1,0 +1,240 @@
+
+{
+    "cctx": {
+        "cck": "cavisson.33338.1714805806591",
+        "pk": "cavisson:172.24.1.8:05-04-2024 06-56-45.911",
+        "u": "cavisson",
+        "prodType": "Netdiagnostics"
+    },
+    "opType": 32,
+    "clientId": "-1",
+    "appId": "-1",
+    "rules": [
+        {
+            "name": "composite_case",
+            "id": 15,
+            "attributes": {
+                "enable": true,
+                "chkStatus": true,
+                "chkStatusTime": 900,
+                "level": 0,
+                "conditionType": 1,
+                "groups": "0",
+                "skipSamples": false,
+                "applyRuleAfter": 5,
+                "genAlertForNaN": false,
+                "severity": [
+                    {
+                        "id": 1,
+                        "condition": "C1 || C2 && C3",
+                        "conditionList": [
+                            {
+                                "type": 3,
+                                "outliersType": {
+                                    "dataType": 5,
+                                    "pctType": 0,
+                                    "pct": 100,
+                                    "timeWindow": 5,
+                                    "twUnit": 0,
+                                    "windowType": 1,
+                                    "algoType": 0,
+                                    "tolerance": 0.33
+                                },
+                                "id": 0,
+                                "name": "C1",
+                                "mName": "B",
+                                "grpAffLevel": 0,
+                                "gAffLevfTh": -1,
+                                "gAffLevrTh": -1
+                            },
+                            {
+                                "type": 4,
+                                "forcastType": {
+                                    "dataType": 4,
+                                    "operator": 0,
+                                    "timeWindow": 5,
+                                    "twUnit": 0,
+                                    "windowType": 1,
+                                    "trendWindow": 5,
+                                    "trendWindowUnit": 0,
+                                    "pctType": 0,
+                                    "pct": -1,
+                                    "forecastModel": 0,
+                                    "forecastType": 0,
+                                    "fThreshold": 2,
+                                    "sThreshold": -1,
+                                    "frThreshold": -1,
+                                    "srThreshold": -1
+                                },
+                                "id": 1,
+                                "name": "C2",
+                                "mName": "A",
+                                "grpAffLevel": 0,
+                                "gAffLevfTh": -1,
+                                "gAffLevrTh": -1
+                            },
+                            {
+                                "type": 4,
+                                "forcastType": {
+                                    "dataType": 0,
+                                    "operator": 0,
+                                    "fThreshold": 1,
+                                    "sThreshold": -1,
+                                    "frThreshold": -1,
+                                    "srThreshold": -1,
+                                    "timeWindow": 5,
+                                    "twUnit": 0,
+                                    "windowType": 1,
+                                    "trendWindow": 5,
+                                    "trendWindowUnit": 0,
+                                    "pctType": 0,
+                                    "pct": 100,
+                                    "forecastModel": 0,
+                                    "forecastType": 0
+                                },
+                                "id": 2,
+                                "name": "C3",
+                                "mName": "C",
+                                "grpAffLevel": 0,
+                                "gAffLevfTh": -1,
+                                "gAffLevrTh": -1
+                            }
+                        ]
+                    }
+                ],
+                "actions": [],
+                "tags": [],
+                "metric": [
+                    {
+                        "subject": [
+                            {
+                                "tags": [
+                                    {
+                                        "key": "Tier",
+                                        "mode": 2,
+                                        "value": "ALL"
+                                    },
+                                    {
+                                        "key": "Server",
+                                        "mode": 2,
+                                        "value": "ALL"
+                                    },
+                                    {
+                                        "key": "Instance",
+                                        "mode": 2,
+                                        "value": "ALL"
+                                    }
+                                ]
+                            }
+                        ],
+                        "measure": {
+                            "metric": "Process CPU Time (Sec)",
+                            "metricId": 2,
+                            "mg": "Process Stats",
+                            "mgId": 10921,
+                            "mgType": "Process Monitoring and process i/o stats. This monitor will work if cmon version is greater than or equal to 4.2.0.",
+                            "mgTypeId": -1,
+                            "value": "Process Stats"
+                        },
+                        "glbMetricId": null,
+                        "derivedFormula": null,
+                        "attribute": 2,
+                        "name": "A",
+                        "mode": 0
+                    },
+                    {
+                        "subject": [
+                            {
+                                "tags": [
+                                    {
+                                        "key": "Tier",
+                                        "value": "business-tier-1",
+                                        "mode": 1
+                                    },
+                                    {
+                                        "key": "Server",
+                                        "value": "business-server-2",
+                                        "mode": 1
+                                    },
+                                    {
+                                        "key": "Instance",
+                                        "value": "business-instance-2",
+                                        "mode": 1
+                                    },
+                                    {
+                                        "key": "Business Transactions",
+                                        "value": "business-transaction-1",
+                                        "mode": 1
+                                    }
+                                ]
+                            }
+                        ],
+                        "measure": {
+                            "metric": "FinWait1",
+                            "metricId": 4,
+                            "mg": "TCP States",
+                            "mgId": 10976,
+                            "mgType": "Display number of connections in different states, send queue size and receive queue size.",
+                            "mgTypeId": -1,
+                            "value": "TCP States"
+                        },
+                        "glbMetricId": null,
+                        "derivedFormula": null,
+                        "attribute": 1,
+                        "name": "B",
+                        "mode": 2
+                    },
+                    {
+                        "subject": [
+                            {
+                                "tags": [
+                                    {
+                                        "key": "Tier",
+                                        "value": "metadata_tree-tier",
+                                        "mode": 1
+                                    },
+                                    {
+                                        "key": "Server",
+                                        "value": "ALL",
+                                        "mode": 2
+                                    }
+                                ]
+                            }
+                        ],
+                        "measure": {
+                            "metric": "L2 Cache Memory (KB)",
+                            "metricId": 4,
+                            "mg": "CPU Stats",
+                            "mgId": 10729,
+                            "mgType": "CPU architecture information",
+                            "mgTypeId": -1
+                        },
+                        "glbMetricId": null,
+                        "derivedFormula": null,
+                        "attribute": 2,
+                        "name": "C",
+                        "mode": 2
+                    },
+                    {
+                        "subject": [
+                            {
+                                "tags": [
+                                    {
+                                        "key": "Tier",
+                                        "value": "metadata_tree-tier",
+                                        "mode": 1
+                                    },
+                                    {
+                                        "key": "Server",
+                                        "value": "ALL",
+                                        "mode": 2
+                                    }
+                                ]
+                            }
+                        ],
+                        "measure": {
+                            "metric": "AL 2xx/Sec",
+                            "metricId": 6,
+                            "mg": "Access Log Stats By Tier",
+                            "mgId": 1000000,
+                            "mgType":"Request stats using access Log such as Requests/SecShow more

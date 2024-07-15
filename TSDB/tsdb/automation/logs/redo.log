@@ -1,0 +1,22 @@
+Tue 11 Jun 2024 06:26:07 PM IST|TESTIDX=99901, TR_PATH=/home/cavisson/work/logs/TR99901, METRIC_FILE=/home/cavisson/work/logs/TR99901/tsdb/tsdb_metrics.txt, TSDB_PORT=32703
+Tue 11 Jun 2024 06:26:07 PM IST|
+Tue 11 Jun 2024 06:26:07 PM IST|TC - [RAR001] Check if tsdb_rar is running
+Tue 11 Jun 2024 06:26:08 PM IST|
+Tue 11 Jun 2024 06:26:08 PM IST|TC - [RAR002] Check if tsdb_rar process invokes tsdb_ddsw process
+Tue 11 Jun 2024 06:26:08 PM IST|
+Tue 11 Jun 2024 06:26:08 PM IST|TC - [RAR003] Check if tsdb_ddsw process recovers if it goes down
+Tue 11 Jun 2024 06:26:09 PM IST|
+Tue 11 Jun 2024 06:26:09 PM IST|TC - [RAR004] If recovery from snapshot than rar and ddsw should not run
+Tue 11 Jun 2024 06:26:09 PM IST|tsdb_rar and tsdb_ddsw should be running as recovery is being done by ddsw.
+Tue 11 Jun 2024 06:26:09 PM IST|
+Tue 11 Jun 2024 06:26:09 PM IST|TC - [RAR005] Check if tsdb_heartbeat field is updating in .lav files
+Tue 11 Jun 2024 06:26:14 PM IST|tsdb_heartbeat field is updating in /home/cavisson/work/logs/TR99901/tsdb/redo/archive/.lav
+Tue 11 Jun 2024 06:26:14 PM IST|
+Tue 11 Jun 2024 06:26:14 PM IST|TC - [RAR006] Check .lrv file updating.
+Tue 11 Jun 2024 06:26:14 PM IST|File /home/cavisson/work/logs/TR99901/tsdb/redo/archive/.lav/../.lrv does not exist
+Tue 11 Jun 2024 06:26:15 PM IST|
+Tue 11 Jun 2024 06:26:15 PM IST|TC - [RAR007] Check if recovery done or not
+Tue 11 Jun 2024 06:26:16 PM IST|tsdb_admin --port 32703 --op tci
+Tue 11 Jun 2024 06:26:16 PM IST|
+Tue 11 Jun 2024 06:26:16 PM IST|TC - [RAR008] Incomplete tranction
+Tue 11 Jun 2024 06:26:16 PM IST|File /home/cavisson/work/logs/TR99901/tsdb/redo/incomplete_logs does not exist, means no incomplete txn.

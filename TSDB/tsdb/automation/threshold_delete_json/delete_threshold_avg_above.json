@@ -1,0 +1,133 @@
+{
+    "cctx": {
+        "cck": "cavisson.191919.1686716490313",
+        "pk": "cavisson:172.24.1.144:06-14-2023 09-51-29",
+        "u": "cavisson",
+        "prodType": "Netdiagnostics"
+    },
+    "clientId": "-1",
+    "appId": "-1",
+    "rules": [
+        {
+            "id": 730,
+            "name": "threshold_avg_above",
+            "createdTs": 1686725661526,
+            "lastModifiedTs": 1686725661526,
+            "creator": "cavisson",
+            "modifiedBy": "cavisson",
+            "venderRule": false,
+            "attributes": {
+                "enable": true,
+                "chkStatus": true,
+                "chkStatusTime": 900,
+                "level": 0,
+                "conditionType": 0,
+                "groups": "0",
+                "skipSamples": false,
+                "applyRuleAfter": 2,
+                "genAlertForNaN": false,
+                "schedule": false,
+                "tags": [],
+                "metric": [
+                    {
+                        "name": "A",
+                        "measure": {
+                            "metric": "Guest CPU (Pct)",
+                            "metricId": 8,
+                            "mg": "MPStat Linux",
+                            "mgId": 10010,
+                            "mgType": "CPU core stats for linux.",
+                            "mgTypeId": -1
+                        },
+                        "glbMetricId": 0,
+                        "attribute": 0,
+                        "subject": [
+                            {
+                                "tags": [
+                                    {
+                                        "key": "Tier",
+                                        "value": "ALL",
+                                        "mode": 2
+                                    },
+                                    {
+                                        "key": "Server",
+                                        "value": "ALL",
+                                        "mode": 2
+                                    },
+                                    {
+                                        "key": "Processor",
+                                        "value": "ALL",
+                                        "mode": 2
+                                    }
+                                ],
+                                "tagInfo": "",
+                                "value": "-1"
+                            }
+                        ],
+                        "mode": 0
+                    }
+                ],
+                "severity": [
+                    {
+                        "id": 3,
+                        "condition": "C1",
+                        "conditionList": [
+                            {
+                                "id": 0,
+                                "name": "C1",
+                                "mName": "A",
+                                "type": 0,
+                                "grpAffLevel": 0,
+                                "gAffLevfTh": -1,
+                                "gAffLevrTh": -1,
+                                "thresholdType": {
+                                    "dataType": 0,
+                                    "operator": 0,
+                                    "windowType": 0,
+                                    "fThreshold": 132,
+                                    "sThreshold": -1,
+                                    "frThreshold": -1,
+                                    "srThreshold": -1,
+                                    "pctType": 0,
+                                    "pct": 100,
+                                    "timeWindow": 2,
+                                    "twUnit": 0
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "actionsEvents": {
+                    "startedMinor": false,
+                    "startedMajor": false,
+                    "startedCritical": false,
+                    "continuousEvent": false,
+                    "minorToMajor": true,
+                    "minorToCritical": false,
+                    "majorToCritical": false,
+                    "majorToMinor": true,
+                    "criticalToMajor": false,
+                    "criticalToMinor": false,
+                    "endedMinor": false,
+                    "endedMajor": false,
+                    "endedCritical": false,
+                    "deleteRule": false,
+                    "updateRule": false,
+                    "disableRule": false,
+                    "forceClear": false,
+                    "endMaintenance": false,
+                    "endRuleSchedule": false,
+                    "endConfig": false,
+                    "info": false
+                },
+                "actions": [],
+                "mailIds": [],
+                "extensions": [],
+                "message": "",
+                "description": "",
+                "recommendation": ""
+            }
+        }
+    ],
+    "opType": 35
+}

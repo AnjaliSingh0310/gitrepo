@@ -1,0 +1,9 @@
+lxml==4.9.2
+urllib3==1.25.8
+Python==3.8.10
+
+To run the alert automation we need pytest
+pyhton3 -m pytest -s <file_name>
+
+To generate report need to pass the flag
+--html=report.html

@@ -1,0 +1,2 @@
+#metric_id,frequency_type,subject,measure,gdf_id,graph_id,discovery_ts
+030103001C00000000000000000000000500000000000000,1,customer:Default>application:Default>Tier:acc-cav-test-com-1>Server:acc-cav-test-com-1-3-0-0>Instance:CMON0,MGType:Application Metrics>MGroup:Process Stats>Metric:Process Elapsed Time(Sec),10921,1,1653302181

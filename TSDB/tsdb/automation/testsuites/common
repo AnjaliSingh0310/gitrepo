@@ -1,0 +1,122 @@
+#!/bin/bash
+
+automation_log()
+{
+ echo -e `date`"|"$* >> $LOG_FILE
+}
+
+#automation_log()
+#{
+#  if [ -n "$LOG_FILE" ]; then
+ #   echo "$(date)|$*" >> "$LOG_FILE"
+ # else
+ #   echo "Error: LOG_FILE1 is not defined or empty. Cannot log message." >&2
+#fi
+#}
+
+
+common_setup()
+{
+  export TESTIDX=`grep "^nde.testRunNum" $NS_WDIR/webapps/sys/config.ini | cut -d'=' -f2 | xargs`
+  #export TESTIDX=909090
+  export TR_PATH="$NS_WDIR/logs/TR$TESTIDX"
+  export TSDB_WDIR="$TR_PATH/tsdb"
+  export TRACE_LOG_FILE="$TSDB_WDIR/logs/tsdb_trace.log"
+  export METRIC_FILE="$TR_PATH/tsdb/tsdb_metrics.txt"
+  #export TSDB_PORT=`cat $NS_WDIR/QueryHead/.port`
+  export TSDB_PORT=`cat $TR_PATH/.ports/TSDBQueryPort`
+  export ERR_MSG=""
+  export NF_ARR=("1" "10" "60" "600" "3600")
+  if [ "${BATS_TEST_FILENAME}X" != "X" ];then
+     load '/home/cavisson/work/TSDB/tsdb/automation/thirdparty/bats-support/load'
+     load '/home/cavisson/work/TSDB/tsdb/automation/thirdparty/bats-assert/load'
+  #DIR="$( cd "$( dirname "$BATS_TEST_FILENAME" )" >/dev/null 2>&1 && pwd )"
+  #PATH=$DIR:$PATH
+  fi
+  export ING_CONF_FILE="${PWD}/tsdb_ingestion/tsdb_ingestion_test.conf"
+  #export GENERIC_LIB="${PWD}/lib"
+  export GENERIC_LIB="$LIB"
+  export RESPONSE_PATH="$RESPONSES/responses"
+  export TSDB_REQ="${PWD}/lib/tsdbRequests"
+  export LAV_PATH="$TSDB_WDIR/redo/archive/.lav"
+
+  # All Response file path
+  export METRIC_CONF="${RESPONSE_PATH}/Metricconf"
+  export DATA_REP="${RESPONSE_PATH}/datacall"
+  export ONLINE_REP="${RESPONSE_PATH}/online"
+  export DATA_TAG="${RESPONSE_PATH}/datacall_tags"
+  export METADATA_REP="${RESPONSE_PATH}/metadata"
+  export DERIVED_REP="${RESPONSE_PATH}/derived"
+  export TREE_REP="${RESPONSE_PATH}/treecall"
+  export HIERARCHY_REP="${RESPONSE_PATH}/hierarchy"
+  export TAGS_REP="${RESPONSE_PATH}/tags"
+  export GRAPH_REP="${RESPONSE_PATH}/group_graph"
+  export PERCENTILE_REP="${RESPONSE_PATH}/percentile"
+  export NONBUSINESS_REP="${RESPONSE_PATH}/nonbusiness"
+  export ALERT_LIB="${PWD}/lib/alert"
+  export ALERT_FILE="${PWD}/testsuites/ALERT_FILE.txt"  
+  export INGESTION_REP="${RESPONSE_PATH}/ingestion"
+  export REDO_REP="${RESPONSE_PATH}/redo"
+  
+  # All library file path
+ # export DATACALL_LIB="${PWD}/lib/datacall"
+  #export QUERYHEAD_LIB="${PWD}/lib/queryhead"
+  #export SNAPSHOT_LIB="${PWD}/lib/snapshot"
+  #export TREECALL_LIB="$LIB/treecall"
+  #export METADATA_LIB="${PWD}/lib/metadata"
+  #export METRICDETAILS="${PWD}/testsuites/MetricDetails"
+  #export HIERARCHY_LIB="${PWD}/lib/hierarchy"
+  #export GROUP_GRAPH_LIB="${PWD}/lib/group_graph"
+  #export DERIVED_LIB="${PWD}/lib/derived"
+  #export TAGS_LIB="${PWD}/lib/tags"
+ # export PERCENTILE_LIB="${PWD}/lib/percentile"
+  #export NONBUSINESS_LIB="${PWD}/lib/nonbusiness"
+  #export INGESTION_LIB="${PWD}/lib/ingestion"
+  #export REDO_LIB="${PWD}/lib/redo"
+  export REDO_LIB="$LIB/redo"
+
+  export DATACALL_LIB="$LIB/datacall"
+  export QUERYHEAD_LIB="$LIB/queryhead"
+  export SNAPSHOT_LIB="$LIB/snapshot"
+  export TREECALL_LIB="$LIB/treecall"
+  export METADATA_LIB="$LIB/metadata"
+  export METRICDETAILS="${PWD}/testsuites/MetricDetails"
+  export HIERARCHY_LIB="$LIB/hierarchy"
+  export GROUP_GRAPH_LIB="$LIB/group_graph"
+  export DERIVED_LIB="$LIB/derived"
+  export TAGS_LIB="$LIB/tags"
+  export PERCENTILE_LIB="$LIB/percentile"
+  export NONBUSINESS_LIB="$LIB/nonbusiness"
+  export INGESTION_LIB="$LIB/ingestion"
+
+
+
+
+
+
+
+
+  # All temp dir file path
+  export TEMP_DIR="${NS_WDIR}/.tmp"
+  export DATACALL_TEMP="$TEMP_DIR/datacall"
+  export ONLINE_TEMP="$TEMP_DIR/online"
+  export METADATA_TEMP="$TEMP_DIR/metadata"
+  export TREECALL_TEMP="$TEMP_DIR/treecall"
+  export HIERARCHY_TEMP="$TEMP_DIR/hierarchy"
+  export GROUP_GRAPH_TEMP="$TEMP_DIR/group_graph"
+  export TAGS_TEMP="$TEMP_DIR/tags"
+  export PERCENTILE_TEMP="$TEMP_DIR/percentile"
+  export NONBUSINESS_TEMP="$TEMP_DIR/nonbusiness"
+  export INGESTION_TEMP="$TEMP_DIR/ingestion"
+  export REDO_TEMP="$TEMP_DIR/redo"
+
+  export LOG_FILE="$LOG_FILE/$(echo $BATS_TEST_FILENAME | awk -F'/' '{print $NF}' | cut -d'.' -f1).log"
+  export MT_DETAIL_FILE="${PWD}/MetricDetails.sh"
+  export RESULT_FILE="${PWD}/result.txt"
+  export -f automation_log
+  
+  if [ "$BATS_TEST_NUMBER" == "1" ];then
+	  >$LOG_FILE
+     automation_log "TESTIDX=$TESTIDX, TR_PATH=$TR_PATH, METRIC_FILE=$METRIC_FILE, TSDB_PORT=$TSDB_PORT"
+  fi
+}

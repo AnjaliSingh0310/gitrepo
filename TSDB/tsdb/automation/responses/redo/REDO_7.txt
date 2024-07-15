@@ -1,0 +1,12 @@
+opcode: 1, msg_size: 149 bytes, version: 1, hdr_flags: 16, corr_id: 0, tx_name_offset: 134, flags 0
+tsdb_nodes: 1, qhead_rt: 0 us
+tx_name: TCI_TPC10m-10m_NC3
+
+tsdb_id: 1, tsdb_rt: 0 us
+num_members: 1, flags: 0
+ id: 060000000C0000000000000000000000FFFF0000, toc: 0, tot: 12, tbl_idx: 0, sub_idx: 0
+ name: Topology, gdf_id: 0, num_child: 1, flag: 0
+
+    id: 060000000C0000000000000000000000FFFF0000, toc: 0, tot: 12, tbl_idx: 0, sub_idx: 0
+    name: Subjects, gdf_id: 0, num_child: 0, flag: 0
+

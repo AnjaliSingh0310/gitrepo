@@ -1,0 +1,25 @@
+#!/bin/bash
+filename=GDF.conf
+echo "#GDFName|GroupID|GraphCount|RangeMode|GlobalRange|Metric 1 range,Metric-2 range,..." > $filename
+echo "#cm_mpstat.gdf|9|0/1|1-100|1-10,11-20,21-30,31-40,..." >> $filename
+echo "#if range mode is 0 then we will consider global range" >> $filename
+echo "#if range mode is 1 then we will consider individual range" >>$filename
+
+TESTIDX=`grep "^nde.testRunNum" $NS_WDIR/webapps/sys/config.ini | cut -d'=' -f2 | xargs`
+
+GRP_IDS=($(tsdb_admin --tr $TESTIDX --op mgn 2>/dev/null | grep -o 'gdf_id.*,' | cut -d',' -f1 | awk '{print $2}' | xargs))
+for grpid in ${GRP_IDS[@]}
+do
+   gdf_name=`grep "^Group.*|$grpid|" $NS_WDIR/sys/*.gdf | cut -d':' -f1 | awk -F'/' '{print $NF}'`
+   graph_cnt=`grep "^Group|" $NS_WDIR/sys/$gdf_name | cut -d'|' -f5`
+   range_mode=0
+   range="0-10000000"
+   individual_range=""
+   for ((i=1;i<=graph_cnt;i++))
+   do
+     individual_range=$individual_range"#,"
+   done
+   echo -e "${gdf_name}|${grpid}|${graph_cnt}|${range_mode}|${range}|${individual_range}\n" >> $filename
+done
+   
+
