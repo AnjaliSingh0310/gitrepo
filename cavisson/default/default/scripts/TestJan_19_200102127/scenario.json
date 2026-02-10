@@ -1,0 +1,609 @@
+{
+  "defaultScriptType": "c",
+  "schedule": [
+    {
+      "duration": "00:01:00",
+      "script": "Group_1",
+      "concurrency": 1
+    }
+  ],
+  "configuration": {
+    "isFlow": "no",
+    "testname": "default/default/TestJan_19_200102127"
+  },
+  "scenario": {
+    "SCHEDULE_TYPE": {
+      "_G": [
+        [
+          "SIMPLE"
+        ]
+      ]
+    },
+    "NS_GENERATOR": {
+      "_G": [
+        []
+      ]
+    },
+    "GEN_LOCATION": {
+      "_G": [
+        []
+      ]
+    },
+    "NUM_USERS": {
+      "_G": [
+        []
+      ]
+    },
+    "G_URL": {},
+    "GEN_LOCATION_MODE": {
+      "_G": [
+        [
+          "0"
+        ]
+      ]
+    },
+    "DEBUG_TRACE": {
+      "_G": [
+        [
+          "1"
+        ]
+      ]
+    },
+    "G_SCRIPT_RUNLOGIC": {
+      "_G": [
+        []
+      ]
+    },
+    "SCHEDULE_BY": {
+      "_G": [
+        [
+          "SCENARIO"
+        ]
+      ]
+    },
+    "G_DATADIR": {
+      "ALL": [
+        [
+          "0",
+          "NA"
+        ]
+      ],
+      "Group_1": [
+        [
+          "0",
+          "NA"
+        ]
+      ]
+    },
+    "NH_SCENARIO": {
+      "_G": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ]
+    },
+    "STYPE": {
+      "_G": [
+        [
+          "FIX_CONCURRENT_USERS"
+        ]
+      ]
+    },
+    "SGRP": {
+      "_G": [
+        [
+          "Group_1",
+          "NA",
+          "NA",
+          "Internet",
+          "0",
+          "default/default/.TestJan_19_200102127_Group_1",
+          "1",
+          "",
+          ""
+        ]
+      ]
+    },
+    "TARGET_RATE": {
+      "_G": [
+        []
+      ]
+    },
+    "SCHEDULE": {
+      "_G": [
+        [
+          "ALL",
+          "Duration",
+          "DURATION",
+          "SESSIONS",
+          "1",
+          "1"
+        ]
+      ]
+    },
+    "NS_GENERATOR_MODE": {
+      "_G": [
+        [
+          ""
+        ]
+      ]
+    },
+    "TNAME": {
+      "_G": [
+        [
+          "Test"
+        ]
+      ]
+    },
+    "PROF_PCT_MODE": {
+      "_G": [
+        [
+          "NUM"
+        ]
+      ]
+    },
+    "G_TRACING": {
+      "ALL": [
+        [
+          4,
+          1,
+          2,
+          0,
+          0,
+          1,
+          100,
+          100
+        ]
+      ]
+    },
+    "RUNTIME_USER_SESSION_PCT": {
+      "_G": [
+        []
+      ]
+    }
+  },
+  "lastModifedBy": "cavisson",
+  "preTest": [],
+  "scripts": {
+    "Group_1": {
+      "scriptMode": "visual",
+      "flows": {
+        "Flow_1": {
+          "enable": true,
+          "requests": [],
+          "steps": [
+            {
+              "optional": false,
+              "label": "go_1",
+              "tagName": "",
+              "type": "go",
+              "continueOnError": true,
+              "timeout": 0,
+              "url": "https://netcloud4-14-1.cav-test.com:8080/",
+              "locators": {},
+              "navigation": true,
+              "stepName": "go_1",
+              "value": "",
+              "snapshot": "",
+              "transaction": "go_1",
+              "iframes": ""
+            },
+            {
+              "optional": false,
+              "label": "click_A_1_1",
+              "tagName": "A",
+              "type": "click",
+              "continueOnError": true,
+              "timeout": 0,
+              "url": "https://netcloud4-14-1.cav-test.com:8080/",
+              "locators": {
+                "xpath": "//A[normalize-space(text())=\\\"Login\\\"]",
+                "id": "//A[normalize-space(text())=\\\"Login\\\"]"
+              },
+              "navigation": true,
+              "stepName": "click_A_1_1",
+              "value": "",
+              "snapshot": "",
+              "transaction": "click_A_1_1",
+              "iframes": ""
+            },
+            {
+              "optional": false,
+              "label": "go_2",
+              "tagName": "",
+              "type": "go",
+              "continueOnError": true,
+              "timeout": 0,
+              "url": "https://netcloud4-14-1.cav-test.com:8080/login",
+              "locators": {},
+              "navigation": true,
+              "stepName": "go_2",
+              "value": "",
+              "snapshot": "",
+              "transaction": "go_2",
+              "iframes": ""
+            },
+            {
+              "optional": false,
+              "label": "click_INPUT_2_1",
+              "tagName": "INPUT",
+              "type": "click",
+              "continueOnError": true,
+              "timeout": 0,
+              "url": "https://netcloud4-14-1.cav-test.com:8080/login",
+              "locators": {
+                "xpath": "/html/body/main/div/div/div/div/form/div/input",
+                "id": "email"
+              },
+              "navigation": true,
+              "stepName": "click_INPUT_2_1",
+              "value": "",
+              "snapshot": "",
+              "transaction": "click_INPUT_2_1",
+              "iframes": ""
+            },
+            {
+              "optional": false,
+              "label": "change_INPUT_2_2",
+              "tagName": "INPUT",
+              "type": "change",
+              "continueOnError": true,
+              "timeout": 0,
+              "url": "https://netcloud4-14-1.cav-test.com:8080/login",
+              "locators": {
+                "xpath": "/html/body/main/div/div/div/div/form/div/input",
+                "id": "email"
+              },
+              "navigation": true,
+              "stepName": "change_INPUT_2_2",
+              "value": "narendra.singh@cavisson.com ",
+              "snapshot": "",
+              "transaction": "change_INPUT_2_2",
+              "iframes": ""
+            },
+            {
+              "optional": false,
+              "label": "click_INPUT_2_3",
+              "tagName": "INPUT",
+              "type": "click",
+              "continueOnError": true,
+              "timeout": 0,
+              "url": "https://netcloud4-14-1.cav-test.com:8080/login",
+              "locators": {
+                "xpath": "//BUTTON[normalize-space(text())=\\\"Login\\\"]/../../DIV[2]/INPUT[1]",
+                "id": "password"
+              },
+              "navigation": true,
+              "stepName": "click_INPUT_2_3",
+              "value": "",
+              "snapshot": "",
+              "transaction": "click_INPUT_2_3",
+              "iframes": ""
+            },
+            {
+              "optional": false,
+              "label": "change_INPUT_2_4",
+              "tagName": "INPUT",
+              "type": "change",
+              "continueOnError": true,
+              "timeout": 0,
+              "url": "https://netcloud4-14-1.cav-test.com:8080/login",
+              "locators": {
+                "xpath": "//BUTTON[normalize-space(text())=\\\"Login\\\"]/../../DIV[2]/INPUT[1]",
+                "id": "password"
+              },
+              "navigation": true,
+              "stepName": "change_INPUT_2_4",
+              "value": "********** ",
+              "snapshot": "",
+              "transaction": "change_INPUT_2_4",
+              "iframes": ""
+            },
+            {
+              "optional": false,
+              "label": "click_BUTTON_2_5",
+              "tagName": "BUTTON",
+              "type": "click",
+              "continueOnError": true,
+              "timeout": 0,
+              "url": "https://netcloud4-14-1.cav-test.com:8080/login",
+              "locators": {
+                "xpath": "//BUTTON[normalize-space(text())=\\\"Login\\\"]",
+                "id": "//BUTTON[normalize-space(text())=\\\"Login\\\"]"
+              },
+              "navigation": true,
+              "stepName": "click_BUTTON_2_5",
+              "value": "",
+              "snapshot": "",
+              "transaction": "click_BUTTON_2_5",
+              "iframes": ""
+            },
+            {
+              "optional": false,
+              "label": "go_3",
+              "tagName": "",
+              "type": "go",
+              "continueOnError": true,
+              "timeout": 0,
+              "url": "https://netcloud4-14-1.cav-test.com:8080/",
+              "locators": {},
+              "navigation": true,
+              "stepName": "go_3",
+              "value": "",
+              "snapshot": "",
+              "transaction": "go_3",
+              "iframes": ""
+            },
+            {
+              "optional": false,
+              "label": "click_A_3_1",
+              "tagName": "A",
+              "type": "click",
+              "continueOnError": true,
+              "timeout": 0,
+              "url": "https://netcloud4-14-1.cav-test.com:8080/",
+              "locators": {
+                "xpath": "(//A[normalize-space(text())=\\\"View\\\"])[2]",
+                "id": "(//A[normalize-space(text())=\\\"View\\\"])[2]"
+              },
+              "navigation": true,
+              "stepName": "click_A_3_1",
+              "value": "",
+              "snapshot": "",
+              "transaction": "click_A_3_1",
+              "iframes": ""
+            },
+            {
+              "optional": false,
+              "label": "go_4",
+              "tagName": "",
+              "type": "go",
+              "continueOnError": true,
+              "timeout": 0,
+              "url": "https://netcloud4-14-1.cav-test.com:8080/product/1001232",
+              "locators": {},
+              "navigation": true,
+              "stepName": "go_4",
+              "value": "",
+              "snapshot": "",
+              "transaction": "go_4",
+              "iframes": ""
+            },
+            {
+              "optional": false,
+              "label": "click_BUTTON_4_1",
+              "tagName": "BUTTON",
+              "type": "click",
+              "continueOnError": true,
+              "timeout": 0,
+              "url": "https://netcloud4-14-1.cav-test.com:8080/product/1001232",
+              "locators": {
+                "xpath": "//BUTTON[normalize-space(text())=\\\"Add to Cart\\\"]",
+                "id": "//BUTTON[normalize-space(text())=\\\"Add to Cart\\\"]"
+              },
+              "navigation": true,
+              "stepName": "click_BUTTON_4_1",
+              "value": "",
+              "snapshot": "",
+              "transaction": "click_BUTTON_4_1",
+              "iframes": ""
+            },
+            {
+              "optional": false,
+              "label": "go_5",
+              "tagName": "",
+              "type": "go",
+              "continueOnError": true,
+              "timeout": 0,
+              "url": "https://netcloud4-14-1.cav-test.com:8080/cart",
+              "locators": {},
+              "navigation": true,
+              "stepName": "go_5",
+              "value": "",
+              "snapshot": "",
+              "transaction": "go_5",
+              "iframes": ""
+            },
+            {
+              "optional": false,
+              "label": "click_A_5_1",
+              "tagName": "A",
+              "type": "click",
+              "continueOnError": true,
+              "timeout": 0,
+              "url": "https://netcloud4-14-1.cav-test.com:8080/cart",
+              "locators": {
+                "xpath": "//A[normalize-space(text())=\\\"Proceed to Checkout\\\"]",
+                "id": "//A[normalize-space(text())=\\\"Proceed to Checkout\\\"]"
+              },
+              "navigation": true,
+              "stepName": "click_A_5_1",
+              "value": "",
+              "snapshot": "",
+              "transaction": "click_A_5_1",
+              "iframes": ""
+            },
+            {
+              "optional": false,
+              "label": "go_6",
+              "tagName": "",
+              "type": "go",
+              "continueOnError": true,
+              "timeout": 0,
+              "url": "https://netcloud4-14-1.cav-test.com:8080/checkout/shipping",
+              "locators": {},
+              "navigation": true,
+              "stepName": "go_6",
+              "value": "",
+              "snapshot": "",
+              "transaction": "go_6",
+              "iframes": ""
+            },
+            {
+              "optional": false,
+              "label": "click_INPUT_6_1",
+              "tagName": "INPUT",
+              "type": "click",
+              "continueOnError": true,
+              "timeout": 0,
+              "url": "https://netcloud4-14-1.cav-test.com:8080/checkout/shipping",
+              "locators": {
+                "xpath": "/html/body/main/div[2]/div/div/div[2]/form/div/input",
+                "id": "name"
+              },
+              "navigation": true,
+              "stepName": "click_INPUT_6_1",
+              "value": "",
+              "snapshot": "",
+              "transaction": "click_INPUT_6_1",
+              "iframes": ""
+            },
+            {
+              "optional": false,
+              "label": "change_INPUT_6_2",
+              "tagName": "INPUT",
+              "type": "change",
+              "continueOnError": true,
+              "timeout": 0,
+              "url": "https://netcloud4-14-1.cav-test.com:8080/checkout/shipping",
+              "locators": {
+                "xpath": "/html/body/main/div[2]/div/div/div[2]/form/div/input",
+                "id": "name"
+              },
+              "navigation": true,
+              "stepName": "change_INPUT_6_2",
+              "value": "rohit ",
+              "snapshot": "",
+              "transaction": "change_INPUT_6_2",
+              "iframes": ""
+            },
+            {
+              "optional": false,
+              "label": "click_TEXTAREA_6_3",
+              "tagName": "TEXTAREA",
+              "type": "click",
+              "continueOnError": true,
+              "timeout": 0,
+              "url": "https://netcloud4-14-1.cav-test.com:8080/checkout/shipping",
+              "locators": {
+                "xpath": "/html/body/main/div[2]/div/div/div[2]/form/div[2]/textarea",
+                "id": "address"
+              },
+              "navigation": true,
+              "stepName": "click_TEXTAREA_6_3",
+              "value": "",
+              "snapshot": "",
+              "transaction": "click_TEXTAREA_6_3",
+              "iframes": ""
+            },
+            {
+              "optional": false,
+              "label": "change_TEXTAREA_6_4",
+              "tagName": "TEXTAREA",
+              "type": "change",
+              "continueOnError": true,
+              "timeout": 0,
+              "url": "https://netcloud4-14-1.cav-test.com:8080/checkout/shipping",
+              "locators": {
+                "xpath": "/html/body/main/div[2]/div/div/div[2]/form/div[2]/textarea",
+                "id": "address"
+              },
+              "navigation": true,
+              "stepName": "change_TEXTAREA_6_4",
+              "value": "noida ",
+              "snapshot": "",
+              "transaction": "change_TEXTAREA_6_4",
+              "iframes": ""
+            },
+            {
+              "optional": false,
+              "label": "click_INPUT_6_5",
+              "tagName": "INPUT",
+              "type": "click",
+              "continueOnError": true,
+              "timeout": 0,
+              "url": "https://netcloud4-14-1.cav-test.com:8080/checkout/shipping",
+              "locators": {
+                "xpath": "/html/body/main/div[2]/div/div/div[2]/form/div[3]/input",
+                "id": "phone"
+              },
+              "navigation": true,
+              "stepName": "click_INPUT_6_5",
+              "value": "",
+              "snapshot": "",
+              "transaction": "click_INPUT_6_5",
+              "iframes": ""
+            },
+            {
+              "optional": false,
+              "label": "change_INPUT_6_6",
+              "tagName": "INPUT",
+              "type": "change",
+              "continueOnError": true,
+              "timeout": 0,
+              "url": "https://netcloud4-14-1.cav-test.com:8080/checkout/shipping",
+              "locators": {
+                "xpath": "/html/body/main/div[2]/div/div/div[2]/form/div[3]/input",
+                "id": "phone"
+              },
+              "navigation": true,
+              "stepName": "change_INPUT_6_6",
+              "value": "222222222222 ",
+              "snapshot": "",
+              "transaction": "change_INPUT_6_6",
+              "iframes": ""
+            },
+            {
+              "optional": false,
+              "label": "click_BUTTON_6_7",
+              "tagName": "BUTTON",
+              "type": "click",
+              "continueOnError": true,
+              "timeout": 0,
+              "url": "https://netcloud4-14-1.cav-test.com:8080/checkout/shipping",
+              "locators": {
+                "xpath": "//BUTTON[normalize-space(text())=\\\"Continue to Payment\\\"]",
+                "id": "//BUTTON[normalize-space(text())=\\\"Continue to Payment\\\"]"
+              },
+              "navigation": true,
+              "stepName": "click_BUTTON_6_7",
+              "value": "",
+              "snapshot": "",
+              "transaction": "click_BUTTON_6_7",
+              "iframes": ""
+            },
+            {
+              "optional": false,
+              "label": "go_7",
+              "tagName": "",
+              "type": "go",
+              "continueOnError": true,
+              "timeout": 0,
+              "url": "https://netcloud4-14-1.cav-test.com:8080/checkout/payment",
+              "locators": {},
+              "navigation": true,
+              "stepName": "go_7",
+              "value": "",
+              "snapshot": "",
+              "transaction": "go_7",
+              "iframes": ""
+            }
+          ]
+        }
+      },
+      "scriptType": "",
+      "assertions": [],
+      "type": "Browser",
+      "parameters": {},
+      "genCapacity": 0,
+      "order": 0
+    }
+  },
+  "postTest": [],
+  "version": "1.0",
+  "lastModifedTime": "19/01/2026 20:01:01",
+  "info": "This is auto generated scenario configuration JSON created by UI. You should not manually edit this file as any syntax error may result in loss of complete configuration. If you make any changes, you must run following program to validate and convert to scenario file used for the running test: nsu_json_to_cav_script  -p <project>/<sub-project>/<scenario_name> -u <username> -s <work space> (e.g admin/system or <username>/<profile>)"
+}
