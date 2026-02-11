@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------------
-    Name: flow
+    Name: flowB
     Recorded By: cavisson
     Date of recording: 04/14/2023 11:15:56
     Flow details:
@@ -12,54 +12,46 @@
 #include <string.h>
 #include "ns_string.h"
 
-/*----------------------------------------------------------------------------
-human_steps:1. **Open URL:** Navigate to `https://www.flipkart.com/`.
-2. **Fill Search Box:** Enter `mobile` into the search field.
-3. **Click Search Button:** Click the button labeled **"Search for Products, Brands and More"**.
-4. **Click Search Button:** Click the button labeled **"Search"** on the results page.
-steps:{"pages":[{"asserts":[],"title_re":null,"pagedump_url":null,"thinkTime":-1,"name":"Others","title":"Online Shopping Site for Mobiles, Electronics, Furniture, Grocery, Lifestyle, Books & More. Best Offers!","navigationType":0,"actions":[{"xpath":"html\/body\/div[1]\/div\/div[1]\/div\/div\/div\/div\/div\/div\/div\/div\/div\/div[1]\/div\/div\/header\/div[1]\/div[2]\/form\/div\/div\/input","idType":"selector","thinkTime":10,"width":"0","id":"html > body > div:nth-of-type(1) > div > div:nth-of-type(1) > div > div > div > div > div > div > div > div > div > div:nth-of-type(1) > div > div > header > div:nth-of-type(1) > div:nth-of-type(2) > form > div > div > input.Pke_EE[type=\"text\"][title=\"Search for Products, Brands and More\"][name=\"q\"][autocomplete=\"off\"][placeholder=\"Search for Products, Brands and More\"]","type":"change","elementType":"INPUT","value":"mobile","height":"0"}],"url":"https:\/\/www.flipkart.com\/"},{"asserts":[],"title_re":null,"pagedump_url":null,"thinkTime":-1,"name":"Others","title":"Online Shopping Site for Mobiles, Electronics, Furniture, Grocery, Lifestyle, Books & More. Best Offers!","navigationType":-1,"actions":[{"xpath":"html\/body\/div[1]\/div\/div[1]\/div\/div\/div\/div\/div\/div\/div\/div\/div\/div[1]\/div\/div\/header\/div[1]\/div[2]\/form\/div\/button","idType":"selector","thinkTime":14,"width":"0","id":"html > body > div:nth-of-type(1) > div > div:nth-of-type(1) > div > div > div > div > div > div > div > div > div > div:nth-of-type(1) > div > div > header > div:nth-of-type(1) > div:nth-of-type(2) > form > div > button._2iLD__[type=\"submit\"][aria-label=\"Search for Products, Brands and More\"][title=\"Search for Products, Brands and More\"]","type":"click","elementType":"BUTTON","value":"","height":"0"}],"url":"https:\/\/www.flipkart.com\/"},{"asserts":[],"title_re":null,"pagedump_url":null,"thinkTime":-1,"name":"Others","title":"Mobile- Buy Products Online at Best Price in India - All Categories | Flipkart.com","navigationType":-1,"actions":[{"xpath":"html\/body\/div[1]\/div\/div[1]\/div[1]\/div[2]\/div[2]\/form\/div\/button","idType":"selector","thinkTime":9,"width":"0","id":"html > body > div:nth-of-type(1) > div > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > form > div > button.MJG8Up[type=\"submit\"]","type":"click","elementType":"BUTTON","value":"","height":"0"}],"url":"https:\/\/www.flipkart.com\/search?q=mobile&otracker=search&otracker1=search&marketplace=FLIPKART&as-show=on&as=off"}],"OS":{"name":"WINDOWS","version":"11"},"userAgent":"WINDOWS\/11; x86; ; Google Chrome\/134; 134.0.6998.165","uuid":"0806d19c-743d-4f04-ad92-a2f6c5a0c134","device":"PC","resolution":"1536x864","Browser":{"name":"Chrome","version":"134"},"Location":{"country":"Others"},"tags":[]}
------------------------------------------------------------------------------*/
-
 void flow()
 {
     ns_start_transaction("index");
     ns_web_url ("index",
-        "URL=https://www.cavisson.com/aaa-app/",
+        "URL={R_URL}/aaa-app/",
         "HEADER=Upgrade-Insecure-Requests:1",
         "HEADER=Accept-Language:en-US,en;q=0.9",
         INLINE_URLS,
-            "URL=https://www.cavisson.com/aaa-app/rfRes/datatable.ecss.xhtml?db=eAG7e5rtPQAG1AKe&ln=org.richfaces", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/rfRes/datascroller.ecss.xhtml?db=eAG7e5rtPQAG1AKe&ln=org.richfaces", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/rfRes/popupPanel.ecss.xhtml?db=eAG7e5rtPQAG1AKe&ln=org.richfaces", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/rfRes/calendar.ecss.xhtml?db=eAG7e5rtPQAG1AKe&ln=org.richfaces", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/javax.faces.resource/style.scss?crc=35028a4325f902599b9d233517d61cecf68921c4:blue", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/javax.faces.resource/css-plain/index-default.css?crc=8df6e3073927a0f7952b145dff384c5816546cb8", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/javax.faces.resource/css-plain/index-custom.css?crc=f50929fa5198a781ee02f403103d4d2fde2107db", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/javax.faces.resource/theme.scss?ln=scss/theme/blue&crc=4d8a2dbea4209567e9a72fd08f56ffee7da8b381:blue", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/javax.faces.resource/jsf.js?ln=javax.faces&crc=cf18b5c6bee824112dc894dd35debcb5c46528d7", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/javax.faces.resource/jquery/jquery.js?ln=primefaces&crc=abfa24db127591cd2defbf6fd6b8e097da7f6af6", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/javax.faces.resource/richfaces.js?crc=c0e3450c92a522ed0569ebcadc3c1c3e79e19b92", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/javax.faces.resource/richfaces-base-component.js?crc=16b7e47381dcb31e65522feae29565e05ebf694a", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/javax.faces.resource/datatable.js?ln=org.richfaces&crc=4766f61371b64ae249b7f03a5b8ca332a746016b", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/javax.faces.resource/richfaces-queue.js?crc=b950ade239cb2d05fea1f27b7b1c6708175eed45", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/javax.faces.resource/richfaces-event.js?crc=e51f0836164018bcd91651a6c4a5b3d1679e5439", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/javax.faces.resource/datascroller.js?ln=org.richfaces&crc=e3ed7fa32cdddd082269e6f0bd5aba5f1f297da3", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/javax.faces.resource/popupPanel.js?ln=org.richfaces&crc=75e71ab80660a389e1c2f56bd1e4d8eb0f1d0f88", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/javax.faces.resource/popupPanelBorders.js?ln=org.richfaces&crc=2c5a827616173baa4a426065b1426e5079fb3255", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/javax.faces.resource/popupPanelSizer.js?ln=org.richfaces&crc=cd63dd984684fc4f39f327078449f267862fc2ff", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/javax.faces.resource/jquery.position.js?crc=0c6d2d0c395a50e53f9d3eaf590514fe2a2529f1", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/javax.faces.resource/json-dom.js?ln=org.richfaces&crc=ecbe16df0e1113de146a2827ed47e124181066d5", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/javax.faces.resource/jquery/jquery-plugins.js?ln=primefaces&crc=d5625b9b0f27fdd73b0ada8363fa1f38a7738dae", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/javax.faces.resource/JQuerySpinBtn.js?ln=org.richfaces&crc=87b46721fda2a0cd09ebc102bebd26a2f7a23133", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/javax.faces.resource/calendar-utils.js?ln=org.richfaces&crc=77a3151e5b605a5d047bd0c5fed5a6898848a9de", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/javax.faces.resource/calendar.js?ln=org.richfaces&crc=bfff6614e0b90d2acdb09a97e0d1b583ab37dce3", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/javax.faces.resource/togglePanel.js?ln=org.richfaces&crc=7f14f3eb908079d77528a87698e7fd96ad4e9eb1", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/javax.faces.resource/togglePanelItem.js?ln=org.richfaces&crc=64c0fdeea19be7d5e1feaab8cd9caa2f2709e8c0", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/javax.faces.resource/collapsiblePanel.js?ln=org.richfaces&crc=78078f4da3df99435bb181f4b394cc570031a160", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/javax.faces.resource/collapsiblePanelItem.js?ln=org.richfaces&crc=6b3a767aed1669fd539deace4acdbb3c2ad31d44", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/javax.faces.resource/eis-scripts.min.js?crc=daf35335db98010e185d255e1553b4bd826e2b94", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/javax.faces.resource/font/fontello.woff?31336992", "HEADER=Origin:https://www.cavisson.com", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
-            "URL=https://www.cavisson.com/aaa-app/javax.faces.resource/font/fontello.woff?31336992", "HEADER=Origin:https://www.cavisson.com", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE
+            "URL={R_URL}/aaa-app/rfRes/datatable.ecss.xhtml?db=eAG7e5rtPQAG1AKe&ln=org.richfaces", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/rfRes/datascroller.ecss.xhtml?db=eAG7e5rtPQAG1AKe&ln=org.richfaces", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/rfRes/popupPanel.ecss.xhtml?db=eAG7e5rtPQAG1AKe&ln=org.richfaces", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/rfRes/calendar.ecss.xhtml?db=eAG7e5rtPQAG1AKe&ln=org.richfaces", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/javax.faces.resource/style.scss?crc=35028a4325f902599b9d233517d61cecf68921c4:blue", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/javax.faces.resource/css-plain/index-default.css?crc=8df6e3073927a0f7952b145dff384c5816546cb8", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/javax.faces.resource/css-plain/index-custom.css?crc=f50929fa5198a781ee02f403103d4d2fde2107db", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/javax.faces.resource/theme.scss?ln=scss/theme/blue&crc=4d8a2dbea4209567e9a72fd08f56ffee7da8b381:blue", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/javax.faces.resource/jsf.js?ln=javax.faces&crc=cf18b5c6bee824112dc894dd35debcb5c46528d7", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/javax.faces.resource/jquery/jquery.js?ln=primefaces&crc=abfa24db127591cd2defbf6fd6b8e097da7f6af6", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/javax.faces.resource/richfaces.js?crc=c0e3450c92a522ed0569ebcadc3c1c3e79e19b92", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/javax.faces.resource/richfaces-base-component.js?crc=16b7e47381dcb31e65522feae29565e05ebf694a", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/javax.faces.resource/datatable.js?ln=org.richfaces&crc=4766f61371b64ae249b7f03a5b8ca332a746016b", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/javax.faces.resource/richfaces-queue.js?crc=b950ade239cb2d05fea1f27b7b1c6708175eed45", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/javax.faces.resource/richfaces-event.js?crc=e51f0836164018bcd91651a6c4a5b3d1679e5439", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/javax.faces.resource/datascroller.js?ln=org.richfaces&crc=e3ed7fa32cdddd082269e6f0bd5aba5f1f297da3", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/javax.faces.resource/popupPanel.js?ln=org.richfaces&crc=75e71ab80660a389e1c2f56bd1e4d8eb0f1d0f88", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/javax.faces.resource/popupPanelBorders.js?ln=org.richfaces&crc=2c5a827616173baa4a426065b1426e5079fb3255", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/javax.faces.resource/popupPanelSizer.js?ln=org.richfaces&crc=cd63dd984684fc4f39f327078449f267862fc2ff", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/javax.faces.resource/jquery.position.js?crc=0c6d2d0c395a50e53f9d3eaf590514fe2a2529f1", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/javax.faces.resource/json-dom.js?ln=org.richfaces&crc=ecbe16df0e1113de146a2827ed47e124181066d5", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/javax.faces.resource/jquery/jquery-plugins.js?ln=primefaces&crc=d5625b9b0f27fdd73b0ada8363fa1f38a7738dae", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/javax.faces.resource/JQuerySpinBtn.js?ln=org.richfaces&crc=87b46721fda2a0cd09ebc102bebd26a2f7a23133", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/javax.faces.resource/calendar-utils.js?ln=org.richfaces&crc=77a3151e5b605a5d047bd0c5fed5a6898848a9de", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/javax.faces.resource/calendar.js?ln=org.richfaces&crc=bfff6614e0b90d2acdb09a97e0d1b583ab37dce3", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/javax.faces.resource/togglePanel.js?ln=org.richfaces&crc=7f14f3eb908079d77528a87698e7fd96ad4e9eb1", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/javax.faces.resource/togglePanelItem.js?ln=org.richfaces&crc=64c0fdeea19be7d5e1feaab8cd9caa2f2709e8c0", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/javax.faces.resource/collapsiblePanel.js?ln=org.richfaces&crc=78078f4da3df99435bb181f4b394cc570031a160", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/javax.faces.resource/collapsiblePanelItem.js?ln=org.richfaces&crc=6b3a767aed1669fd539deace4acdbb3c2ad31d44", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/javax.faces.resource/eis-scripts.min.js?crc=daf35335db98010e185d255e1553b4bd826e2b94", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/javax.faces.resource/font/fontello.woff?31336992", "HEADER=Origin:{R_URL}", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE,
+            "URL={R_URL}/aaa-app/javax.faces.resource/font/fontello.woff?31336992", "HEADER=Origin:{R_URL}", "HEADER=Accept-Language:en-US,en;q=0.9", "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE", END_INLINE
     );
 
     ns_end_transaction("index", NS_AUTO_STATUS);
@@ -67,7 +59,7 @@ void flow()
 
     ns_start_transaction("flow");
     ns_web_url ("flow",
-        "URL=https://www.cavisson.com/aaa-app/flow?_flowId=ipb-entry-flow",
+        "URL={R_URL}/aaa-app/flow?_flowId=ipb-entry-flow",
         "HEADER=Upgrade-Insecure-Requests:1",
         "HEADER=Accept-Language:en-US,en;q=0.9",
         "COOKIE=oam.Flash.RENDERMAP.TOKEN;JSESSIONID;PASROUTE"
@@ -78,10 +70,10 @@ void flow()
 
     ns_start_transaction("SAML");
     ns_web_url ("SAML",
-        "URL=https://www.con.com/aaa-external-stub-services-app/authentification/SAML",
+        "URL=https://{R_ConstURL}/aaa-external-stub-services-app/authentification/SAML",
         "METHOD=POST",
         "HEADER=Upgrade-Insecure-Requests:1",
-        "HEADER=Origin:https://www.cavisson.com",
+        "HEADER=Origin:{R_URL}",
         "HEADER=Content-Type:application/x-www-form-urlencoded",
         "HEADER=Sec-Fetch-Site:cross-site",
         "HEADER=Sec-Fetch-Mode:navigate",
@@ -89,7 +81,7 @@ void flow()
         "HEADER=Accept-Language:en-US,en;q=0.9",
         "COOKIE=PASROUTE",
         BODY_BEGIN,
-            "SAMLRequest=sampleReq",
+            "SAMLRequest={D_SAMLRequest}",
         BODY_END
     );
 
@@ -109,10 +101,10 @@ void flow()
     //Page Auto split for Button 'Login' Clicked by User
     ns_start_transaction("SAML_2");
     ns_web_url ("SAML_2",
-        "URL=https://www.con.com/aaa-external-stub-services-app/authentification/SAML?",
+        "URL=https://{R_ConstURL}/aaa-external-stub-services-app/authentification/SAML?",
         "METHOD=POST",
         "HEADER=Upgrade-Insecure-Requests:1",
-        "HEADER=Origin:https://www.con.com",
+        "HEADER=Origin:https://{R_ConstURL}",
         "HEADER=Content-Type:application/x-www-form-urlencoded",
         "HEADER=Sec-Fetch-Site:same-origin",
         "HEADER=Sec-Fetch-Mode:navigate",
@@ -121,7 +113,7 @@ void flow()
         "HEADER=Accept-Language:en-US,en;q=0.9",
         "COOKIE=PAS_SRV_JSESSIONID;PASROUTE",
         BODY_BEGIN,
-            "username=Anjali&groups=T49&groups=U50&states=AZ&uw_level=04&billing_level=05&password=Anjali&submit=Login",
+            "username={R_DashUsername}&groups=T49&groups=U50&states=AZ&uw_level=04&billing_level=05&password={R_DashPassword}&submit=Login",
         BODY_END,
         );
          ns_end_transaction("SAML_2", NS_AUTO_STATUS);
@@ -133,7 +125,7 @@ void flow()
     		  "URL=https://e3.pncie.com/aaa-app/saml/SSO",
             "METHOD=POST",
             "HEADER=Upgrade-Insecure-Requests:1",
-            "HEADER=Origin:https://www.con.com",
+            "HEADER=Origin:https://{R_ConstURL}",
             "HEADER=Content-Type:application/x-www-form-urlencoded",
             "HEADER=Sec-Fetch-Site:cross-site",
             "HEADER=Sec-Fetch-Mode:navigate",
@@ -142,7 +134,7 @@ void flow()
             "REDIRECT=YES",
             "LOCATION=/aaa-app/flow?_flowId=ipb-entry-flow",
             ITEMDATA,
-                "Name=SAMLResponse", "Value=SampleResp",
+                "Name=SAMLResponse", "Value={D_SAMLResponse}",
                 "Name=submit", "Value=Login",
             ITEMDATA_END,
             INLINE_URLS,
