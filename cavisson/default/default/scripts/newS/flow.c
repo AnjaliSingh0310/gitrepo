@@ -16,7 +16,7 @@
 void flow()
 {
 
-        ns_start_transaction("url_test_method");
+        ns_start_transaction("url_test_method_test");
         ns_web_url("url_test_method",
             "URL=http://127.0.0.1:7912/url_service/url_test.xml?SvcTime=150&Status=200",
 	        "HEADER=Accept-Encoding:gzip, deflate, br",
