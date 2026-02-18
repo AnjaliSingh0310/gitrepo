@@ -13,3 +13,17 @@ jobs:
 
       - name: List Files
         run: ls -la
+
+  sonar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v2
+        with:
+          args: >
+            -Dsonar.organization=AnjaliSingh0310/gitrepo
+        env:
+          SONAR_TOKEN: 33f49840787e6388b6ceab0e11da146d09902636
