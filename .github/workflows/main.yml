@@ -24,7 +24,7 @@ jobs:
         uses: SonarSource/sonarcloud-github-action@v2
         with:
           args: >
-            -Dsonar.projectKey=anjalisingh0310
-            -Dsonar.organization=AnjaliSingh0310/gitrepo
+            -Dsonar.projectKey=anjalisingh0310_gitrepo
+            -Dsonar.organization=AnjaliSingh0310
         env:
           SONAR_TOKEN: 33f49840787e6388b6ceab0e11da146d09902636
