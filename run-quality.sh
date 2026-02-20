@@ -3,7 +3,7 @@
 echo "Starting Sonar Scan..."
 
 sonar-scanner \
-  -Dsonar.projectKey=anjalisingh0310_gitrepo \
+  -Dsonar.projectKey=AnjaliSingh0310_gitrepo \
   -Dsonar.organization=anjalisingh0310 \
   -Dsonar.exclusions=**/TSDB/** \
   -Dsonar.sources=. \
