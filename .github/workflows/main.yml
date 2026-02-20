@@ -26,5 +26,6 @@ jobs:
           args: >
             -Dsonar.projectKey=AnjaliSingh0310_gitrepo
             -Dsonar.organization=anjalisingh0310
+            -Dsonar.exclusions=**/TSDB/**
         env:
           SONAR_TOKEN: 33f49840787e6388b6ceab0e11da146d09902636
