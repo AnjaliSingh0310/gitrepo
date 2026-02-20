@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo "Installing Sonar Scanner..."
+npm install -g sonar-scanner
+echo "INSTALLED........"
+
 echo "Starting Sonar Scan..."
 
 sonar-scanner \
