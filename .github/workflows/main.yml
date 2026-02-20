@@ -14,10 +14,6 @@ jobs:
       - name: List Files
         run: ls -la
 
-      # Install SonarScanner CLI
-      - name: Install SonarScanner
-        run: npm install -g sonar-scanner
-
       # Make script executable
       - name: Grant Execute Permission
         run: chmod +x run-quality.sh
