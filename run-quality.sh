@@ -8,6 +8,6 @@ sonar-scanner \
   -Dsonar.exclusions=**/TSDB/** \
   -Dsonar.sources=. \
   -Dsonar.host.url=https://sonarcloud.io \
-  -Dsonar.login=$SONAR_TOKEN 
+  -Dsonar.login=33f49840787e6388b6ceab0e11da146d09902636 
 
 echo "Sonar Scan Completed"
