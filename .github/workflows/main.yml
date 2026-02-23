@@ -21,7 +21,7 @@ jobs:
           java-version: '11'
 
       - name: Build with Maven
-        working-directory: spring-user-management-master
+        working-directory: simple-maven-project
         run: mvn clean verify
 
       # Make script executable
