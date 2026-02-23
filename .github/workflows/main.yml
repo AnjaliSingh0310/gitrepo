@@ -14,6 +14,15 @@ jobs:
       - name: List Files
         run: ls -la
 
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Build with Maven
+        run: mvn clean verify
+
       # Make script executable
       - name: Grant Execute Permission
         run: chmod +x run-quality.sh
