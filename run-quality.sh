@@ -12,6 +12,7 @@ sonar-scanner \
   -Dsonar.exclusions=**/TSDB/** \
   -Dsonar.sources=. \
   -Dsonar.host.url=https://sonarcloud.io \
-  -Dsonar.login=33f49840787e6388b6ceab0e11da146d09902636 
+  -Dsonar.login=33f49840787e6388b6ceab0e11da146d09902636 \
+  -Dsonar.java.binaries=spring-user-management-master/target/classes
 
 echo "Sonar Scan Completed"
