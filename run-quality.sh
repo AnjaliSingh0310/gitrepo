@@ -17,7 +17,7 @@ dotnet sonarscanner begin \
 
 # -------- JAVA BUILD --------
 echo "Building Java project..."
-cd java-project-folder
+cd simple-maven-project
 mvn clean verify
 cd ..
 
