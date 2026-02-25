@@ -19,6 +19,11 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+          
+      - name: Set up Dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
 
       - name: Build with Maven
         working-directory: simple-maven-project
