@@ -1,41 +1,63 @@
 #!/bin/bash
 set -e
 
+echo "======================================="
+echo "Starting Code Quality & Coverage Check"
+echo "======================================="
+
+# ---------------------------------------
+# Install SonarScanner for .NET (if not already)
+# ---------------------------------------
 echo "Installing SonarScanner for .NET..."
 dotnet tool install --global dotnet-sonarscanner || true
 export PATH="$PATH:$HOME/.dotnet/tools"
 
-echo "Starting Sonar analysis..."
+# ---------------------------------------
+# Start SonarCloud Analysis
+# ---------------------------------------
+echo "Starting SonarCloud analysis..."
 
 dotnet sonarscanner begin \
-  /k:"AnjaliSingh0310_gitrepo" \
-  /o:"anjalisingh0310" \
-  /d:sonar.exclusions=**/TSDB/** \
+  /k:AnjaliSingh0310_gitrepo \
+  /o:anjalisingh0310 \
   /d:sonar.host.url="https://sonarcloud.io" \
   /d:sonar.login=33f49840787e6388b6ceab0e11da146d09902636 \
-  /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
+  /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" \
+  /d:sonar.coverage.jacoco.xmlReportPaths="**/jacoco.xml"
 
-# -------- JAVA BUILD --------
-echo "Building Java project..."
-cd simple-maven-project
-mvn clean verify
-cd ..
+# ---------------------------------------
+# Build & Test Java Projects (if present)
+# ---------------------------------------
+if [ -d simple-maven-project ]; then
+  echo "Building Java project..."
+  cd simple-maven-project
+  mvn clean verify
+  cd ..
+fi
 
-# -------- DOTNET BUILD --------
-echo "Building .NET project..."
-cd eShop-main
-dotnet restore
-dotnet build --no-restore
+# ---------------------------------------
+# Build & Test .NET (Using Solution Filter)
+# ---------------------------------------
+echo "Building .NET filtered solution..."
 
-# Run tests with coverage
-dotnet test \
+dotnet restore eShop.Web.slnf
+dotnet build eShop.Web.slnf --no-restore
+
+echo "Running .NET tests with coverage..."
+
+dotnet test eShop.Web.slnf \
   --no-build \
   /p:CollectCoverage=true \
   /p:CoverletOutputFormat=opencover
-cd ..
 
-# End Sonar analysis
+# ---------------------------------------
+# End SonarCloud Analysis
+# ---------------------------------------
+echo "Finishing SonarCloud analysis..."
+
 dotnet sonarscanner end \
-  /d:sonar.login="33f49840787e6388b6ceab0e11da146d09902636"
+  /d:sonar.login=33f49840787e6388b6ceab0e11da146d09902636
 
-echo "Sonar analysis completed."
+echo "======================================="
+echo "Code Quality Analysis Completed"
+echo "======================================="
