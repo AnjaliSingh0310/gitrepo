@@ -39,7 +39,7 @@ fi
 # Build & Test .NET (Using Solution Filter)
 # ---------------------------------------
 echo "Building .NET filtered solution..."
-
+cd eShop-main
 dotnet restore eShop.Web.slnf
 dotnet build eShop.Web.slnf --no-restore
 
@@ -49,6 +49,7 @@ dotnet test eShop.Web.slnf \
   --no-build \
   /p:CollectCoverage=true \
   /p:CoverletOutputFormat=opencover
+cd ..
 
 # ---------------------------------------
 # End SonarCloud Analysis
