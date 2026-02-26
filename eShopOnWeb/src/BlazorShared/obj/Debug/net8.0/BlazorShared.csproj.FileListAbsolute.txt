@@ -1,0 +1,13 @@
+/home/team/eShopOnWeb/src/BlazorShared/bin/Debug/net8.0/BlazorShared.deps.json
+/home/team/eShopOnWeb/src/BlazorShared/bin/Debug/net8.0/BlazorShared.dll
+/home/team/eShopOnWeb/src/BlazorShared/bin/Debug/net8.0/BlazorShared.pdb
+/home/team/eShopOnWeb/src/BlazorShared/obj/Debug/net8.0/BlazorShared.csproj.AssemblyReference.cache
+/home/team/eShopOnWeb/src/BlazorShared/obj/Debug/net8.0/BlazorShared.GeneratedMSBuildEditorConfig.editorconfig
+/home/team/eShopOnWeb/src/BlazorShared/obj/Debug/net8.0/BlazorShared.AssemblyInfoInputs.cache
+/home/team/eShopOnWeb/src/BlazorShared/obj/Debug/net8.0/BlazorShared.AssemblyInfo.cs
+/home/team/eShopOnWeb/src/BlazorShared/obj/Debug/net8.0/BlazorShared.csproj.CoreCompileInputs.cache
+/home/team/eShopOnWeb/src/BlazorShared/obj/Debug/net8.0/BlazorShared.sourcelink.json
+/home/team/eShopOnWeb/src/BlazorShared/obj/Debug/net8.0/BlazorShared.dll
+/home/team/eShopOnWeb/src/BlazorShared/obj/Debug/net8.0/refint/BlazorShared.dll
+/home/team/eShopOnWeb/src/BlazorShared/obj/Debug/net8.0/BlazorShared.pdb
+/home/team/eShopOnWeb/src/BlazorShared/obj/Debug/net8.0/ref/BlazorShared.dll

@@ -1,0 +1,16 @@
+/home/team/eShopOnWeb/src/ApplicationCore/bin/Debug/net8.0/ApplicationCore.deps.json
+/home/team/eShopOnWeb/src/ApplicationCore/bin/Debug/net8.0/ApplicationCore.dll
+/home/team/eShopOnWeb/src/ApplicationCore/bin/Debug/net8.0/ApplicationCore.pdb
+/home/team/eShopOnWeb/src/ApplicationCore/bin/Debug/net8.0/BlazorShared.dll
+/home/team/eShopOnWeb/src/ApplicationCore/bin/Debug/net8.0/BlazorShared.pdb
+/home/team/eShopOnWeb/src/ApplicationCore/obj/Debug/net8.0/ApplicationCore.csproj.AssemblyReference.cache
+/home/team/eShopOnWeb/src/ApplicationCore/obj/Debug/net8.0/ApplicationCore.GeneratedMSBuildEditorConfig.editorconfig
+/home/team/eShopOnWeb/src/ApplicationCore/obj/Debug/net8.0/ApplicationCore.AssemblyInfoInputs.cache
+/home/team/eShopOnWeb/src/ApplicationCore/obj/Debug/net8.0/ApplicationCore.AssemblyInfo.cs
+/home/team/eShopOnWeb/src/ApplicationCore/obj/Debug/net8.0/ApplicationCore.csproj.CoreCompileInputs.cache
+/home/team/eShopOnWeb/src/ApplicationCore/obj/Debug/net8.0/ApplicationCore.sourcelink.json
+/home/team/eShopOnWeb/src/ApplicationCore/obj/Debug/net8.0/Applicat.71DDEAC9.Up2Date
+/home/team/eShopOnWeb/src/ApplicationCore/obj/Debug/net8.0/ApplicationCore.dll
+/home/team/eShopOnWeb/src/ApplicationCore/obj/Debug/net8.0/refint/ApplicationCore.dll
+/home/team/eShopOnWeb/src/ApplicationCore/obj/Debug/net8.0/ApplicationCore.pdb
+/home/team/eShopOnWeb/src/ApplicationCore/obj/Debug/net8.0/ref/ApplicationCore.dll
