@@ -55,9 +55,9 @@ find . -name "coverage.cobertura.xml"
 # ---------------------------------------
 echo "Finishing SonarCloud analysis..."
 
-echo "Displaying coverage report snippets for debugging..."
-head -n 150 tests/UnitTests/TestResults/*/coverage.cobertura.xml
-echo "Coverage report snippet displayed"
+#echo "Displaying coverage report snippets for debugging..."
+#head -n 150 tests/UnitTests/TestResults/*/coverage.cobertura.xml
+#echo "Coverage report snippet displayed"
 
 
 dotnet sonarscanner end \
