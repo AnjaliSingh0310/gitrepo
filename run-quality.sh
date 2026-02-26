@@ -54,7 +54,9 @@ find . -name "coverage.cobertura.xml"
 # ---------------------------------------
 echo "Finishing SonarCloud analysis..."
 
-ls -R eShopOnWeb/tests
+echo "Listing test directories for debugging..."
+ls -R tests
+echo "Tests directory done"
 
 dotnet sonarscanner end \
   /d:sonar.login=33f49840787e6388b6ceab0e11da146d09902636
