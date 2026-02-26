@@ -25,8 +25,7 @@ dotnet sonarscanner begin \
   /o:anjalisingh0310 \
   /d:sonar.host.url="https://sonarcloud.io" \
   /d:sonar.login=33f49840787e6388b6ceab0e11da146d09902636 \
-  /d:sonar.cs.cobertura.reportsPaths="tests/**/coverage.cobertura.xml" \
-  /d:sonar.coverage.jacoco.xmlReportPaths="**/jacoco.xml"
+  /d:sonar.cs.cobertura.reportsPaths="TestResults/coverage.xml" 
 
 # ---------------------------------------
 # Build & Test .NET (Using Solution Filter)
@@ -43,7 +42,9 @@ echo "Running tests with coverage..."
 
 dotnet test eShopOnWeb.sln \
   --no-build \
-  --collect:"XPlat Code Coverage"
+  /p:CollectCoverage=true \
+  /p:CoverletOutputFormat=cobertura \
+  /p:CoverletOutput=./TestResults/coverage.xml
 
 # Debug (optional but useful)
 echo "Searching for coverage files..."
