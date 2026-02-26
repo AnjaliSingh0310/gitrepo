@@ -22,7 +22,7 @@ dotnet sonarscanner begin \
   /o:anjalisingh0310 \
   /d:sonar.host.url="https://sonarcloud.io" \
   /d:sonar.login=33f49840787e6388b6ceab0e11da146d09902636 \
-  /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" \
+  /d:sonar.cs.cobertura.reportsPaths="**/coverage.cobertura.xml" \
   /d:sonar.coverage.jacoco.xmlReportPaths="**/jacoco.xml"
 
 # ---------------------------------------
@@ -38,7 +38,24 @@ fi
 # ---------------------------------------
 # Build & Test .NET (Using Solution Filter)
 # ---------------------------------------
-dotnet build eShopOnWeb/eShopOnWeb.sln
+echo "Building .NET solution..."
+
+dotnet restore eShopOnWeb/eShopOnWeb.sln
+dotnet build eShopOnWeb/eShopOnWeb.sln --no-restore
+
+# -------------------------------
+# Run .NET tests with coverage
+# -------------------------------
+echo "Running tests with coverage..."
+
+dotnet test eShop-main/eShop.Web.slnf \
+  --no-build \
+  --collect:"XPlat Code Coverage"
+
+# Debug (optional but useful)
+echo "Searching for coverage files..."
+find . -name "coverage.cobertura.xml"
+
 # ---------------------------------------
 # End SonarCloud Analysis
 # ---------------------------------------
