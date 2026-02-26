@@ -48,7 +48,7 @@ dotnet build eShopOnWeb/eShopOnWeb.sln --no-restore
 # -------------------------------
 echo "Running tests with coverage..."
 
-dotnet test eShop-main/eShop.Web.slnf \
+dotnet test eShopOnWeb/eShopOnWeb.sln \
   --no-build \
   --collect:"XPlat Code Coverage"
 
