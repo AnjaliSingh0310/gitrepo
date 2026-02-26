@@ -17,6 +17,9 @@ export PATH="$PATH:$HOME/.dotnet/tools"
 # ---------------------------------------
 echo "Starting SonarCloud analysis..."
 
+# Go into solution directory
+cd eShopOnWeb
+
 dotnet sonarscanner begin \
   /k:AnjaliSingh0310_gitrepo \
   /o:anjalisingh0310 \
@@ -26,29 +29,19 @@ dotnet sonarscanner begin \
   /d:sonar.coverage.jacoco.xmlReportPaths="**/jacoco.xml"
 
 # ---------------------------------------
-# Build & Test Java Projects (if present)
-# ---------------------------------------
-if [ -d simple-maven-project ]; then
-  echo "Building Java project..."
-  cd simple-maven-project
-  mvn clean verify
-  cd ..
-fi
-
-# ---------------------------------------
 # Build & Test .NET (Using Solution Filter)
 # ---------------------------------------
 echo "Building .NET solution..."
 
-dotnet restore eShopOnWeb/eShopOnWeb.sln
-dotnet build eShopOnWeb/eShopOnWeb.sln --no-restore
+dotnet restore eShopOnWeb.sln
+dotnet build eShopOnWeb.sln --no-restore
 
 # -------------------------------
 # Run .NET tests with coverage
 # -------------------------------
 echo "Running tests with coverage..."
 
-dotnet test eShopOnWeb/eShopOnWeb.sln \
+dotnet test eShopOnWeb.sln \
   --no-build \
   --collect:"XPlat Code Coverage"
 
