@@ -22,7 +22,7 @@ dotnet sonarscanner begin \
   /o:anjalisingh0310 \
   /d:sonar.host.url="https://sonarcloud.io" \
   /d:sonar.login=33f49840787e6388b6ceab0e11da146d09902636 \
-  /d:sonar.cs.cobertura.reportsPaths="**/coverage.cobertura.xml" \
+  /d:sonar.cs.cobertura.reportsPaths="eShopOnWeb/**/coverage.cobertura.xml" \
   /d:sonar.coverage.jacoco.xmlReportPaths="**/jacoco.xml"
 
 # ---------------------------------------
@@ -60,6 +60,8 @@ find . -name "coverage.cobertura.xml"
 # End SonarCloud Analysis
 # ---------------------------------------
 echo "Finishing SonarCloud analysis..."
+
+ls -R eShopOnWeb/tests
 
 dotnet sonarscanner end \
   /d:sonar.login=33f49840787e6388b6ceab0e11da146d09902636
