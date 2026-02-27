@@ -33,15 +33,15 @@ dotnet sonarscanner begin \
 # ---------------------------------------
 echo "Building .NET solution..."
 
-dotnet restore eShopOnWeb.sln
-dotnet build eShopOnWeb.sln --no-restore
+dotnet restore eShopOnWeb/eShopOnWeb.sln
+dotnet build eShopOnWeb/eShopOnWeb.sln --no-restore
 
 # -------------------------------
 # Run .NET tests with coverage
 # -------------------------------
 echo "Running tests with coverage..."
 
-dotnet test eShopOnWeb.sln \
+dotnet test eShopOnWeb/eShopOnWeb.sln \
   --no-build \
   /p:CollectCoverage=true \
   /p:CoverletOutputFormat=cobertura \
