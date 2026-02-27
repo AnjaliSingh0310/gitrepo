@@ -43,9 +43,7 @@ echo "Running tests with coverage..."
 
 dotnet test eShopOnWeb/eShopOnWeb.sln \
   --no-build \
-  /p:CollectCoverage=true \
-  /p:CoverletOutputFormat=cobertura \
-  /p:CoverletOutput=./TestResults/coverage.xml
+  --collect:"XPlat Code Coverage"
 
 # Debug (optional but useful)
 echo "Searching for coverage files..."
