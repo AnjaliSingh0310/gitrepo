@@ -18,7 +18,7 @@ export PATH="$PATH:$HOME/.dotnet/tools"
 echo "Starting SonarCloud analysis..."
 
 # Go into solution directory
-cd eShopOnWeb
+#cd eShopOnWeb
 
 dotnet sonarscanner begin \
   /k:AnjaliSingh0310_gitrepo \
