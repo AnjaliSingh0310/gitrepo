@@ -103,4 +103,4 @@ jobs:
             --host-url https://sonarcloud.io \
             --solution eShopOnWeb/eShopOnWeb.sln \
             --coverage-path "eShopOnWeb/tests/**/coverage.cobertura.xml" \
-            --token "${{ secrets.SONAR_TOKEN }}"
+            --token "33f49840787e6388b6ceab0e11da146d09902636"
