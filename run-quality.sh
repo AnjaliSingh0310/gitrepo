@@ -25,7 +25,6 @@ dotnet sonarscanner begin \
   /o:anjalisingh0310 \
   /d:sonar.host.url="https://sonarcloud.io" \
   /d:sonar.login=33f49840787e6388b6ceab0e11da146d09902636 \
-  /d:sonar.projectBaseDir="eShopOnWeb" \
   /d:sonar.cs.cobertura.reportsPaths="eShopOnWeb/tests/**/coverage.cobertura.xml"
 
 # ---------------------------------------
@@ -54,9 +53,9 @@ find . -name "coverage.cobertura.xml"
 # ---------------------------------------
 echo "Finishing SonarCloud analysis..."
 
-#echo "Displaying coverage report snippets for debugging..."
-#head -n 150 tests/UnitTests/TestResults/*/coverage.cobertura.xml
-#echo "Coverage report snippet displayed"
+echo "Displaying coverage report snippets for debugging..."
+head -n 150 eShopOnWeb/tests/UnitTests/TestResults/*/coverage.cobertura.xml
+echo "Coverage report snippet displayed"
 
 
 dotnet sonarscanner end \
