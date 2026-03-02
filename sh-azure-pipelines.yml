@@ -4,25 +4,6 @@ trigger:
 pool:
   name: Default   # Self-hosted agent pool
 
-steps:
-
-- checkout: self
-
-- script: ls -la
-  displayName: 'List Files'
-
-# Check Java
-- script: java -version
-  displayName: 'Check Java'
-
-# Check Dotnet
-- script: dotnet --version
-  displayName: 'Check Dotnet'
-
-# Check Maven
-- script: mvn -version
-  displayName: 'Check Maven'
-
 resources:
   repositories:
     - repository: qualityTemplates
@@ -30,7 +11,27 @@ resources:
       name: gitrepo/azure-quality-templates
 
 jobs:
+- job: EnvironmentCheck
+  displayName: Check Build Environment
+  steps:
+    - checkout: self
+
+    - script: ls -la
+      displayName: List Files
+
+    - script: java -version
+      displayName: Check Java
+
+    - script: dotnet --version
+      displayName: Check Dotnet
+
+    - script: mvn -version
+      displayName: Check Maven
+
+
 - job: CodeQuality
+  displayName: Run Sonar Quality
+  dependsOn: EnvironmentCheck
   steps:
     - checkout: self
     - checkout: qualityTemplates
