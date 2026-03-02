@@ -8,7 +8,7 @@ resources:
   repositories:
     - repository: qualityTemplates
       type: github
-      name: AnjaliSingh0310/gitrepo/azure-quality-templates
+      name: AnjaliSingh0310/gitrepo
       endpoint: AnjaliSingh0310
 
 jobs:
@@ -37,7 +37,7 @@ jobs:
     - checkout: self
     - checkout: qualityTemplates
 
-    - template: templates/run-quality.yml@qualityTemplates
+    - template: azure-quality-templates/templates/run-quality.yml@qualityTemplates
       parameters:
         projectKey: AnjaliSingh0310_gitrepo
         organization: anjalisingh0310
