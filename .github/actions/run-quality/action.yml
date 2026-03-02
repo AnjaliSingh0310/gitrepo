@@ -1,0 +1,58 @@
+name: "Run SonarCloud Quality"
+description: "Internal action to build, test and run SonarCloud analysis for .NET"
+
+inputs:
+  project_key:
+    description: "SonarCloud project key"
+    required: true
+  organization:
+    description: "SonarCloud organization"
+    required: true
+  solution:
+    description: "Path to .sln file"
+    required: true
+  coverage_path:
+    description: "Cobertura coverage path"
+    required: true
+  sonar_token:
+    description: "SonarCloud authentication token"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+
+    # Setup .NET
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    # Cache NuGet
+    - name: Cache NuGet packages
+      uses: actions/cache@v4
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+
+    # Cache SonarScanner tool
+    - name: Cache SonarScanner
+      uses: actions/cache@v4
+      with:
+        path: ~/.dotnet/tools
+        key: ${{ runner.os }}-sonarscanner
+
+    # Run Script
+    - name: Execute Quality Script
+      shell: bash
+      run: |
+        chmod +x $GITHUB_WORKSPACE/run-quality.sh
+        $GITHUB_WORKSPACE/run-quality.sh \
+          --project-key "${{ inputs.project_key }}" \
+          --org "${{ inputs.organization }}" \
+          --host-url https://sonarcloud.io \
+          --solution "${{ inputs.solution }}" \
+          --coverage-path "${{ inputs.coverage_path }}" \
+          --token "${{ inputs.sonar_token }}"
