@@ -1,0 +1,44 @@
+trigger:
+- main
+
+pool:
+  name: Default   # Self-hosted agent pool
+
+steps:
+
+- checkout: self
+
+- script: ls -la
+  displayName: 'List Files'
+
+# Check Java
+- script: java -version
+  displayName: 'Check Java'
+
+# Check Dotnet
+- script: dotnet --version
+  displayName: 'Check Dotnet'
+
+# Check Maven
+- script: mvn -version
+  displayName: 'Check Maven'
+
+resources:
+  repositories:
+    - repository: qualityTemplates
+      type: git
+      name: gitrepo/azure-quality-templates
+
+jobs:
+- job: CodeQuality
+  steps:
+    - checkout: self
+    - checkout: qualityTemplates
+
+    - template: templates/run-quality.yml@qualityTemplates
+      parameters:
+        projectKey: AnjaliSingh0310_gitrepo
+        organization: anjalisingh0310
+        solution: eShopOnWeb/eShopOnWeb.sln
+        coveragePath: eShopOnWeb/tests/**/coverage.cobertura.xml
+        sonarToken: 33f49840787e6388b6ceab0e11da146d09902636

@@ -1,0 +1,23 @@
+parameters:
+  projectKey: ''
+  organization: ''
+  solution: ''
+  coveragePath: ''
+  sonarToken: ''
+
+steps:
+  - task: UseDotNet@2
+    inputs:
+      packageType: 'sdk'
+      version: '8.0.x'
+
+  - script: |
+      chmod +x scripts/run-quality.sh
+      scripts/run-quality.sh \
+        --project-key ${{ parameters.projectKey }} \
+        --org ${{ parameters.organization }} \
+        --host-url https://sonarcloud.io \
+        --solution ${{ parameters.solution }} \
+        --coverage-path "${{ parameters.coveragePath }}" \
+        --token "${{ parameters.sonarToken }}"
+    displayName: Run Quality
