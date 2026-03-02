@@ -2,7 +2,7 @@ trigger:
 - main
 
 pool:
-  vmImage: ubuntu-latest
+  name: Default   # Self-hosted agent pool
 
 steps:
 
@@ -11,23 +11,28 @@ steps:
 - script: ls -la
   displayName: 'List Files'
 
-- task: JavaToolInstaller@0
-  inputs:
-    versionSpec: '17'
-    jdkArchitectureOption: 'x64'
-    jdkSourceOption: 'PreInstalled'
+# Check Java
+- script: java -version
+  displayName: 'Check Java'
 
-- task: UseDotNet@2
-  inputs:
-    version: '8.0.x'
+# Check Dotnet
+- script: dotnet --version
+  displayName: 'Check Dotnet'
 
+# Check Maven
+- script: mvn -version
+  displayName: 'Check Maven'
+
+# Maven Build
 - script: |
     cd simple-maven-project
     mvn clean verify
   displayName: 'Build with Maven'
 
+# Grant Permission
 - script: chmod +x run-quality.sh
   displayName: 'Grant Permission'
 
+# Run Quality Script
 - script: ./run-quality.sh
   displayName: 'Run Quality Script'
