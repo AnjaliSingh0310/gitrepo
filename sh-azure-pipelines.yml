@@ -9,7 +9,7 @@ resources:
     - repository: qualityTemplates
       type: github
       name: AnjaliSingh0310/gitrepo/azure-quality-templates
-      endpoint: GitHubConnection
+      endpoint: AnjaliSingh0310
 
 jobs:
 - job: EnvironmentCheck
