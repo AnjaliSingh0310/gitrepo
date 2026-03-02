@@ -7,8 +7,9 @@ pool:
 resources:
   repositories:
     - repository: qualityTemplates
-      type: git
-      name: gitrepo/azure-quality-templates
+      type: github
+      name: AnjaliSingh0310/gitrepo/azure-quality-templates
+      endpoint: GitHubConnection
 
 jobs:
 - job: EnvironmentCheck
