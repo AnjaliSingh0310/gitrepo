@@ -33,11 +33,10 @@ jobs:
   displayName: Run Extension Build
   dependsOn: EnvironmentCheck
   steps:
-    steps:
-      - task: RunQuality@1
-        inputs:
-          projectKey: AnjaliSingh0310_gitrepo
-          organization: anjalisingh0310
-          solution: 'eShopOnWeb/eShopOnWeb.sln'
-          coveragePath: eShopOnWeb/tests/**/coverage.cobertura.xml
-          sonarToken: 33f49840787e6388b6ceab0e11da146d09902636
+    - task: RunQuality@1
+      inputs:
+        projectKey: AnjaliSingh0310_gitrepo
+        organization: anjalisingh0310
+        solution: 'eShopOnWeb/eShopOnWeb.sln'
+        coveragePath: eShopOnWeb/tests/**/coverage.cobertura.xml
+        sonarToken: 33f49840787e6388b6ceab0e11da146d09902636
