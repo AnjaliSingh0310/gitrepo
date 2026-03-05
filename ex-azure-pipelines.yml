@@ -37,21 +37,6 @@ jobs:
   displayName: Run Extension Build
   dependsOn: EnvironmentCheck
   steps:
-
-    - task: NodeTool@0
-      inputs:
-        versionSpec: '18.x' # Replace with your required version
-      displayName: Install Node.js
-
-    - script: node --version
-      displayName: Check Node.js Version
-
-    - script: npm --version
-      displayName: Check npm Version
-      
-    - script: npm install
-      displayName: Install Dependencies
-
     - task: RunQuality@1
       inputs:
         projectKey: AnjaliSingh0310_gitrepo
