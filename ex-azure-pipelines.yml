@@ -13,7 +13,7 @@ jobs:
     - task: NodeTool@0
       inputs:
         versionSpec: '18.x' # Replace with your required version
-      displayName: 'Install Node.js
+      displayName: Install Node.js
 
     - script: node --version
       displayName: Check Node.js Version
@@ -35,7 +35,7 @@ jobs:
   dependsOn: EnvironmentCheck
   steps:
     - script: npm install
-      displayName: 'Install Dependencies'
+      displayName: Install Dependencies
 
     - task: RunQuality@1
       inputs:
