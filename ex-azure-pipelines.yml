@@ -10,6 +10,16 @@ jobs:
   steps:
     - checkout: self
 
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '18.x' # Replace with your required version
+      displayName: 'Install Node.js
+
+    - script: |
+        npm install
+        npm run build
+      displayName: 'npm install and build'
+
     - script: ls -la
       displayName: List Files
 
@@ -28,7 +38,7 @@ jobs:
   steps:
     - script: npm install
       displayName: 'Install Dependencies'
-      
+
     - task: RunQuality@1
       inputs:
         projectKey: AnjaliSingh0310_gitrepo
