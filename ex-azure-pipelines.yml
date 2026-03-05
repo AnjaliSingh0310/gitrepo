@@ -20,6 +20,9 @@ jobs:
         npm run build
       displayName: 'npm install and build'
 
+    - script: node --version
+      displayName: Check Node.js Version
+
     - script: ls -la
       displayName: List Files
 
