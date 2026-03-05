@@ -4,13 +4,6 @@ trigger:
 pool:
   name: Default   # Self-hosted agent pool
 
-resources:
-  repositories:
-    - repository: qualityTemplates
-      type: github
-      name: AnjaliSingh0310/gitrepo
-      endpoint: AnjaliSingh0310
-
 jobs:
 - job: EnvironmentCheck
   displayName: Check Build Environment
