@@ -26,6 +26,9 @@ jobs:
   displayName: Run Extension Build
   dependsOn: EnvironmentCheck
   steps:
+    - script: npm install
+      displayName: 'Install Dependencies'
+      
     - task: RunQuality@1
       inputs:
         projectKey: AnjaliSingh0310_gitrepo
