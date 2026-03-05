@@ -18,6 +18,15 @@ jobs:
     - script: node --version
       displayName: Check Node.js Version
 
+    - script: npm --version
+      displayName: Check npm Version
+
+    - script: npm install 
+      displayName: Install npm Packages
+
+    - script: npm run build
+      displayName: Build Project
+
     - script: ls -la
       displayName: List Files
 
