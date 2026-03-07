@@ -41,7 +41,7 @@ jobs:
       inputs:
         projectKey: AnjaliSingh0310_gitrepo
         organization: anjalisingh0310
-        hostUrl: 'https://10.10.70.101/sonar'
+        hostUrl: 'http://10.10.70.101:9002'
         solution: 'eShopOnWeb/eShopOnWeb.sln'
         coveragePath: eShopOnWeb/tests/**/coverage.cobertura.xml
         sonarToken: sqa_8448fe5ad83c03208e03dcbba4f17bffb2fda67d
