@@ -40,7 +40,7 @@ jobs:
     - task: run-quality@1
       inputs:
         projectKey: git_proj
-        organization: 
+        organization: 'anjalisingh0310'
         hostUrl: 'http://10.10.70.101:9002'
         solution: 'eShopOnWeb/eShopOnWeb.sln'
         coveragePath: eShopOnWeb/tests/**/coverage.cobertura.xml
