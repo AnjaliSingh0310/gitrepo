@@ -41,7 +41,7 @@ jobs:
       inputs:
         projectKey: cav_proj
         organization: ''
-        hostUrl: 'https://182.71.119.220/sonar'
+        hostUrl: 'https://sonar.cav-test.com/sonar'
         solution: 'eShopOnWeb/eShopOnWeb.sln'
         coveragePath: eShopOnWeb/tests/**/coverage.cobertura.xml
         sonarToken: sqa_ee292a9e84a10fce829cb5e4a3be9f075c2944cf
