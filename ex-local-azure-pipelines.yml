@@ -39,10 +39,9 @@ jobs:
   steps:
     - task: run-quality@1
       inputs:
-        projectKey: git_proj
+        projectKey: cav_proj
         organization: 'anjalisingh0310'
-        hostUrl: 'http://10.10.70.101:9002'
+        hostUrl: 'https://182.71.119.220/sonar'
         solution: 'eShopOnWeb/eShopOnWeb.sln'
         coveragePath: eShopOnWeb/tests/**/coverage.cobertura.xml
-        sonarToken: sqa_8448fe5ad83c03208e03dcbba4f17bffb2fda67d
-        GITHUB_TOKEN : sqa_8448fe5ad83c03208e03dcbba4f17bffb2fda67d
+        sonarToken: sqa_ee292a9e84a10fce829cb5e4a3be9f075c2944cf
