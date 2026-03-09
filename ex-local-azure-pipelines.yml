@@ -40,7 +40,7 @@ jobs:
     - task: run-quality@1
       inputs:
         projectKey: cav_proj
-        organization: 'anjalisingh0310'
+        organization: ''
         hostUrl: 'https://182.71.119.220/sonar'
         solution: 'eShopOnWeb/eShopOnWeb.sln'
         coveragePath: eShopOnWeb/tests/**/coverage.cobertura.xml
