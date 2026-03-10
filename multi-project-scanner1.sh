@@ -47,6 +47,7 @@ is_supported_project() {
   FILE=$1
 
   FRAMEWORK=$(grep -oPm1 "(?<=<TargetFramework>)[^<]+" "$FILE" || true)
+  echo "Detected framework: $FRAMEWORK for project $FILE"
 
   if [[ "$FRAMEWORK" == *android* ||
         "$FRAMEWORK" == *ios* ||
@@ -79,7 +80,9 @@ fi
 ########################################
 for PROJ in $PROJECTS
 do
-
+echo "---------------------------------------"
+echo "Scanning project file: $PROJ"
+echo "---------------------------------------"
   if is_supported_project "$PROJ"; then
 
     NAME=$(basename "$PROJ" .csproj)
