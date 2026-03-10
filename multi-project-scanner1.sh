@@ -47,13 +47,19 @@ is_supported_project() {
   FILE=$1
 
   FRAMEWORK=$(grep -oPm1 "(?<=<TargetFramework>)[^<]+" "$FILE" || true)
+
   echo "Detected framework: $FRAMEWORK for project $FILE"
+
+  if grep -qi "<UseMaui>" "$FILE"; then
+      echo "Skipping MAUI project: $FILE"
+      SKIPPED_PROJECTS+=("$FILE (MAUI)")
+      return 1
+  fi
 
   if [[ "$FRAMEWORK" == *android* ||
         "$FRAMEWORK" == *ios* ||
         "$FRAMEWORK" == *maccatalyst* ||
-        "$FRAMEWORK" == *tizen* ||
-        "$FRAMEWORK" == *maui* ]]; then
+        "$FRAMEWORK" == *tizen* ]]; then
 
       echo "Skipping mobile workload project: $FILE ($FRAMEWORK)"
       SKIPPED_PROJECTS+=("$FILE ($FRAMEWORK)")
