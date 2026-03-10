@@ -83,7 +83,8 @@ do
   if is_supported_project "$PROJ"; then
 
     NAME=$(basename "$PROJ" .csproj)
-    KEY="${PREFIX}_${NAME}"
+    #KEY="${PREFIX}_${NAME}"
+    KEY="${PREFIX}"
 
     echo "---------------------------------------"
     echo "Scanning project: $NAME"
