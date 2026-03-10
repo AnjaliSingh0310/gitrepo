@@ -96,11 +96,9 @@ jobs:
       # -----------------------------
       - name: Run Code Quality Parametrised
         run: |
-          chmod +x run-quality.sh
-          ./run-quality.sh \
+          chmod +x param-run-quality.sh
+          ./param-run-quality.sh \
             --project-key AnjaliSingh0310_gitrepo \
             --org anjalisingh0310 \
             --host-url https://sonarcloud.io \
-            --solution eShopOnWeb/eShopOnWeb.sln \
-            --coverage-path "eShopOnWeb/tests/**/coverage.cobertura.xml" \
             --token "33f49840787e6388b6ceab0e11da146d09902636"
