@@ -26,12 +26,19 @@ if [[ -z "$PREFIX" || -z "$HOST_URL" || -z "$SONAR_TOKEN" ]]; then
 fi
 
 ########################################
-# Install SonarScanner
+# Install SonarScanner for .NET and SonarScanner CLI
 ########################################
 echo "Installing SonarScanner for .NET"
 
 dotnet tool install --global dotnet-sonarscanner || true
 export PATH="$PATH:$HOME/.dotnet/tools"
+
+echo "Installing Sonar Scanner..."
+npm install -g sonar-scanner
+echo "INSTALLED........"
+
+
+
 
 ########################################
 # Arrays for reporting
@@ -155,6 +162,7 @@ do
     -Dsonar.host.url="$HOST_URL" \
     -Dsonar.login="$SONAR_TOKEN" \
     -Dsonar.scanner.skipJreProvisioning=true
+    -Dsonar.exclusions=**/TSDB/**
 
   popd
 
