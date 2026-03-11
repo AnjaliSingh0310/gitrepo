@@ -105,6 +105,7 @@ echo "---------------------------------------"
       /k:"$KEY" \
       /o:"$ORG" \
       /d:sonar.host.url="$HOST_URL" \
+      /d:sonar.exclusions=**/TSDB/** \
       /d:sonar.token="$SONAR_TOKEN"
 
     echo "Restoring project"
