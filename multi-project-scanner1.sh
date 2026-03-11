@@ -40,7 +40,7 @@ SCANNED_PROJECTS=()
 SKIPPED_PROJECTS=()
 
 ########################################
-# Function: detect supported frameworks
+# Function: detect supported frameworks and skip mobile/MAUI projects
 ########################################
 is_supported_project() {
 
@@ -70,7 +70,7 @@ is_supported_project() {
 }
 
 ########################################
-# Detect projects
+# Detect .Net projects
 ########################################
 echo "Searching for .NET projects..."
 
@@ -82,7 +82,7 @@ if [[ -z "$PROJECTS" ]]; then
 fi
 
 ########################################
-# Scan projects
+# Scan .Net projects
 ########################################
 for PROJ in $PROJECTS
 do
@@ -125,6 +125,43 @@ echo "---------------------------------------"
   fi
 
 done
+
+########################################
+# Scan Java Maven Projects
+########################################
+echo "Searching Maven projects..."
+
+find . -name "pom.xml" | while read POM
+do
+
+  DIR=$(dirname "$POM")
+  NAME=$(basename "$DIR")
+  #KEY="${PREFIX}_${NAME}"
+  KEY="${PREFIX}"
+
+  echo "-----------------------------------"
+  echo "Scanning Java project: $NAME"
+  echo "-----------------------------------"
+
+  pushd "$DIR"
+
+  mvn -B clean package
+
+  sonar-scanner \
+    -Dsonar.projectKey="$KEY" \
+    -Dsonar.organization="$ORG" \
+    -Dsonar.sources="src/main/java" \
+    -Dsonar.java.binaries="target/classes" \
+    -Dsonar.host.url="$HOST_URL" \
+    -Dsonar.login="$SONAR_TOKEN" \
+    -Dsonar.scanner.skipJreProvisioning=true
+
+  popd
+
+  SCANNED_PROJECTS+=("$DIR")
+
+done
+
 
 ########################################
 # Summary
