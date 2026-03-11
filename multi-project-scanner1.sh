@@ -161,7 +161,7 @@ do
     -Dsonar.java.binaries="target/classes" \
     -Dsonar.host.url="$HOST_URL" \
     -Dsonar.login="$SONAR_TOKEN" \
-    -Dsonar.scanner.skipJreProvisioning=true
+    -Dsonar.scanner.skipJreProvisioning=true \
     -Dsonar.exclusions=**/TSDB/**
 
   popd
