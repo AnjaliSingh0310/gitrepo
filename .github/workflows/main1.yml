@@ -98,7 +98,7 @@ jobs:
         run: |
           chmod +x multi-project-scanner1.sh
           ./multi-project-scanner1.sh \
-            --project-key-prefix asdfghj \
+            --project-key-prefix asdfghjk \
             --org asdfghj \
             --host-url https://sonarcloud.io \
             --token "33f49840787e6388b6ceab0e11da146d09902636"
