@@ -98,7 +98,7 @@ jobs:
         run: |
           chmod +x multi-project-scanner1.sh
           ./multi-project-scanner1.sh \
-            --project-key-prefix AnjaliSingh0310_gitrepo \
-            --org anjalisingh0310 \
+            --project-key-prefix as-22 \
+            --org AS_22 \
             --host-url https://sonarcloud.io \
             --token "33f49840787e6388b6ceab0e11da146d09902636"
