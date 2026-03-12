@@ -107,13 +107,14 @@ echo "---------------------------------------"
     echo "Project path: $PROJ"
     echo "Sonar key: $KEY"
     echo "---------------------------------------"
-
-    dotnet sonarscanner begin \
-      /k:"$KEY" \
-      /o:"$ORG" \
-      /d:sonar.host.url="$HOST_URL" \
-      /d:sonar.exclusions=**/TSDB/** \
-      /d:sonar.token="$SONAR_TOKEN"
+#commenting out sonar-scanner for .NET in favor of CLI to handle multi-project scanning with better control
+#
+##    dotnet sonarscanner begin \
+#      /k:"$KEY" \
+##      /o:"$ORG" \
+#      /d:sonar.host.url="$HOST_URL" \
+#      /d:sonar.exclusions=**/TSDB/** \
+#      /d:sonar.token="$SONAR_TOKEN"
 
     echo "Restoring project"
     dotnet restore "$PROJ"
@@ -124,8 +125,8 @@ echo "---------------------------------------"
     echo "Running tests (if available)"
     dotnet test "$PROJ" --no-build || true
 
-    dotnet sonarscanner end \
-      /d:sonar.token="$SONAR_TOKEN"
+#    dotnet sonarscanner end \
+#      /d:sonar.token="$SONAR_TOKEN"
 
     SCANNED_PROJECTS+=("$PROJ")
 
