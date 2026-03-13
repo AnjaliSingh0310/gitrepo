@@ -39,7 +39,7 @@ jobs:
   steps:
     - task: run-quality@1
       inputs:
-        projectKey: cav_proj
+        projectKey: my_unique_project_key
         organization: ''
         hostUrl: 'https://sonar.cav-test.com/sonar'
         solution: 'eShopOnWeb/eShopOnWeb.sln'
