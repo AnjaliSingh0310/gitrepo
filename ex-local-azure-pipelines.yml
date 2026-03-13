@@ -5,37 +5,8 @@ pool:
   name: Default   # Self-hosted agent pool
 
 jobs:
-- job: EnvironmentCheck
-  displayName: Check Build Environment
-  steps:
-    - checkout: self
-
-    - task: NodeTool@0
-      inputs:
-        versionSpec: '18.x' # Replace with your required version
-      displayName: Install Node.js
-
-    - script: node --version
-      displayName: Check Node.js Version
-
-    - script: npm --version
-      displayName: Check npm Version
-
-    - script: ls -la
-      displayName: List Files
-
-    - script: java -version
-      displayName: Check Java
-
-    - script: dotnet --version
-      displayName: Check Dotnet
-
-    - script: mvn -version
-      displayName: Check Maven
-
 - job: Build
   displayName: Run Extension Build
-  dependsOn: EnvironmentCheck
   steps:
     - task: run-quality@1
       inputs:
