@@ -199,6 +199,22 @@ wait
 ########################################
 create_project_if_missing
 
+
+#########################################
+
+CFAMILY_OPTION=""
+
+COMPILE_DB=$(find . -name "compile_commands.json" | head -1)
+
+if [[ -n "$COMPILE_DB" ]]; then
+  echo "Detected C/C++ compilation database: $COMPILE_DB"
+  CFAMILY_OPTION="-Dsonar.cfamily.compile-commands=$COMPILE_DB"
+else
+  echo "No C/C++ compilation database found. Skipping C/C++ analysis."
+fi
+
+########################################
+
 ########################################
 # Run Sonar scan
 ########################################
@@ -214,7 +230,7 @@ if [[ "$IS_SONARCLOUD" == true ]]; then
     -Dsonar.organization="$ORG" \
     -Dsonar.sources=. \
     -Dsonar.java.binaries="**/target/classes" \
-    -Dsonar.cfamily.compile-commands="**/compile_commands.json" \
+    $CFAMILY_OPTION \
     -Dsonar.host.url="$HOST_URL" \
     -Dsonar.token="$SONAR_TOKEN" \
     -Dsonar.qualitygate.wait=true
@@ -225,7 +241,7 @@ else
     -Dsonar.projectKey="$PROJECT_KEY" \
     -Dsonar.sources=. \
     -Dsonar.java.binaries="**/target/classes" \
-    -Dsonar.cfamily.compile-commands="**/compile_commands.json" \
+    $CFAMILY_OPTION \
     -Dsonar.host.url="$HOST_URL" \
     -Dsonar.token="$SONAR_TOKEN" \
     -Dsonar.qualitygate.wait=true
