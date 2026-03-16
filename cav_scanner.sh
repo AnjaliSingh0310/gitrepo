@@ -136,15 +136,23 @@ scan_dotnet_solution() {
   fi     
 
   echo "Running SonarScanner for .NET begin step..."
+  echo "Command: $SONAR_BEGIN_CMD"
   eval $SONAR_BEGIN_CMD
   echo "Restoring solution"
     
+  # if not solution provided, find one
+  if [[ -z "$SOLUTION" ]]; then
+    SOLUTION=$(find . -name "*.sln" | head -1) 
+    echo "No solution provided. Detected solution: $SOLUTION"
+  fi 
   dotnet restore "$SOLUTION"
   dotnet build "$SOLUTION"
   dotnet test "$SOLUTION" || true
 
   dotnet sonarscanner end \
     /d:sonar.token="$SONAR_TOKEN"
+
+  echo "Finished SonarScanner for .NET analysis"
 }
 
 ########################################
@@ -154,10 +162,23 @@ scan_maven() {
 
   echo "Detected Maven project"
 
-  mvn -B clean verify sonar:sonar \
-    -Dsonar.projectKey="$PROJECT_KEY" \
-    -Dsonar.host.url="$HOST_URL" \
-    -Dsonar.login="$SONAR_TOKEN"
+  #if sonarcloud, we need to include organization in the maven command, else it can be skipped
+  if [[ "$IS_SONARCLOUD" == true ]]; then
+    MVN_CMD="mvn -B clean verify sonar:sonar \
+      -Dsonar.projectKey=\"$PROJECT_KEY\" \
+      -Dsonar.organization=\"$ORG\" \
+      -Dsonar.host.url=\"$HOST_URL\" \
+      -Dsonar.login=\"$SONAR_TOKEN\""
+  else
+    MVN_CMD="mvn -B clean verify sonar:sonar \
+      -Dsonar.projectKey=\"$PROJECT_KEY\" \
+      -Dsonar.host.url=\"$HOST_URL\" \
+      -Dsonar.login=\"$SONAR_TOKEN\""
+  fi
+
+    echo "Running SonarScanner for Maven..."
+    eval $MVN_CMD
+    echo "Finished Maven analysis"
 }
 
 ########################################
@@ -173,6 +194,8 @@ scan_generic() {
     -Dsonar.host.url="$HOST_URL" \
     -Dsonar.login="$SONAR_TOKEN" \
     -Dsonar.qualitygate.wait=true
+
+    echo "Finished generic analysis"
 }
 
 ########################################
@@ -197,16 +220,21 @@ else
 
   echo "No solution provided. Detecting technologies..."
 
+  echo "Searching for .NET solutions..."
   if find . -name "*.sln" | grep -q .; then
     SOLUTION=$(find . -name "*.sln" | head -1)
     scan_dotnet_solution
 
-  elif find . -name "pom.xml" | grep -q .; then
+  fi
+
+  echo "Searching for Maven projects..."
+  if find . -name "pom.xml" | grep -q .; then
     scan_maven
 
-  else
-    scan_generic
   fi
+
+  echo "No specific solutions found. Running generic scan..."  
+  scan_generic
 
 fi
 
