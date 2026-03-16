@@ -230,6 +230,12 @@ echo "====================================="
 echo "Running Sonar analysis"
 echo "====================================="
 
+echo "All details:"
+echo "HOST_URL: $HOST_URL"
+echo "PROJECT_KEY: $PROJECT_KEY"
+echo "ORG: $ORG"
+echo "IS_SONARCLOUD: $IS_SONARCLOUD"  
+
 if [[ "$IS_SONARCLOUD" == true ]]; then
 
   sonar-scanner \
