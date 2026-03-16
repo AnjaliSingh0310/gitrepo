@@ -99,6 +99,5 @@ jobs:
           chmod +x cav_scanner.sh
           ./cav_scanner.sh \
             --projectKey my_unique_testing_key \
-            --organization asdfghj \
             --hostUrl https://sonar.cav-test.com/sonar \
             --sonarToken "sqa_ee292a9e84a10fce829cb5e4a3be9f075c2944cf"
