@@ -214,6 +214,7 @@ if [[ "$IS_SONARCLOUD" == true ]]; then
     -Dsonar.organization="$ORG" \
     -Dsonar.sources=. \
     -Dsonar.java.binaries="**/target/classes" \
+    -Dsonar.cfamily.compile-commands="**/compile_commands.json" \
     -Dsonar.host.url="$HOST_URL" \
     -Dsonar.token="$SONAR_TOKEN" \
     -Dsonar.qualitygate.wait=true
@@ -224,6 +225,7 @@ else
     -Dsonar.projectKey="$PROJECT_KEY" \
     -Dsonar.sources=. \
     -Dsonar.java.binaries="**/target/classes" \
+    -Dsonar.cfamily.compile-commands="**/compile_commands.json" \
     -Dsonar.host.url="$HOST_URL" \
     -Dsonar.token="$SONAR_TOKEN" \
     -Dsonar.qualitygate.wait=true
