@@ -208,18 +208,19 @@ COMPILE_DB=$(find . -name "compile_commands.json" | head -1)
 
 if [[ -n "$COMPILE_DB" ]]; then
   echo "C/C++ compilation database detected: $COMPILE_DB"
-  CFAMILY_OPTIONS="-Dsonar.cfamily.compile-commands=$COMPILE_DB"
+  CFAMILY_OPTION="-Dsonar.cfamily.compile-commands=$COMPILE_DB"
 else
-  echo "No compile_commands.json found. Disabling C/C++ analysis."
+  echo "No compilation database found. Disabling C/C++ analysis."
 
-  CFAMILY_OPTIONS="
+  CFAMILY_OPTION="
   -Dsonar.c.file.suffixes=-
   -Dsonar.cpp.file.suffixes=-
   -Dsonar.objc.file.suffixes=-
   "
 fi
-
 ########################################
+
+echo "CFAMILY_OPTION: $CFAMILY_OPTION"
 
 ########################################
 # Run Sonar scan
