@@ -212,11 +212,7 @@ if [[ -n "$COMPILE_DB" ]]; then
 else
   echo "No compilation database found. Disabling C/C++ analysis."
 
-  CFAMILY_OPTION="
-  -Dsonar.c.file.suffixes=-
-  -Dsonar.cpp.file.suffixes=-
-  -Dsonar.objc.file.suffixes=-
-  "
+  CFAMILY_OPTION="-Dsonar.c.file.suffixes=- -Dsonar.cpp.file.suffixes=- -Dsonar.objc.file.suffixes=-"
 fi
 ########################################
 
@@ -235,6 +231,7 @@ echo "HOST_URL: $HOST_URL"
 echo "PROJECT_KEY: $PROJECT_KEY"
 echo "ORG: $ORG"
 echo "IS_SONARCLOUD: $IS_SONARCLOUD"  
+echo "CFAMILY_OPTION: $CFAMILY_OPTION"
 
 SCANNER_OPTS=(
   -Dsonar.projectKey=$PROJECT_KEY
@@ -254,6 +251,8 @@ if [ -n "$CFAMILY_OPTION" ]; then
 fi
 
 echo "Running scanner..."
+echo "sonar-scanner ${SCANNER_OPTS[*]}"
+
 
 sonar-scanner "${SCANNER_OPTS[@]}"
 
