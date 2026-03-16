@@ -239,6 +239,7 @@ SCANNER_OPTS=(
   -Dsonar.host.url=$HOST_URL
   -Dsonar.token=$SONAR_TOKEN
   -Dsonar.java.binaries=**/target/classes
+  -Dsonar.api.version=9.9
 )
 
 if [ "$IS_SONARCLOUD" = "true" ]; then
