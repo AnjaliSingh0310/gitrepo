@@ -142,12 +142,14 @@ scan_dotnet_solution() {
     
   # if not solution provided, find one
   if [[ -z "$SOLUTION" ]]; then
-    SOLUTION=$(find . -name "*.sln" | head -1) 
-    echo "No solution provided. Detected solution: $SOLUTION"
+    FSOLUTION=$(find . -name "*.sln" | head -1) 
+    echo "No solution provided. Detected solution: $FSOLUTION"
   fi 
-  dotnet restore "$SOLUTION"
-  dotnet build "$SOLUTION"
-  dotnet test "$SOLUTION" || true
+
+  echo "Using new found solution: $FSOLUTION"
+  dotnet restore "$FSOLUTION"
+  dotnet build "$FSOLUTION"
+  dotnet test "$FSOLUTION" || true
 
   dotnet sonarscanner end \
     /d:sonar.token="$SONAR_TOKEN"
