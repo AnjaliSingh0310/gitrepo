@@ -48,15 +48,19 @@ fi
 ########################################
 
 LOGIN=$(curl -s -u "$SONAR_TOKEN:" "$HOST_URL/api/users/current" | jq -r '.login')
-echo "$LOGIN"
+echo "Authenticated as: $LOGIN"
 
 ########################################
 # Check if project exists
 ########################################
 echo "Checking if project exists..."
 
-PROJECT_EXISTS=$(curl -s -u "$SONAR_TOKEN:" \
-"$HOST_URL/api/projects/search?projects=$PROJECT_KEY" | jq '.components | length')
+if [[ "$IS_SONARCLOUD" == true ]]; then
+  PROJECT_EXISTS=$(curl -s -u "$SONAR_TOKEN:" "$HOST_URL/api/projects/search?projects=$PROJECT_KEY&organization=$ORG" | jq '.components | length')
+else
+  PROJECT_EXISTS=$(curl -s -u "$SONAR_TOKEN:" "$HOST_URL/api/projects/search?projects=$PROJECT_KEY" | jq '.components | length')
+fi
+
 
 echo "Project exists: $PROJECT_EXISTS"
 
@@ -115,13 +119,26 @@ scan_dotnet_solution() {
 
   echo "Detected .NET solution"
 
-  dotnet sonarscanner begin \
-    /k:"$PROJECT_KEY" \
-    /d:sonar.host.url="$HOST_URL" \
-    /d:sonar.token="$SONAR_TOKEN" \
-    /d:snar.qualitygate.wait=true
+  #if sonarcloud, we need to include organization in the begin step, else it can be skipped
+  if [[ "$IS_SONARCLOUD" == true ]]; then
+    SONAR_BEGIN_CMD="dotnet sonarscanner begin \
+      /k:\"$PROJECT_KEY\" \
+      /o:\"$ORG\" \
+      /d:sonar.host.url=\"$HOST_URL\" \
+      /d:sonar.token=\"$SONAR_TOKEN\" \
+      /d:sonar.qualitygate.wait=true"
+  else
+    SONAR_BEGIN_CMD="dotnet sonarscanner begin \
+      /k:\"$PROJECT_KEY\" \
+      /d:sonar.host.url=\"$HOST_URL\" \
+      /d:sonar.token=\"$SONAR_TOKEN\" \
+      /d:sonar.qualitygate.wait=true"
+  fi     
 
-
+  echo "Running SonarScanner for .NET begin step..."
+  eval $SONAR_BEGIN_CMD
+  echo "Restoring solution"
+    
   dotnet restore "$SOLUTION"
   dotnet build "$SOLUTION"
   dotnet test "$SOLUTION" || true
