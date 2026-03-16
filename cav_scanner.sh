@@ -213,8 +213,9 @@ if [[ "$IS_SONARCLOUD" == true ]]; then
     -Dsonar.projectKey="$PROJECT_KEY" \
     -Dsonar.organization="$ORG" \
     -Dsonar.sources=. \
+    -Dsonar.java.binaries="**/target/classes" \
     -Dsonar.host.url="$HOST_URL" \
-    -Dsonar.login="$SONAR_TOKEN" \
+    -Dsonar.token="$SONAR_TOKEN" \
     -Dsonar.qualitygate.wait=true
 
 else
@@ -222,8 +223,9 @@ else
   sonar-scanner \
     -Dsonar.projectKey="$PROJECT_KEY" \
     -Dsonar.sources=. \
+    -Dsonar.java.binaries="**/target/classes" \
     -Dsonar.host.url="$HOST_URL" \
-    -Dsonar.login="$SONAR_TOKEN" \
+    -Dsonar.token="$SONAR_TOKEN" \
     -Dsonar.qualitygate.wait=true
 
 fi
