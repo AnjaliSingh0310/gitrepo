@@ -10,20 +10,16 @@ while [[ "$#" -gt 0 ]]; do
     --sonarToken) SONAR_TOKEN="$2"; shift ;;
     --projectKey) PROJECT_KEY="$2"; shift ;;
     --organization) ORG="$2"; shift ;;
-    --solution) SOLUTION="$2"; shift ;;
     *) echo "Unknown parameter: $1"; exit 1 ;;
   esac
   shift
 done
 
 ########################################
-# Validate required parameters
+# Validate parameters
 ########################################
 if [[ -z "$HOST_URL" || -z "$SONAR_TOKEN" || -z "$PROJECT_KEY" ]]; then
-  echo "Required parameters:"
-  echo "--hostUrl"
-  echo "--sonarToken"
-  echo "--projectKey"
+  echo "Required parameters: --hostUrl --sonarToken --projectKey"
   exit 1
 fi
 
@@ -42,63 +38,59 @@ if [[ "$HOST_URL" == *"sonarcloud.io"* ]]; then
   fi
 fi
 
-
 ########################################
-# login name 
+# Get login
 ########################################
-
 LOGIN=$(curl -s -u "$SONAR_TOKEN:" "$HOST_URL/api/users/current" | jq -r '.login')
 echo "Authenticated as: $LOGIN"
 
 ########################################
-# Check if project exists
-########################################
-echo "Checking if project exists..."
-
-if [[ "$IS_SONARCLOUD" == true ]]; then
-  PROJECT_EXISTS=$(curl -s -u "$SONAR_TOKEN:" "$HOST_URL/api/projects/search?projects=$PROJECT_KEY&organization=$ORG" | jq '.components | length')
-else
-  PROJECT_EXISTS=$(curl -s -u "$SONAR_TOKEN:" "$HOST_URL/api/projects/search?projects=$PROJECT_KEY" | jq '.components | length')
-fi
-
-
-echo "Project exists: $PROJECT_EXISTS"
-
-########################################
 # Create project if missing
 ########################################
-if [[ "$PROJECT_EXISTS" == "0" ]]; then
-
-  echo "Project does not exist. Creating project..."
+create_project_if_missing() {
 
   if [[ "$IS_SONARCLOUD" == true ]]; then
-
-    curl -u "$SONAR_TOKEN:" \
-    -X POST "$HOST_URL/api/projects/create" \
-    -d "organization=$ORG" \
-    -d "project=$PROJECT_KEY" \
-    -d "name=$PROJECT_KEY"
-
+    PROJECT_EXISTS=$(curl -s -u "$SONAR_TOKEN:" \
+      "$HOST_URL/api/projects/search?projects=$PROJECT_KEY&organization=$ORG" \
+      | jq '.components | length')
   else
-
-    curl -u "$SONAR_TOKEN:" \
-    -X POST "$HOST_URL/api/projects/create" \
-    -d "project=$PROJECT_KEY" \
-    -d "name=$PROJECT_KEY"
-
-    echo "Assigning permissions..."
-
-    curl -u "$SONAR_TOKEN:" \
-    -X POST "$HOST_URL/api/permissions/add_user" \
-    -d "login=$LOGIN" \
-    -d "permission=scan" \
-    -d "projectKey=$PROJECT_KEY"
-
+    PROJECT_EXISTS=$(curl -s -u "$SONAR_TOKEN:" \
+      "$HOST_URL/api/projects/search?projects=$PROJECT_KEY" \
+      | jq '.components | length')
   fi
 
-else
-  echo "Project already exists"
-fi
+  echo "Project exists: $PROJECT_EXISTS"
+
+  if [[ "$PROJECT_EXISTS" == "0" ]]; then
+
+    echo "Creating project $PROJECT_KEY"
+
+    if [[ "$IS_SONARCLOUD" == true ]]; then
+
+      curl -u "$SONAR_TOKEN:" \
+      -X POST "$HOST_URL/api/projects/create" \
+      -d "organization=$ORG" \
+      -d "project=$PROJECT_KEY" \
+      -d "name=$PROJECT_KEY"
+
+    else
+
+      curl -u "$SONAR_TOKEN:" \
+      -X POST "$HOST_URL/api/projects/create" \
+      -d "project=$PROJECT_KEY" \
+      -d "name=$PROJECT_KEY"
+
+      curl -u "$SONAR_TOKEN:" \
+      -X POST "$HOST_URL/api/permissions/add_user" \
+      -d "login=$LOGIN" \
+      -d "permission=scan" \
+      -d "projectKey=$PROJECT_KEY"
+
+    fi
+  else
+    echo "Project already exists"
+  fi
+}
 
 ########################################
 # Install scanners
@@ -108,87 +100,124 @@ echo "Installing scanners..."
 dotnet tool install --global dotnet-sonarscanner || true
 export PATH="$PATH:$HOME/.dotnet/tools"
 
-echo "Installing Sonar Scanner..."
-npm install -g sonar-scanner
-echo "INSTALLED........"
+npm install -g sonar-scanner || true
 
 ########################################
-# Function: scan .NET solution
+# Detect technologies
 ########################################
-scan_dotnet_solution() {
 
-  echo "Detected .NET solution"
+DOTNET_SOLUTIONS=$(find . -name "*.sln" || true)
+MAVEN_PROJECTS=$(find . -name "pom.xml" || true)
+NODE_PROJECTS=$(find . -name "package.json" || true)
+PY_PROJECTS=$(find . -name "requirements.txt" || true)
+GO_PROJECTS=$(find . -name "go.mod" || true)
 
-  #if sonarcloud, we need to include organization in the begin step, else it can be skipped
-  if [[ "$IS_SONARCLOUD" == true ]]; then
-    SONAR_BEGIN_CMD="dotnet sonarscanner begin \
-      /k:\"$PROJECT_KEY\" \
-      /o:\"$ORG\" \
-      /d:sonar.host.url=\"$HOST_URL\" \
-      /d:sonar.token=\"$SONAR_TOKEN\" \
-      /d:sonar.qualitygate.wait=true"
-  else
-    SONAR_BEGIN_CMD="dotnet sonarscanner begin \
-      /k:\"$PROJECT_KEY\" \
-      /d:sonar.host.url=\"$HOST_URL\" \
-      /d:sonar.token=\"$SONAR_TOKEN\" \
-      /d:sonar.qualitygate.wait=true"
-  fi     
+echo "Detected .NET solutions: $DOTNET_SOLUTIONS"
+echo "Detected Maven projects: $MAVEN_PROJECTS"
+echo "Detected NodeJS projects: $NODE_PROJECTS"
+echo "Detected Python projects: $PY_PROJECTS"
+echo "Detected Go projects: $GO_PROJECTS"
 
-  echo "Running SonarScanner for .NET begin step..."
-  echo "Command: $SONAR_BEGIN_CMD"
-  eval $SONAR_BEGIN_CMD
-  echo "Restoring solution"
-    
-  # if not solution provided, find one
-  if [[ -z "$SOLUTION" ]]; then
-    FSOLUTION=$(find . -name "*.sln" | head -1) 
-    echo "No solution provided. Detected solution: $FSOLUTION"
-  fi 
+########################################
+# Build stage
+########################################
 
-  echo "Using new found solution: $FSOLUTION"
-  dotnet restore "$FSOLUTION"
-  dotnet build "$FSOLUTION"
-  dotnet test "$FSOLUTION" || true
+echo "====================================="
+echo "Building monorepo projects"
+echo "====================================="
 
-  dotnet sonarscanner end \
-    /d:sonar.token="$SONAR_TOKEN"
-
-  echo "Finished SonarScanner for .NET analysis"
+build_dotnet() {
+  for SLN in $DOTNET_SOLUTIONS; do
+    DIR=$(dirname "$SLN")
+    echo "Building .NET: $SLN"
+    (
+      cd "$DIR"
+      dotnet restore "$SLN"
+      dotnet build "$SLN"
+      dotnet test "$SLN" || true
+    ) &
+  done
 }
 
-########################################
-# Function: scan Maven
-########################################
-scan_maven() {
-
-  echo "Detected Maven project"
-
-  #if sonarcloud, we need to include organization in the maven command, else it can be skipped
-  if [[ "$IS_SONARCLOUD" == true ]]; then
-    MVN_CMD="mvn -B clean verify sonar:sonar \
-      -Dsonar.projectKey=\"$PROJECT_KEY\" \
-      -Dsonar.organization=\"$ORG\" \
-      -Dsonar.host.url=\"$HOST_URL\" \
-      -Dsonar.login=\"$SONAR_TOKEN\""
-  else
-    MVN_CMD="mvn -B clean verify sonar:sonar \
-      -Dsonar.projectKey=\"$PROJECT_KEY\" \
-      -Dsonar.host.url=\"$HOST_URL\" \
-      -Dsonar.login=\"$SONAR_TOKEN\""
-  fi
-
-    echo "Running SonarScanner for Maven..."
-    eval $MVN_CMD
-    echo "Finished Maven analysis"
+build_maven() {
+  for POM in $MAVEN_PROJECTS; do
+    DIR=$(dirname "$POM")
+    echo "Building Maven: $POM"
+    (
+      cd "$DIR"
+      mvn -B clean verify
+    ) &
+  done
 }
 
-########################################
-# Function: scan generic repo
-########################################
-scan_generic() {
+build_node() {
+  for PKG in $NODE_PROJECTS; do
+    DIR=$(dirname "$PKG")
+    echo "Building NodeJS: $PKG"
+    (
+      cd "$DIR"
+      npm install
+      npm test || true
+    ) &
+  done
+}
 
-  echo "Scanning entire repository"
+build_python() {
+  for REQ in $PY_PROJECTS; do
+    DIR=$(dirname "$REQ")
+    echo "Building Python: $REQ"
+    (
+      cd "$DIR"
+      pip install -r requirements.txt || true
+      pytest || true
+    ) &
+  done
+}
+
+build_go() {
+  for MOD in $GO_PROJECTS; do
+    DIR=$(dirname "$MOD")
+    echo "Building Go: $MOD"
+    (
+      cd "$DIR"
+      go mod tidy
+      go test ./... || true
+    ) &
+  done
+}
+
+build_dotnet
+build_maven
+build_node
+build_python
+build_go
+
+wait
+
+########################################
+# Create project
+########################################
+create_project_if_missing
+
+########################################
+# Run Sonar scan
+########################################
+
+echo "====================================="
+echo "Running Sonar analysis"
+echo "====================================="
+
+if [[ "$IS_SONARCLOUD" == true ]]; then
+
+  sonar-scanner \
+    -Dsonar.projectKey="$PROJECT_KEY" \
+    -Dsonar.organization="$ORG" \
+    -Dsonar.sources=. \
+    -Dsonar.host.url="$HOST_URL" \
+    -Dsonar.login="$SONAR_TOKEN" \
+    -Dsonar.qualitygate.wait=true
+
+else
 
   sonar-scanner \
     -Dsonar.projectKey="$PROJECT_KEY" \
@@ -196,47 +225,6 @@ scan_generic() {
     -Dsonar.host.url="$HOST_URL" \
     -Dsonar.login="$SONAR_TOKEN" \
     -Dsonar.qualitygate.wait=true
-
-    echo "Finished generic analysis"
-}
-
-########################################
-# Determine analysis mode
-########################################
-if [[ -n "$SOLUTION" ]]; then
-
-  echo "Solution provided: $SOLUTION"
-
-  if [[ "$SOLUTION" == *.sln ]]; then
-    scan_dotnet_solution
-
-  elif [[ "$SOLUTION" == *pom.xml ]]; then
-    scan_maven
-
-  else
-    echo "Unknown solution type"
-    exit 1
-  fi
-
-else
-
-  echo "No solution provided. Detecting technologies..."
-
-  echo "Searching for .NET solutions..."
-  if find . -name "*.sln" | grep -q .; then
-    SOLUTION=$(find . -name "*.sln" | head -1)
-    scan_dotnet_solution
-
-  fi
-
-  echo "Searching for Maven projects..."
-  if find . -name "pom.xml" | grep -q .; then
-    scan_maven
-
-  fi
-
-  echo "No specific solutions found. Running generic scan..."  
-  scan_generic
 
 fi
 
