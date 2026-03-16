@@ -238,7 +238,6 @@ SCANNER_OPTS=(
   -Dsonar.sources=.
   -Dsonar.host.url=$HOST_URL
   -Dsonar.token=$SONAR_TOKEN
-  -Dsonar.qualitygate.wait=true
   -Dsonar.java.binaries=**/target/classes
 )
 
