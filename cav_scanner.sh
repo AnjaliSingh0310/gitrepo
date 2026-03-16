@@ -202,15 +202,21 @@ create_project_if_missing
 
 #########################################
 
-CFAMILY_OPTION=""
+CFAMILY_OPTIONS=""
 
 COMPILE_DB=$(find . -name "compile_commands.json" | head -1)
 
 if [[ -n "$COMPILE_DB" ]]; then
-  echo "Detected C/C++ compilation database: $COMPILE_DB"
-  CFAMILY_OPTION="-Dsonar.cfamily.compile-commands=$COMPILE_DB"
+  echo "C/C++ compilation database detected: $COMPILE_DB"
+  CFAMILY_OPTIONS="-Dsonar.cfamily.compile-commands=$COMPILE_DB"
 else
-  echo "No C/C++ compilation database found. Skipping C/C++ analysis."
+  echo "No compile_commands.json found. Disabling C/C++ analysis."
+
+  CFAMILY_OPTIONS="
+  -Dsonar.c.file.suffixes=-
+  -Dsonar.cpp.file.suffixes=-
+  -Dsonar.objc.file.suffixes=-
+  "
 fi
 
 ########################################
