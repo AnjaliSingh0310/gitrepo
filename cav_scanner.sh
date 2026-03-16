@@ -236,24 +236,26 @@ echo "PROJECT_KEY: $PROJECT_KEY"
 echo "ORG: $ORG"
 echo "IS_SONARCLOUD: $IS_SONARCLOUD"  
 
-#gather all options
-SCANNER_OPTS="-Dsonar.projectKey=\"$PROJECT_KEY\" \
--Dsonar.sources=. \
--Dsonar.host.url=\"$HOST_URL\" \
--Dsonar.token=\"$SONAR_TOKEN\" \
--Dsonar.qualitygate.wait=true \
--Dsonar.java.binaries=\"**/target/classes\" \
-$CFAMILY_OPTION"  
-
+SCANNER_OPTS=(
+  -Dsonar.projectKey=$PROJECT_KEY
+  -Dsonar.sources=.
+  -Dsonar.host.url=$HOST_URL
+  -Dsonar.token=$SONAR_TOKEN
+  -Dsonar.qualitygate.wait=true
+  -Dsonar.java.binaries=**/target/classes
+)
 
 if [ "$IS_SONARCLOUD" = "true" ]; then
-  SCANNER_OPTS="$SCANNER_OPTS -Dsonar.organization=$ORG"
+  SCANNER_OPTS+=(-Dsonar.organization=$ORG)
 fi
 
-echo "Scanner options: $SCANNER_OPTS"
+if [ -n "$CFAMILY_OPTION" ]; then
+  SCANNER_OPTS+=($CFAMILY_OPTION)
+fi
 
-# run scanner
-sonar-scanner $SCANNER_OPTS
+echo "Running scanner..."
+
+sonar-scanner "${SCANNER_OPTS[@]}"
 
 echo "====================================="
 echo "Sonar analysis completed"
