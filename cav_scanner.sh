@@ -10,6 +10,7 @@ while [[ "$#" -gt 0 ]]; do
     --sonarToken) SONAR_TOKEN="$2"; shift ;;
     --projectKey) PROJECT_KEY="$2"; shift ;;
     --organization) ORG="$2"; shift ;;
+    --solution) SOLUTION_DIR="$2"; shift ;;
     *) echo "Unknown parameter: $1"; exit 1 ;;
   esac
   shift
@@ -37,6 +38,25 @@ if [[ "$HOST_URL" == *"sonarcloud.io"* ]]; then
     exit 1
   fi
 fi
+
+#########################################
+#Finding base directory for solution
+#########################################
+if [[ -n "$SOLUTION_DIR" ]]; then
+  echo "Scanning specific solution: $SOLUTION_DIR"
+
+  if [[ ! -d "$SOLUTION_DIR" ]]; then
+    echo "ERROR: Provided solution directory does not exist"
+    exit 1
+  fi
+
+  BASE_DIR="$SOLUTION_DIR"
+else
+  echo "No solution provided. Scanning full repository"
+  BASE_DIR="."
+fi
+
+echo "Base directory for scanning: $BASE_DIR"
 
 ########################################
 # Get login
@@ -109,11 +129,11 @@ pip install pytest || true
 # Detect technologies
 ########################################
 
-DOTNET_SOLUTIONS=$(find . -name "*.sln" || true)
-MAVEN_PROJECTS=$(find . -name "pom.xml" || true)
-NODE_PROJECTS=$(find . -name "package.json" || true)
-PY_PROJECTS=$(find . -name "requirements.txt" || true)
-GO_PROJECTS=$(find . -name "go.mod" || true)
+DOTNET_SOLUTIONS=$(find "$BASE_DIR" -name "*.sln" || true)
+MAVEN_PROJECTS=$(find "$BASE_DIR" -name "pom.xml" || true)
+NODE_PROJECTS=$(find "$BASE_DIR" -name "package.json" || true)
+PY_PROJECTS=$(find "$BASE_DIR" -name "requirements.txt" || true)
+GO_PROJECTS=$(find "$BASE_DIR" -name "go.mod" || true)
 
 echo "Detected .NET solutions: $DOTNET_SOLUTIONS"
 echo "Detected Maven projects: $MAVEN_PROJECTS"
@@ -207,7 +227,7 @@ create_project_if_missing
 
 CFAMILY_OPTIONS=""
 
-COMPILE_DB=$(find . -name "compile_commands.json" | head -1)
+COMPILE_DB=$(find "$BASE_DIR" -name "compile_commands.json" | head -1)
 
 if [[ -n "$COMPILE_DB" ]]; then
   echo "C/C++ compilation database detected: $COMPILE_DB"
@@ -238,7 +258,7 @@ echo "CFAMILY_OPTION: $CFAMILY_OPTION"
 
 SCANNER_OPTS=(
   -Dsonar.projectKey=$PROJECT_KEY
-  -Dsonar.sources=.
+  -Dsonar.sources=$BASE_DIR
   -Dsonar.host.url=$HOST_URL
   -Dsonar.token=$SONAR_TOKEN
   -Dsonar.java.binaries=**/target/classes
