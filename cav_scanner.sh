@@ -102,6 +102,9 @@ export PATH="$PATH:$HOME/.dotnet/tools"
 
 npm install -g sonar-scanner || true
 
+# install pytest 
+pip install pytest || true
+
 ########################################
 # Detect technologies
 ########################################
