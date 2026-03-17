@@ -240,6 +240,7 @@ SCANNER_OPTS=(
   -Dsonar.token=$SONAR_TOKEN
   -Dsonar.java.binaries=**/target/classes
   -Dsonar.api.version=9.9
+  -Dsonar.exclusions=**/node_modules/**,**/.git/**,**/target/**,**/build/**,**/dist/**
 )
 
 if [ "$IS_SONARCLOUD" = "true" ]; then
@@ -251,7 +252,7 @@ if [ -n "$CFAMILY_OPTION" ]; then
 fi
 
 echo "Running scanner..."
-echo "sonar-scanner ${SCANNER_OPTS[*]}"
+echo "sonar-scanner -X ${SCANNER_OPTS[*]}"
 
 
 sonar-scanner "${SCANNER_OPTS[@]}"
