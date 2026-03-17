@@ -98,7 +98,6 @@ jobs:
         run: |
           chmod +x cav_scanner.sh
           ./cav_scanner.sh \
-            --projectKey asdfghjk \
-            --organization asdfghj \
-            --hostUrl https://sonarcloud.io \
-            --sonarToken "33f49840787e6388b6ceab0e11da146d09902636"
+            --projectKey my_unique_testing_key \
+            --hostUrl https://sonar.cav-test.com:4444/sonar \
+            --sonarToken "sqp_5c9379989cc54d0e4f8777cba7293437101c1074"
