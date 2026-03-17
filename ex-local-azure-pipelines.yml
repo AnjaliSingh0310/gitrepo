@@ -12,7 +12,7 @@ jobs:
       inputs:
         projectKey: my_unique_testing_key
         organization: ''
-        hostUrl: 'https://sonar.cav-test.com/sonar'
+        hostUrl: 'https://sonar.cav-test.com:4444/sonar'
         solution: 'eShopOnWeb/eShopOnWeb.sln'
         coveragePath: eShopOnWeb/tests/**/coverage.cobertura.xml
-        sonarToken: sqa_ee292a9e84a10fce829cb5e4a3be9f075c2944cf
+        sonarToken: sqp_5c9379989cc54d0e4f8777cba7293437101c1074
