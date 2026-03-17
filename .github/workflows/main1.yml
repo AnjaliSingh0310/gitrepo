@@ -100,5 +100,5 @@ jobs:
           ./cav_scanner.sh \
             --projectKey my_unique_testing_key \
             --hostUrl https://sonar.cav-test.com:4444/sonar \
-            --solution simple-maven-project/pom.xml \
+            --solution simple-maven-project \
             --sonarToken "sqp_5c9379989cc54d0e4f8777cba7293437101c1074"
