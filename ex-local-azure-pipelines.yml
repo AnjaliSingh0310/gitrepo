@@ -8,8 +8,6 @@ jobs:
 - job: Build
   displayName: Run Extension Build
   steps:
-    - checkout: self
-      fetchDepth: 0
     - task: run-quality@1
       inputs:
         projectKey: cavisson_sonar_test
