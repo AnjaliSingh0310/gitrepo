@@ -10,6 +10,6 @@ jobs:
   steps:
     - task: run-quality@1
       inputs:
-        projectKey: cavisson_test
+        projectKey: cavisson_sonar_test
         hostUrl: 'https://sonar.cav-test.com:4444/sonar'
         sonarToken: sqp_631dbc4743b159c42953bd814ecab85f6d86283b
