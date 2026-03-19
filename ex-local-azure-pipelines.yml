@@ -10,6 +10,6 @@ jobs:
   steps:
     - task: cavisson-scanner@1
       inputs:
-        project: cavisson_sonar_demo_1
-        reportServerUrl: 'https://sonar.cav-test.com:4444/sonar'
+        project: cavisson_proj_1
+        reportServerUrl: 'https://sonar.cav-test.com:4444/code_analyzer'
         reportAccessToken: sqp_631dbc4743b159c42953bd814ecab85f6d86283b
