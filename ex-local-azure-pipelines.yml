@@ -12,4 +12,4 @@ jobs:
       inputs:
         project: cavisson_proj_cav
         reportServerUrl: 'https://sonar.cav-test.com:4444/code_analyzer'
-        reportAccessToken: sqp_631dbc4743b159c42953bd814ecab85f6d86283b
+        reportAccessToken: squ_d474dcc4e682bac749e96222088596a3cdc7e09b
