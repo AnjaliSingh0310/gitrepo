@@ -12,4 +12,4 @@ jobs:
       inputs:
         project: cavisson_proj_cav_Anjali_1
         reportServerUrl: 'https://sonar.cav-test.com:4444/code_analyzer'
-        reportAccessToken: squ_d474dcc4e682bac749e96222088596a3cdc7e09b
+        reportAccessToken: squ_1e1bcfce3afec2b86fade5a97ba0e7b6022196ee
