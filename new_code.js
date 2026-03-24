@@ -22,3 +22,15 @@ function vulnerableFunction(userInput) {
     const user = getUserById(userInput);
     return user;
 }
+// add some more vulnerablities
+function anotherVulnerableFunction(userInput) {
+    // Vulnerability: Command injection
+    const exec = require('child_process').exec;
+    exec(userInput, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error executing command: ${error}`);
+            return;
+        }
+        console.log(`Command output: ${stdout}`);
+    });
+}
