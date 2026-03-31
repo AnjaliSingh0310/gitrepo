@@ -8,8 +8,8 @@ jobs:
 - job: Build
   displayName: Run Extension Build
   steps:
-    - task: cavisson-scanner@1
+    - task: CavissonScanProjects@1
       inputs:
-        reportServerUrl: 'http://10.10.50.8:7922'
-        project: 'cavisson_proj_cav_Anjali_0011'
-        reportAccessToken: 'squ_33ddbecf828440f6c95e30141e75583cd368c4a4'
+        cavissonScannerServiceConnection: 's'
+        project: 'cavisson_proj_cav_Anjali_01'
+    
