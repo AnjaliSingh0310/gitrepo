@@ -11,4 +11,6 @@ jobs:
     - task: CavissonScanProjects@1
       inputs:
         cavissonScannerServiceConnection: 'sonar22'
-        project: 'cav_proj_001'
+        project: 'cav_proj_demo'
+
+      
