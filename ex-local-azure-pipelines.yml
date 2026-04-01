@@ -11,5 +11,4 @@ jobs:
     - task: CavissonScanProjects@1
       inputs:
         cavissonScannerServiceConnection: 's'
-        project: 'cavisson_proj_cav_Anjali_03'
-    
+        project: 'cav_proj_001'
