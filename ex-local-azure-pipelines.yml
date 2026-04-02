@@ -10,7 +10,11 @@ jobs:
   steps:
     - task: CavissonScanProjects@1
       inputs:
-        cavissonScannerServiceConnection: 'sonar22'
-        project: 'cav_proj_demo'
+        cavissonScannerServiceConnection: 'sonar11'
+        reportServerUrl: '/cav-analysis'
+        project: 'cav_an1'
+    
+
+      
 
       
