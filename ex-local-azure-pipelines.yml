@@ -14,6 +14,13 @@ jobs:
         reportServerUrl: '/cav-analysis'
         project: 'cav_d1'
 
+    - task: CavissonScanProjects@1
+      inputs:
+        SonarqubeServiceConnection: 'SC'
+        project: 'f'
+        organization: 'cx'
+        targetPath: 'v'
+
     
     
 
