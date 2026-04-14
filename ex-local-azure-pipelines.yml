@@ -14,6 +14,12 @@ jobs:
         reportServerUrl: '/cav-analysis'
         project: 'cav_d1'
 
+    - task: CavissonAnalyzerProjects@1
+      inputs:
+        cavissonAnalyzerServiceConnection: 'caaa'
+        CodeanalyzerServiceConnection: 'SQ'
+        project: 'a'
+
 
     
     
