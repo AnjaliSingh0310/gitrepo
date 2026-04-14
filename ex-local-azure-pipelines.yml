@@ -7,18 +7,20 @@ pool:
 jobs:
 - job: Build
   displayName: Run Extension Build
-  steps:        
+  steps:    
+
     - task: CavissonScanProjects@1
       inputs:
-        cavissonScannerServiceConnection: 's'
+        cavissonScannerServiceConnection: 'sold'
         reportServerUrl: '/cav-analysis'
         project: 'cav_U1'
-
+   
     - task: CavissonAnalyzerProjects@1
       inputs:
         cavissonAnalyzerServiceConnection: 'caaa'
         CodeanalyzerServiceConnection: 'SQ'
         project: 'a'
+
 
 
     
