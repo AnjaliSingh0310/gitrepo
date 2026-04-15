@@ -1,0 +1,22 @@
+trigger:
+- main
+
+pool:
+  name: Default   # Self-hosted agent pool
+
+jobs:
+- job: Build
+  displayName: Run Extension Build
+  steps:        
+    - task: CavissonScanProjects@1
+      inputs:
+        cavissonScannerServiceConnection: 's'
+        reportServerUrl: '/cav-analysis'
+        project: 'cav_a1'
+
+    
+    
+
+      
+
+      
