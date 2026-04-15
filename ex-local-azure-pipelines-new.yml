@@ -10,8 +10,8 @@ jobs:
   steps:        
       - task: CavissonAnalyzerProjects@1
         inputs:
-          cavissonAnalyzerServiceConnection: 'caaa'
-          project: 'a3'
+          cavissonAnalyzerServiceConnection: 'CS'
+          project: 'a4'
 
     
     
