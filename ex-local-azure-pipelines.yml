@@ -13,7 +13,7 @@ jobs:
       inputs:
         cavissonScannerServiceConnection: 'sold'
         reportServerUrl: '/cav-analysis'
-        project: 'cav_U1_test55'
+        project: 'demo1'
    
     - task: CavissonAnalyzerProjects@1
       inputs:
