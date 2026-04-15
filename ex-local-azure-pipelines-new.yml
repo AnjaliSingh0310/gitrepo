@@ -8,11 +8,10 @@ jobs:
 - job: Build
   displayName: Run Extension Build
   steps:        
-    - task: CavissonScanProjects@1
-      inputs:
-        cavissonScannerServiceConnection: 's'
-        reportServerUrl: '/cav-analysis'
-        project: 'cav_a1'
+      - task: CavissonAnalyzerProjects@1
+        inputs:
+          cavissonAnalyzerServiceConnection: 'caaa'
+          project: 'a1'
 
     
     
