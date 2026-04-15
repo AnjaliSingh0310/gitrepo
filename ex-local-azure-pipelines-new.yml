@@ -6,12 +6,12 @@ pool:
 
 jobs:
 - job: Build
-  displayName: Run Extension Build
+  displayName: Run Cavisson Analyzer
   steps:        
       - task: CavissonAnalyzerProjects@1
         inputs:
           cavissonAnalyzerServiceConnection: 'caaa'
-          project: 'a1'
+          project: 'a2'
 
     
     
