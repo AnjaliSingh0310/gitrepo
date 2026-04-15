@@ -11,7 +11,7 @@ jobs:
       - task: CavissonAnalyzerProjects@1
         inputs:
           cavissonAnalyzerServiceConnection: 'caaa'
-          project: 'a2'
+          project: 'a3'
 
     
     
