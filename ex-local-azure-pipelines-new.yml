@@ -8,10 +8,10 @@ jobs:
 - job: Build
   displayName: Run Cavisson Analyzer
   steps:        
-      - task: CavissonAnalyzerProjects@1
+      - task: CavissonCodeAnalyzer@1
         inputs:
-          cavissonAnalyzerServiceConnection: 'CS'
-          project: 'a4'
+          cavissonAnalyzerServiceConnection: 'cav'
+          project: 'b1'
 
     
     
