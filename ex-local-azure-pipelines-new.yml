@@ -11,7 +11,7 @@ jobs:
       - task: CavissonCodeAnalyzer@1
         inputs:
           cavissonAnalyzerServiceConnection: 'cav'
-          project: 'b1'
+          project: 'b2'
 
     
     
